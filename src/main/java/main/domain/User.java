@@ -31,6 +31,9 @@ public class User implements Serializable, IEntity {
     @ElementCollection
     private List<Permission> permissions;
 
+    public User() {
+    }
+
     public User(String username, String password) {
         this.username = username;
         this.password = password;

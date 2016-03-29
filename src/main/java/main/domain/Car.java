@@ -27,6 +27,11 @@ public class Car implements Serializable, IEntity {
     @ManyToOne
     private Driver driver;
 
+    public Car() {
+    }
+
+    
+    
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
     public Long getId() {
         return id;

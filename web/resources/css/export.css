@@ -1,0 +1,75 @@
+/* 
+    Document   : export
+    Created on : 10-okt-2013, 12:36:00
+    Author     : Emir
+    Description:
+        Purpose of the stylesheet follows. the mark up of the printed file
+*/
+
+root { 
+    display: block;
+}
+
+.test {
+	margin-bottom: 0px;
+}
+.font{
+	
+	font-family:arial;
+}
+.font2{
+	
+	width: 90%;
+	
+}
+.fontFooter{
+	
+	margin-left: 3em
+}
+
+.presentStyle{
+		
+    padding: 5px;
+    text-align: left;
+    font-family: Arial, Verdana, sans-serif;
+    border: 1px solid #000; /* let's apply borders */
+   
+		
+	}
+	.presentColumnStyle{
+		
+		
+		 border: 1px solid #000;
+	}
+	
+table.people {
+    width: 100%;
+    border-collapse: collapse; /* so we can control cellspacing in a practical way */
+    border-bottom: 1px solid #000;
+}	
+	
+table.people th,
+table.people td {
+    padding: 3px;
+    text-align: left;
+    font-family: Arial, Verdana, sans-serif;
+    font-size: 11px;
+    line-height:27px;
+    border: 1px solid #000; /* let's apply borders */
+}
+
+.smallColumn15 {
+	width:15%;
+}
+
+.width5 {
+    width:5%;
+}
+
+.width15 {
+    width:15%;
+}
+
+.width75 {
+    width:75%;
+}

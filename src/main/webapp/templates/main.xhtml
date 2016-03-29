@@ -12,7 +12,7 @@
 
     <h:body class="smart-style-1 minified" style="margin-right: 1px;">
         <ui:include src="header.xhtml" />
-        <ui:include src="leftMenu.xhtml" rendered="#{userInfoBean.isLoggedInUserInGroup('superadmin') or userInfoBean.isLoggedInUserInGroup('Administrators')}"/>
+        <ui:include src="leftMenu.xhtml"/>
         <div id="main" role="main" >
             <ui:insert name="content"/>
         </div>
@@ -22,7 +22,7 @@
                     ©<h:outputText value="#{currentDate}">
                         <f:convertDateTime pattern="yyyy" type="date"/>
                     </h:outputText> 
-                    <a href="http://www.ceron.nl">CERON</a> - Alle rechten voorbehouden!</span>
+                    <a href="http://www.vershuys.com/productfotos/bakkerij-broekmans-kluntjes-mik--ongesneden-half/groo0013/64f7a90a-1b19-44e2-8398-5a82d396348c/800/600">S63A</a> - Alle rechten voorbehouden!</span>
             </div>
         </div>
 

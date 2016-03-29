@@ -12,152 +12,22 @@
             <aside id="left-panel">
                 <nav>
                     <ul>
-                        <ui:fragment rendered='#{userInfoBean.checkPermission("general")}'>
-                            <li>
-                                <a href="#"><i class="fa fa-lg fa-fw fa-home"/> <span class="menu-item-parent">Dashboard</span></a>
-                                <ul>
-                                    <li class="#{currentMenuItem eq 'dashboard' ? 'active' : ''}">
-                                        <a href="#{root}/pages/dashboard/dashboard.xhtml">Dashboard</a>
-                                    </li>
-                                    <li class="#{currentMenuItem eq 'schedule' ? 'active' : ''}">
-                                        <a href="#{root}/pages/dashboard/schedule.xhtml">Agenda</a>
-                                    </li>
-                                    <li class="#{currentMenuItem eq 'companySettings' ? 'active' : ''}">
-                                        <a href="#{root}/pages/company/companySettings.xhtml">Instellingen</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ui:fragment>
-                        <ui:fragment rendered='#{userInfoBean.checkPermission("vve")}'>
-                            <li>
-                                <a href="#"><i class="fa fa-lg fa-fw fa-building"/><span class="menu-item-parent">VvE</span></a>
-                                <ul>
-                                    <li class="#{currentMenuItem eq 'vveOverview' ? 'active' : ''}">
-                                        <a href="#{root}/pages/vve/vveOverview.xhtml">Overzicht</a>
-                                    </li>
-                                    <li class="#{currentMenuItem eq 'vveMembershipOverview' ? 'active' : ''}">
-                                        <a href="#{root}/pages/vveMembership/vveMembershipOverview.xhtml">Leden</a>
-                                    </li>
-                                    <li class="#{currentMenuItem eq 'vveMembershipArchiveOverview' ? 'active' : ''}">
-                                        <a href="#{root}/pages/vveMembership/vveMembershipArchiveOverview.xhtml">Ledenarchief</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ui:fragment>
-                        <ui:fragment rendered='#{userInfoBean.checkPermission("realestate")}'>
-                            <li>
-                                <a href="#"><i class="fa fa-lg fa-fw fa-building" /><span class="menu-item-parent">Vastgoed</span></a>
-                                <ul>
-                                    <li class="#{currentMenuItem eq 'objectOverview' ? 'active' : ''}">
-                                        <a href="#{root}/pages/realestate/objectOverview.xhtml">Overzicht</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ui:fragment>
-                        <ui:fragment rendered='#{userInfoBean.checkPermission("administration")}'>
-                            <li>
-                                <a href="#"><i class="fa fa-lg fa-fw fa-pie-chart"/> <span class="menu-item-parent">Administratie</span></a>
-                                <ul>
-                                    <li>
-                                        <a href="#"><span class="menu-item-parent">Invoeren</span></a>
-                                        <ul>
-                                            <li class="#{currentMenuItem eq 'journalEntry' ? 'active' : ''}">
-                                                <a href="#{root}/pages/administration/entry/journalEntryOverview.xhtml">Boekstuk invoeren</a>
-                                            </li>
-                                            <li class="#{currentMenuItem eq 'cashLedger' ? 'active' : ''}">
-                                                <a href="#{root}/pages/administration/cashLedger.xhtml">Kasboek</a>
-                                            </li>
-                                            <li class="#{currentMenuItem eq 'bankLedger' ? 'active' : ''}">
-                                                <a href="#{root}/pages/administration/bankLedger.xhtml">Bankboek</a>
-                                            </li>
-                                            <li class="#{currentMenuItem eq 'memoLedger' ? 'active' : ''}">
-                                                <a href="#{root}/pages/administration/memoLedger.xhtml">Memoboek</a>
-                                            </li>
-                                            <li class="#{currentMenuItem eq 'bankTransactionImport' ? 'active' : ''}">
-                                                <a href="#{root}/pages/banking/bankTransactionImport.xhtml">Importeren</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="#"><span class="menu-item-parent">Rapportage's</span></a>
-                                        <ul>
-                                            <li class="#{currentMenuItem eq 'journalOverview' ? 'active' : ''}">
-                                                <a href="#{root}/pages/invoice/journalOverview.xhtml">Journaal</a>
-                                            </li>
-                                            <ui:fragment rendered="#{!vveAdministrationBean.selectedAdministration.canRenderStartBalance}">
-                                                <li class="#{currentMenuItem eq 'balanceOverview' ? 'active' : ''}">
-                                                    <a href="#{root}/pages/administration/balanceOverview.xhtml">Balans</a>
-                                                </li>
-                                            </ui:fragment>
-                                            <li>
-                                                <a href="#"><span class="menu-item-parent">Grootboek</span></a>
-                                                <ul>
-                                                    <li class="#{currentMenuItem eq 'generalLedgerAccount' ? 'active' : ''}">
-                                                        <a href="#{root}/pages/administration/entry/generalLedgerAccount.xhtml?isCompany=true">Per rekening</a>
-                                                    </li>
-                                                    <li class="#{currentMenuItem eq 'generalLedgerRelation' ? 'active' : ''}">
-                                                        <a href="#{root}/pages/administration/entry/generalLedgerRelation.xhtml?isCompany=true">Per relatie</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="#{currentMenuItem eq 'openItems' ? 'active' : ''}">
-                                                <a href="#{root}/pages/administration/openItems.xhtml">Open posten</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="#"><span class="menu-item-parent">Beheer</span></a>
-                                        <ul>
-                                            <ui:fragment rendered="#{vveAdministrationBean.selectedAdministration.canRenderStartBalance}">
-                                                <li class="#{currentMenuItem eq 'startingBalanceOverview' ? 'active' : ''}">
-                                                    <a href="#{root}/pages/administration/startingBalanceOverview.xhtml">Startbalans</a>
-                                                </li>
-                                            </ui:fragment>
-                                            <li class="#{currentMenuItem eq 'administrationSelection' ? 'active' : ''}">
-                                                <a href="#{root}/pages/administration/administrationSelection.xhtml">Boekjaren</a>
-                                            </li>
-                                            <li class="#{currentMenuItem eq 'createDefaultOffsetSchema' ? 'active' : ''}">
-                                                <a href="#{root}/pages/administration/offset/createDefaultOffsetSchema.xhtml">Standaard rekeningen</a>
-                                            </li> 
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ui:fragment>
-                        <ui:fragment rendered='#{userInfoBean.checkPermission("customer")}'>
-                            <li>
-                                <a href="#"><i class="fa fa-lg fa-fw fa-share-alt"></i> <span class="menu-item-parent">#{txt.RELATION}</span></a>
-                                <ul>
-                                    <li class="#{currentMenuItem eq 'customerOverview' ? 'active' : ''}">
-                                        <a href="#{root}/pages/customer/customerOverview.xhtml">Klanten</a>
-                                    </li>
-                                    <li class="#{currentMenuItem eq 'supplierOverview' ? 'active' : ''}">
-                                        <a href="#{root}/pages/supplier/supplierOverview.xhtml">#{txt.SUPPLIERS}</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ui:fragment>
-                        <ui:fragment rendered='#{userInfoBean.checkPermission("document")}'>
-                            <li class="#{currentMenuItem eq 'documentOverview' ? 'active' : ''}">
-                                <a href="#{root}/pages/document/documentOverview.xhtml"><i class="fa fa-lg fa-fw fa-files-o"/> <span class="menu-item-parent">Documenten</span></a>
-                            </li>
-                        </ui:fragment>
-
-                        <ui:fragment rendered="#{userInfoBean.checkPermission('user')}">
-                            <li class="#{currentMenuItem eq 'userOverview' ? 'active' : ''}">
-<!--                                <a jsf:action="#{leftMenuBean.noAccessWarning()}">
-                                    <i class="fa fa-lg fa-fw fa-users"/> <span class="menu-item-parent">Gebruikers</span>
-                                    <f:ajax execute="@this" rendered="@none"/>
-                                </a>-->
-                                <a href="#{root}/pages/user/userOverview.xhtml"><i class="fa fa-lg fa-fw fa-users"/> <span class="menu-item-parent">Gebruikers</span></a>
-                            </li>
-                        </ui:fragment>
-
-                        <ui:fragment rendered='#{userInfoBean.checkPermission("log")}'>
-                            <li class="#{currentMenuItem eq 'logs' ? 'active' : ''}">
-                                <a href="#{root}/pages/logs/logs.xhtml"><i class="fa fa-lg fa-fw fa-database"/> <span class="menu-item-parent">Logs</span></a>
-                            </li>
-                        </ui:fragment>
+                        <li>
+                            <a href="#"><i class="fa fa-lg fa-fw fa-home"/> <span class="menu-item-parent">Index</span></a>
+                            <ul>
+                                <li class="#{currentMenuItem eq 'dashboard' ? 'active' : ''}">
+                                    <a href="#{root}/index.xhtml">Index</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-lg fa-fw fa-car"/><span class="menu-item-parent">Auto</span></a>
+                            <ul>
+                                <li class="#{currentMenuItem eq 'vveOverview' ? 'active' : ''}">
+                                    <a href="#{root}/pages/vve/vveOverview.xhtml">Overzicht</a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
                 <span class="minifyme" data-action="minifyMenu"> 

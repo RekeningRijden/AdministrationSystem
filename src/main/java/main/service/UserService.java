@@ -1,11 +1,11 @@
-package service;
+package main.service;
 
 import java.io.Serializable;
 
 import javax.ejb.Stateless;
 
-import dao.UserDao;
 import domain.User;
+import main.dao.UserDao;
 
 /**
  * @author Sam

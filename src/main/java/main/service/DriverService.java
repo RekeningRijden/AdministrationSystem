@@ -1,11 +1,11 @@
-package service;
+package main.service;
 
 import java.io.Serializable;
 
 import javax.ejb.Stateless;
 
-import dao.DriverDao;
 import domain.Driver;
+import main.dao.DriverDao;
 
 /**
  * @author Sam

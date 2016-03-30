@@ -1,13 +1,11 @@
-package service;
+package main.service;
 
 import java.io.Serializable;
 
 import javax.ejb.Stateless;
 
-import dao.CarDao;
-import dao.UserDao;
+import main.dao.CarDao;
 import domain.Car;
-import domain.User;
 
 /**
  * @author Sam

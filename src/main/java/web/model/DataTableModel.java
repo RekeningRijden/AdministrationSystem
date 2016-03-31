@@ -1,21 +1,28 @@
 package web.model;
 
 import com.ceron.gatevvem.web.core.pagination.Paginator;
+import domain.IEntity;
 import main.dao.AbstractDao;
 import domain.enums.SortOrder;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Base implementation for dataTable beans that need filterable and sortable
- * dataTables with pagination.
+ * Base implementation for filterable and sortable dataTables with pagination.
+ * <p>
+ * A bean or model can extend this model to inherit pagination capabilities and
+ * only has to implement the abstract methods to deliver the data and this class
+ * takes care of the lifecycle.
  *
  * @param <ServiceType> used to store a DataSourceService
  * @param <EntityType> used to store a domain Entity
- * @autor Sam
+ * @author Sam
  */
-public abstract class DataTableModel<ServiceType extends AbstractDao, EntityType> extends Paginator {
+public abstract class DataTableModel<ServiceType extends AbstractDao<EntityType>, EntityType extends IEntity> extends Paginator {
 
+    /**
+     * List containing all the filtered, sorted and paginated data.
+     */
     private List<EntityType> displayedList;
 
     private String filter = "";
@@ -25,7 +32,7 @@ public abstract class DataTableModel<ServiceType extends AbstractDao, EntityType
     protected EntityType entityToRemove;
 
     /**
-     * @return get the service from a child Class.
+     * @return the service with database access.
      */
     protected abstract ServiceType getService();
 
@@ -50,17 +57,12 @@ public abstract class DataTableModel<ServiceType extends AbstractDao, EntityType
     protected abstract String getDefaultSort();
 
     /**
-     * Refresh the dataList the user can see, by re-applying filters, sorts and
+     * Refresh the data list the user can see, by re-applying filters, sorts and
      * pagination.
      *
-     * @param sortOn Map with the name of an EntityType as the Key, and a field
-     * of the given EntityType as the value.
+     * @param sortOn the database column name to sort on.
      */
     private void refreshList(String sortOn) {
-        if (displayedList == null) {
-            displayedList = new ArrayList<>();
-        }
-
         sortedOn = sortOn;
 
         displayedList.clear();
@@ -91,12 +93,16 @@ public abstract class DataTableModel<ServiceType extends AbstractDao, EntityType
      * @param entity EntityType to remove.
      */
     public void remove(EntityType entity) {
-        //TODO
-        //getService().remove(entity);
+        getService().remove(entity);
         refreshList(sortedOn);
     }
 
-    public void sort(String sortValue) {
+    /**
+     * Turn the sort order around an refresh the data list.
+     *
+     * @param sortValue the database column name to sort on.
+     */
+    protected void sort(String sortValue) {
         flipSortOrder();
         refreshList(sortValue);
     }
@@ -105,11 +111,11 @@ public abstract class DataTableModel<ServiceType extends AbstractDao, EntityType
         sortIsAscending = !sortIsAscending;
     }
 
-    public void forceRefresh() {
+    protected void forceRefresh() {
         refreshList(sortedOn);
     }
 
-    //<editor-fold defaultstate="open" desc="props">
+    //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
     /**
      * Get the data that passed all the filters.
      *
@@ -128,10 +134,6 @@ public abstract class DataTableModel<ServiceType extends AbstractDao, EntityType
         return displayedList;
     }
 
-    public void setDisplayedList(List<EntityType> displayedList) {
-        this.displayedList = displayedList;
-    }
-
     /**
      * @return True if next sort is Ascending, false if next sort is Descending.
      */
@@ -142,7 +144,7 @@ public abstract class DataTableModel<ServiceType extends AbstractDao, EntityType
     /**
      * @return SortOrder.TYPE based on the next sort.
      */
-    public SortOrder getSortOrder() {
+    protected SortOrder getSortOrder() {
         return sortIsAscending ? SortOrder.ASCENDING : SortOrder.DESCENDING;
     }
 
@@ -154,11 +156,11 @@ public abstract class DataTableModel<ServiceType extends AbstractDao, EntityType
     }
 
     public String getFilter() {
-        return filter.trim();
+        return filter;
     }
 
     public void setFilter(String filter) {
-        this.filter = filter;
+        this.filter = filter.trim();
     }
 
     /**
@@ -166,8 +168,7 @@ public abstract class DataTableModel<ServiceType extends AbstractDao, EntityType
      * paginated page if the current page is empty.
      */
     public void removeSelectedEntity() {
-        //TODO
-        //getService().remove(entityToRemove);
+        getService().remove(entityToRemove);
 
         if (getItemsPerPage() * (getCurrentPage() - 1) + 1 == getDataListTotalSize()) {
             setCurrentPage(getCurrentPage() - 1);
@@ -183,24 +184,6 @@ public abstract class DataTableModel<ServiceType extends AbstractDao, EntityType
      */
     public void setEntityToRemove(EntityType entity) {
         this.entityToRemove = entity;
-    }
-
-    /**
-     * Get the desired with for a button group containing action buttons like
-     * edit and remove based on the permissions to execute these actions.
-     *
-     * @param value1 Permission to use first button.
-     * @param value2 Permission to use second button.
-     * @return String with the width of the button group.
-     */
-    public static String getActionButtonGroupWidth(boolean value1, boolean value2) {
-        if (value1 && value2) {
-            return "45px";
-        } else if (value1 && !value2 || !value1 && value2) {
-            return "22px";
-        } else {
-            return "0px";
-        }
     }
 
     @Override

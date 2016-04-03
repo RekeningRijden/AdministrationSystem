@@ -46,4 +46,8 @@ public abstract class CarDao extends AbstractDao<Car> {
     private String getFilteredQueryString() {
         return " WHERE c.licencePlate LIKE :filter";
     }
+
+    public List<Car> getCarsFromDriverWithId(Long driverId) {
+        return getEntityManager().createNamedQuery("findAllCarsFromDriverWithId").setParameter("driverId", driverId).getResultList();
+    }
 }

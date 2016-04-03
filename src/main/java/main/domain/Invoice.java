@@ -1,10 +1,7 @@
 package main.domain;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -14,6 +11,7 @@ import main.domain.enums.PaymentStatus;
  * Created by Eric on 02-04-16.
  */
 @Entity
+@NamedQuery(name = "findAllInvoicesForUserWithId", query = "SELECT i FROM Invoice i WHERE i.cartrackerId = :cartrackerId")
 public class Invoice implements Serializable, IEntity {
 
     @Id
@@ -29,6 +27,8 @@ public class Invoice implements Serializable, IEntity {
     public Invoice() {
         this.paymentStatus = PaymentStatus.OPEN;
     }
+
+    //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
 
     public Long getId() {
         return id;
@@ -69,4 +69,6 @@ public class Invoice implements Serializable, IEntity {
     public void setTotalAmount(BigDecimal totalAmount) {
         this.totalAmount = totalAmount;
     }
+
+    //</editor-fold>
 }

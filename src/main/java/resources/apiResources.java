@@ -1,18 +1,15 @@
 package resources;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.persistence.PostRemove;
-import javax.print.attribute.standard.Media;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-
 import main.domain.Driver;
 import main.domain.Invoice;
 import main.domain.enums.PaymentStatus;
 import main.service.DriverService;
 import main.service.InvoiceService;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 

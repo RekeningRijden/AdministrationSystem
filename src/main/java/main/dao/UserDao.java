@@ -5,7 +5,7 @@
  */
 package main.dao;
 
-import domain.User;
+import main.domain.User;
 
 /**
  * @author Sam

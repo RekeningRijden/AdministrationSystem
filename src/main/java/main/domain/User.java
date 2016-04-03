@@ -1,4 +1,4 @@
-package domain;
+package main.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import domain.enums.Permission;
+import main.domain.enums.Permission;
 
 /**
  * @author Sam

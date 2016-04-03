@@ -8,8 +8,8 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
-import domain.IEntity;
-import domain.enums.SortOrder;
+import main.domain.IEntity;
+import main.domain.enums.SortOrder;
 
 /**
  * Base class for all persistence database actions.

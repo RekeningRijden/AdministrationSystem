@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.ejb.Stateless;
 
 import main.dao.CarDao;
-import domain.Car;
+import main.domain.Car;
 
 /**
  * @author Sam

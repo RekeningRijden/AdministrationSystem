@@ -6,7 +6,7 @@
 package web.beans.car;
 
 import com.ceron.gatevvem.web.core.helper.ContextHelper;
-import domain.Car;
+import main.domain.Car;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;

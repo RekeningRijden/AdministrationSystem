@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import javax.ejb.Stateless;
 
-import domain.Driver;
+import main.domain.Driver;
 import main.dao.DriverDao;
 
 /**

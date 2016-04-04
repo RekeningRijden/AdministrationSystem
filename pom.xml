@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.edr</groupId>
@@ -13,6 +13,14 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        
+        <db.serverName>localhost</db.serverName>
+        <db.portNumber>3306</db.portNumber>
+        <db.databaseName>administrationSystem</db.databaseName>
+        <db.user>root</db.user>
+        <db.password>marijn</db.password>
+        <db.url>jdbc:mysql://localhost:3306/administrationSystem</db.url>
+        <db.driverClass>com.mysql.jdbc.Driver</db.driverClass>
     </properties>
 
     <dependencyManagement>
@@ -62,6 +70,12 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/setup</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -114,6 +128,15 @@
     <profiles>
         <profile>
             <id>cargo-deploy</id>
+            <properties>
+                <db.serverName>mysql</db.serverName>
+                <db.portNumber>3306</db.portNumber>
+                <db.databaseName>administration</db.databaseName>
+                <db.user>root</db.user>
+                <db.password>s63a</db.password>
+                <db.url>jdbc:mysql://mysql:3306/administration</db.url>
+                <db.driverClass>com.mysql.jdbc.Driver</db.driverClass>
+            </properties>
             <pluginRepositories>
                 <pluginRepository>
                     <id>maven.java.net</id>

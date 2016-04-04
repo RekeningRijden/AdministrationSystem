@@ -54,12 +54,6 @@ public class ApiResources {
         return driverService.create(driver);
     }
 
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    public Invoice addNewInvoice(Invoice invoice) {
-        return (Invoice) invoiceService.create(invoice);
-    }
-
     /**
      * Gets a driver based on his id
      * @param driverId The id of the driver

@@ -5,7 +5,7 @@
  */
 package main.dao;
 
-import domain.Driver;
+import main.domain.Driver;
 
 /**
  * @author Sam

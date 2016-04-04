@@ -5,9 +5,8 @@
  */
 package main.dao;
 
-import main.dao.AbstractDao;
-import domain.Car;
-import domain.enums.SortOrder;
+import main.domain.Car;
+import main.domain.enums.SortOrder;
 import java.util.List;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -46,5 +45,9 @@ public abstract class CarDao extends AbstractDao<Car> {
     
     private String getFilteredQueryString() {
         return " WHERE c.licencePlate LIKE :filter";
+    }
+
+    public List<Car> getCarsFromDriverWithId(Long driverId) {
+        return getEntityManager().createNamedQuery("findAllCarsFromDriverWithId").setParameter("driverId", driverId).getResultList();
     }
 }

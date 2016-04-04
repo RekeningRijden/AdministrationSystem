@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package web.beans;
+package web.beans.car;
 
-import domain.Car;
+import main.domain.Car;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;

@@ -1,4 +1,4 @@
-package domain;
+package main.domain;
 
 /**
  * @author Sam

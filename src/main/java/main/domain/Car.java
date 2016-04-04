@@ -1,20 +1,16 @@
-package domain;
+package main.domain;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * @author Sam
  */
 @Entity
 @Table(name = "Car")
+@NamedQuery(name = "findAllCarsFromDriverWithId", query = "SELECT c FROM Car c WHERE c.driver.id = :driverId")
 public class Car implements Serializable, IEntity {
 
     @Id
@@ -24,13 +20,11 @@ public class Car implements Serializable, IEntity {
     private Long cartrackerId;
     private String licencePlate;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Driver driver;
 
     public Car() {
     }
-
-    
     
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
     public Long getId() {

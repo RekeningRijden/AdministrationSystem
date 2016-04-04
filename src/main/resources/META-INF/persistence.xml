@@ -5,8 +5,9 @@
     <class>main.domain.Address</class>
     <class>main.domain.Car</class>
     <class>main.domain.Driver</class>
+    <class>main.domain.Invoice</class>
     <class>main.domain.User</class>
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
     </properties>

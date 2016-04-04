@@ -20,7 +20,7 @@ public class Car implements Serializable, IEntity {
     private Long cartrackerId;
     private String licencePlate;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Driver driver;
 
     public Car() {

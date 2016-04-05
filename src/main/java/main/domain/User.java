@@ -18,7 +18,7 @@ import main.domain.enums.Permission;
  * @author Sam
  */
 @Entity
-@Table(name = "User")
+@Table(name = "Users")
 public class User implements Serializable, IEntity {
 
     @Id

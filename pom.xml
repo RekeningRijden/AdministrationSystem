@@ -21,6 +21,8 @@
         <db.password>marijn</db.password>
         <db.url>jdbc:mysql://localhost:3306/administrationSystem</db.url>
         <db.driverClass>com.mysql.jdbc.Driver</db.driverClass>
+        
+        <environment>development</environment>
     </properties>
 
     <dependencyManagement>
@@ -41,7 +43,6 @@
             <artifactId>primefaces</artifactId>
             <version>5.0</version>
         </dependency>
-
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
@@ -67,15 +68,24 @@
             <artifactId>wildfly-arquillian-container-remote</artifactId>
             <version>8.2.0.Final</version>
         </dependency>
+        s
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.34</version>
+        </dependency>
     </dependencies>
-
+       
     <build>
-        <resources>
+        <!--<resources>
             <resource>
-                <directory>src/main/setup</directory>
+                <directory>src/main/resources</directory>
                 <filtering>true</filtering>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
             </resource>
-        </resources>
+        </resources>-->
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -136,6 +146,7 @@
                 <db.password>s63a</db.password>
                 <db.url>jdbc:mysql://mysql:3306/administration</db.url>
                 <db.driverClass>com.mysql.jdbc.Driver</db.driverClass>
+                <environment>production</environment>
             </properties>
             <pluginRepositories>
                 <pluginRepository>

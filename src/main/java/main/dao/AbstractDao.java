@@ -19,7 +19,7 @@ import main.domain.enums.SortOrder;
  */
 public abstract class AbstractDao<EntityType extends IEntity> {
 
-    @PersistenceContext(name = "MovementPU")
+    @PersistenceContext(name = "AdministrationPoep")
     private EntityManager entityManager;
 
     /**

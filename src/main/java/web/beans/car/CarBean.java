@@ -6,6 +6,7 @@
 package web.beans.car;
 
 import com.ceron.gatevvem.web.core.helper.ContextHelper;
+import com.ceron.gatevvem.web.core.helper.FrontendHelper;
 import main.domain.Car;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
@@ -44,8 +45,10 @@ public class CarBean implements Serializable {
     public void save(){
         if(carService.hasBeenPersisted(car)){
             carService.update(car);
+            FrontendHelper.displaySuccessSmallBox("De auto is geupdate");
         }else{
             carService.create(car);
+            FrontendHelper.displaySuccessSmallBox("De auto is aangemaakt");
         }
     }
 

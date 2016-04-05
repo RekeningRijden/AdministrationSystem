@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import main.domain.Driver;
 import main.service.CarService;
 
 /**
@@ -35,6 +36,7 @@ public class CarBean implements Serializable {
                 car = carService.findById(carId);
             }else{
                 car = new Car();
+                car.setDriver(new Driver());
             }
         }
     }

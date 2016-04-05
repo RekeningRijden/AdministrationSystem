@@ -26,6 +26,7 @@ public class Car implements Serializable, IEntity {
     }
     
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
+    @Override
     public Long getId() {
         return id;
     }

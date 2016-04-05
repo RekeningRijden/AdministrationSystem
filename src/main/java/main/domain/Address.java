@@ -27,6 +27,7 @@ public class Address implements Serializable {
     private String country;
 
     public Address() {
+        // Empty constructor for JPA
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
@@ -80,26 +81,22 @@ public class Address implements Serializable {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="HashCode/Equals">
+
     @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 61 * hash + Objects.hashCode(this.id);
-        return hash;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Address address = (Address) o;
+
+        return id != null ? id.equals(address.id) : address.id == null;
+
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Address other = (Address) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
+
     //</editor-fold>
 }

@@ -3,7 +3,6 @@ package main.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -32,6 +31,7 @@ public class User implements Serializable, IEntity {
     private List<Permission> permissions;
 
     public User() {
+        // Empty constructor for JPA
     }
 
     public User(String username, String password) {
@@ -78,26 +78,21 @@ public class User implements Serializable, IEntity {
     //<editor-fold defaultstate="collapsed" desc="HashCode/Equals">
 
     @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 43 * hash + Objects.hashCode(this.id);
-        return hash;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        return id != null ? id.equals(user.id) : user.id == null;
+
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final User other = (User) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
+
 
     //</editor-fold>
 }

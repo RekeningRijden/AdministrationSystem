@@ -24,6 +24,7 @@ public class Car implements Serializable, IEntity {
     private Driver driver;
 
     public Car() {
+        // Empty constructor for JPA
     }
     
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
@@ -61,26 +62,22 @@ public class Car implements Serializable, IEntity {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="HashCode/Equals">
+
     @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.id);
-        return hash;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Car car = (Car) o;
+
+        return id != null ? id.equals(car.id) : car.id == null;
+
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Car other = (Car) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
+
     //</editor-fold>
 }

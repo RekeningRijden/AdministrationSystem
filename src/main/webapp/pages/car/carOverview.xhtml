@@ -64,6 +64,12 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="col-md-7 col-sm-6 col-xs-4">
+                                                    <h:outputLink class="btn btn-primary pull-right" value="car.xhtml">
+                                                        <i class="fa fa-plus"/>
+                                                        Toevoegen
+                                                    </h:outputLink>
+                                                </div>
                                             </div>
 
                                             <div class="row">
@@ -80,16 +86,16 @@
                                                                 <tr>
                                                                     <f:ajax execute="@form" render="@form">
                                                                         <th>
-                                                                            <h:commandLink value="id" action="#{carOverviewBean.sortById()}"/>
-                                                                            <h:commandLink  class="#{sortIsAscending ? 'fa fa-long-arrow-up' : 'fa fa-long-arrow-down'} pull-right" 
-                                                                                            action="#{carOverviewBean.sortById()}"
-                                                                                            rendered="#{sortedOn eq 'c.id'}"/>
-                                                                            <h:commandLink class="fa fa-arrows-v pull-right" 
-                                                                                           action="#{carOverviewBean.sortById()}"
-                                                                                           rendered="#{sortedOn != 'c.id'}"/>
+                                                                            Licence plate
                                                                         </th>
                                                                         <th>
-                                                                            Licence plate
+                                                                            <h:commandLink value="Driver" action="#{carOverviewBean.sortByDriver()}"/>
+                                                                            <h:commandLink  class="#{sortIsAscending ? 'fa fa-long-arrow-up' : 'fa fa-long-arrow-down'} pull-right" 
+                                                                                            action="#{carOverviewBean.sortByDriver()}"
+                                                                                            rendered="#{sortedOn eq 'd.lastName'}"/>
+                                                                            <h:commandLink class="fa fa-arrows-v pull-right" 
+                                                                                           action="#{carOverviewBean.sortByDriver()}"
+                                                                                           rendered="#{sortedOn != 'd.lastName'}"/>
                                                                         </th>
                                                                     </f:ajax>
                                                                 </tr>
@@ -100,13 +106,12 @@
                                                                         <td>
                                                                             <h:outputLink value="car.xhtml">
                                                                                 <f:param name="carId" value="#{item.id}"/>
-                                                                                <h:outputText value="#{item.id}" />  
+                                                                                <h:outputText value="#{item.licencePlate}" />  
                                                                             </h:outputLink>
                                                                         </td>
                                                                         <td>
-                                                                            <h:outputText value="#{item.licencePlate}" /> 
+                                                                            <h:outputText value="#{item.driver.getFullName()}" />
                                                                         </td>
-
                                                                     </tr>
                                                                 </ui:repeat>
                                                             </tbody>

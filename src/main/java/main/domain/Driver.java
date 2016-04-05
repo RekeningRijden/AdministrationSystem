@@ -62,6 +62,10 @@ public class Driver implements Serializable, IEntity {
     public void setAddress(Address address) {
         this.address = address;
     }
+    
+    public String getFullName(){
+        return firstName + " " + lastName;
+    }
 
     //</editor-fold>
 

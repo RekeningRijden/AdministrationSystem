@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE resources PUBLIC "-//GlassFish.org//DTD GlassFish Application Server 3.1 Resource Definitions//EN" "http://glassfish.org/dtds/glassfish-resources_1_5.dtd">
+<resources>
+    <jdbc-connection-pool allow-non-component-callers="false" associate-with-thread="false" connection-creation-retry-attempts="0" connection-creation-retry-interval-in-seconds="10" connection-leak-reclaim="false" connection-leak-timeout-in-seconds="0" connection-validation-method="auto-commit" datasource-classname="com.mysql.jdbc.jdbc2.optional.MysqlDataSource" fail-all-connections="false" idle-timeout-in-seconds="300" is-connection-validation-required="false" is-isolation-level-guaranteed="true" lazy-conn...(line truncated)...
+        <property name="serverName" value="localhost"/>
+        <property name="portNumber" value="3306"/>
+        <property name="databaseName" value="administrationSystem"/>
+        <property name="User" value="root"/>
+        <property name="Password" value="root"/>
+        <property name="URL" value="jdbc:mysql://localhost:3306/administrationSystem?zeroDateTimeBehavior=convertToNull"/>
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+    </jdbc-connection-pool>
+    <jdbc-resource enabled="true" jndi-name="AdministrationSystem" object-type="user" pool-name="mysql_administrationSystem_rootPool"/>
+</resources>

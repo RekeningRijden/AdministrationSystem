@@ -10,10 +10,6 @@
     <class>main.domain.User</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
-      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/administrationSystem?zeroDateTimeBehavior=convertToNull"/>
-      <property name="javax.persistence.jdbc.user" value="root"/>
-      <property name="javax.persistence.jdbc.password" value="marijn"/>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
       <property name="eclipselink.logging.level" value="FINE"/>
     </properties>

@@ -80,20 +80,18 @@ public class ApiResources {
 
     /**
      * Get a invoice based on the invoiceId (This only works if every invoice has an unique id, not an unique id per user)
-     * @param driverId The id of the driver
      * @param invoiceId The id of the invoice
      * @return The invoice belonging to the invoiceId
      */
     @GET
     @Path("/{userId}/invoices/{invoiceId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Invoice getInvoiceWithId(@PathParam("userId") Long driverId, @PathParam("invoiceId") Long invoiceId) {
+    public Invoice getInvoiceWithId(@PathParam("invoiceId") Long invoiceId) {
         return (Invoice) invoiceService.findById(invoiceId);
     }
 
     /**
      * Updates the PaymentStatus for a specific invoice
-     * @param driverId The id of the driver
      * @param invoiceId The id of the invoice
      * @param status The new status of the invoice
      * @return The invoice with the updated status
@@ -102,7 +100,7 @@ public class ApiResources {
     @Path("/{userId}/invoices/{invoiceId}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Invoice updateInvoicePaymentStatus(@PathParam("userId") Long driverId, @PathParam("invoiceId") Long invoiceId, PaymentStatus status) {
+    public Invoice updateInvoicePaymentStatus(@PathParam("invoiceId") Long invoiceId, PaymentStatus status) {
         Invoice invoice = (Invoice) invoiceService.findById(invoiceId);
         invoice.setPaymentStatus(status);
         invoiceService.update(invoice);

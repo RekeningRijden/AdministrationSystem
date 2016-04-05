@@ -1,15 +1,14 @@
 package main.dao;
 
-import java.util.List;
+import main.domain.IEntity;
+import main.domain.enums.SortOrder;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-
-import main.domain.IEntity;
-import main.domain.enums.SortOrder;
+import java.util.List;
 
 /**
  * Base class for all persistence database actions.

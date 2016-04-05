@@ -6,14 +6,15 @@
 package web.beans.car;
 
 import main.domain.Car;
-import java.io.Serializable;
-import java.util.List;
+import main.service.CarService;
+import web.model.DataTableModel;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import main.service.CarService;
-import web.model.DataTableModel;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  *

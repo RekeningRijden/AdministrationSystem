@@ -7,9 +7,10 @@ package main.dao;
 
 import main.domain.Car;
 import main.domain.enums.SortOrder;
-import java.util.List;
+
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.util.List;
 
 /**
  * @author Sam

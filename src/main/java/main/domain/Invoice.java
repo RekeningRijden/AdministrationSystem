@@ -1,11 +1,12 @@
 package main.domain;
 
 
+import main.domain.enums.PaymentStatus;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import main.domain.enums.PaymentStatus;
 
 /**
  * Created by Eric on 02-04-16.

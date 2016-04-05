@@ -8,13 +8,14 @@ package web.beans.car;
 import com.ceron.gatevvem.web.core.helper.ContextHelper;
 import com.ceron.gatevvem.web.core.helper.FrontendHelper;
 import main.domain.Car;
-import java.io.Serializable;
+import main.domain.Driver;
+import main.service.CarService;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import main.domain.Driver;
-import main.service.CarService;
+import java.io.Serializable;
 
 /**
  *

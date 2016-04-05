@@ -1,11 +1,10 @@
 package main.service;
 
-import java.io.Serializable;
+import main.dao.DriverDao;
+import main.domain.Driver;
 
 import javax.ejb.Stateless;
-
-import main.domain.Driver;
-import main.dao.DriverDao;
+import java.io.Serializable;
 
 /**
  * @author Sam

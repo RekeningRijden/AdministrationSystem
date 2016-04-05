@@ -1,9 +1,10 @@
 package web.model;
 
 import com.ceron.gatevvem.web.core.pagination.Paginator;
-import main.domain.IEntity;
 import main.dao.AbstractDao;
+import main.domain.IEntity;
 import main.domain.enums.SortOrder;
+
 import java.util.ArrayList;
 import java.util.List;
 

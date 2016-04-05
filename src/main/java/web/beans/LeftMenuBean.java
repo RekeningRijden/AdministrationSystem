@@ -1,11 +1,10 @@
 package web.beans;
 
 
-
-import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.inject.Named;
+import java.io.Serializable;
 
 /**
  *

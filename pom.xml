@@ -68,7 +68,7 @@
             <artifactId>wildfly-arquillian-container-remote</artifactId>
             <version>8.2.0.Final</version>
         </dependency>
-        s
+        
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>

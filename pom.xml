@@ -13,16 +13,6 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        
-        <db.serverName>localhost</db.serverName>
-        <db.portNumber>3306</db.portNumber>
-        <db.databaseName>administrationSystem</db.databaseName>
-        <db.user>root</db.user>
-        <db.password>marijn</db.password>
-        <db.url>jdbc:mysql://localhost:3306/administrationSystem</db.url>
-        <db.driverClass>com.mysql.jdbc.Driver</db.driverClass>
-        
-        <environment>development</environment>
     </properties>
 
     <dependencyManagement>
@@ -139,16 +129,6 @@
     <profiles>
         <profile>
             <id>cargo-deploy</id>
-            <properties>
-                <db.serverName>mysql</db.serverName>
-                <db.portNumber>3306</db.portNumber>
-                <db.databaseName>administration</db.databaseName>
-                <db.user>root</db.user>
-                <db.password>s63a</db.password>
-                <db.url>jdbc:mysql://mysql:3306/administration</db.url>
-                <db.driverClass>com.mysql.jdbc.Driver</db.driverClass>
-                <environment>production</environment>
-            </properties>
             <pluginRepositories>
                 <pluginRepository>
                     <id>maven.java.net</id>

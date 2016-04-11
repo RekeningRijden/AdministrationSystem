@@ -1,14 +1,18 @@
 package main.domain;
 
 import javax.persistence.*;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Sam
  */
 @Entity
 @Table(name = "Car")
-@NamedQuery(name = "findAllCarsFromDriverWithId", query = "SELECT c FROM Car c WHERE c.driver.id = :driverId")
+@NamedQuery(name = "findAllCarsFromDriverWithId", query = "SELECT o.car FROM Ownership o WHERE o.driver.id = :driverId")
 public class Car implements Serializable, IEntity {
 
     @Id
@@ -18,13 +22,13 @@ public class Car implements Serializable, IEntity {
     private Long cartrackerId;
     private String licencePlate;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Driver driver;
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
+    private List<Ownership> ownerships;
 
     public Car() {
-        // Empty constructor for JPA
+        this.ownerships = new ArrayList<>();
     }
-    
+
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
     @Override
     public Long getId() {
@@ -51,31 +55,37 @@ public class Car implements Serializable, IEntity {
         this.licencePlate = licencePlate;
     }
 
-    public Driver getDriver() {
-        return driver;
+    public List<Ownership> getOwnerships() {
+        return ownerships;
     }
 
-    public void setDriver(Driver driver) {
-        this.driver = driver;
+    public void setOwnerships(List<Ownership> ownerships) {
+        this.ownerships = ownerships;
     }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="HashCode/Equals">
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Car car = (Car) o;
-
-        return id != null ? id.equals(car.id) : car.id == null;
-
+    public int hashCode() {
+        int hash = 5;
+        hash = 89 * hash + Objects.hashCode(this.id);
+        return hash;
     }
 
     @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Car other = (Car) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
 
     //</editor-fold>

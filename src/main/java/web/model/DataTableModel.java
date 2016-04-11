@@ -1,12 +1,12 @@
 package web.model;
 
-import com.ceron.gatevvem.web.core.pagination.Paginator;
+import java.util.ArrayList;
+import java.util.List;
+
 import main.dao.AbstractDao;
 import main.domain.IEntity;
 import main.domain.enums.SortOrder;
-
-import java.util.ArrayList;
-import java.util.List;
+import web.core.pagination.Paginator;
 
 /**
  * Base implementation for filterable and sortable dataTables with pagination.
@@ -15,27 +15,27 @@ import java.util.List;
  * only has to implement the abstract methods to deliver the data and this class
  * takes care of the lifecycle.
  *
- * @param <ServiceType> used to store a DataSourceService
- * @param <EntityType> used to store a domain Entity
+ * @param <S> used to store a DataSourceService
+ * @param <T>  used to store a domain Entity
  * @author Sam
  */
-public abstract class DataTableModel<ServiceType extends AbstractDao<EntityType>, EntityType extends IEntity> extends Paginator {
+public abstract class DataTableModel<S extends AbstractDao<T>, T extends IEntity> extends Paginator {
 
     /**
      * List containing all the filtered, sorted and paginated data.
      */
-    private List<EntityType> displayedList;
+    private List<T> displayedList;
 
     private String filter = "";
     private String sortedOn = "";
     private boolean sortIsAscending = true;
 
-    protected EntityType entityToRemove;
+    protected T entityToRemove;
 
     /**
      * @return the service with database access.
      */
-    protected abstract ServiceType getService();
+    protected abstract S getService();
 
     /**
      * Get data of a certain entityType from the database. This data request can
@@ -43,7 +43,7 @@ public abstract class DataTableModel<ServiceType extends AbstractDao<EntityType>
      *
      * @return List with the found data from the database.
      */
-    protected abstract List<EntityType> getData();
+    protected abstract List<T> getData();
 
     /**
      * @return The number of rows returned form a database query.
@@ -93,7 +93,7 @@ public abstract class DataTableModel<ServiceType extends AbstractDao<EntityType>
      *
      * @param entity EntityType to remove.
      */
-    public void remove(EntityType entity) {
+    public void remove(T entity) {
         getService().remove(entity);
         refreshList(sortedOn);
     }
@@ -117,12 +117,13 @@ public abstract class DataTableModel<ServiceType extends AbstractDao<EntityType>
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
+
     /**
      * Get the data that passed all the filters.
      *
      * @return The final list with data.
      */
-    public List<EntityType> getDisplayedList() {
+    public List<T> getDisplayedList() {
         if (displayedList == null) {
             displayedList = new ArrayList<>();
 
@@ -183,7 +184,7 @@ public abstract class DataTableModel<ServiceType extends AbstractDao<EntityType>
      *
      * @param entity The entity which might get removed
      */
-    public void setEntityToRemove(EntityType entity) {
+    public void setEntityToRemove(T entity) {
         this.entityToRemove = entity;
     }
 

@@ -13,22 +13,21 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
 import java.io.Serializable;
 import java.util.List;
 
 /**
- *
  * @author maikel
  */
 @ManagedBean
 @Named
 @ViewScoped
-public class CarOverviewBean extends DataTableModel<CarService, Car> implements Serializable{
-    
+public class CarOverviewBean extends DataTableModel<CarService, Car> implements Serializable {
+
     @Inject
     private CarService carService;
 
-    
     @Override
     protected CarService getService() {
         return carService;
@@ -48,13 +47,12 @@ public class CarOverviewBean extends DataTableModel<CarService, Car> implements 
     protected String getDefaultSort() {
         return "c.id";
     }
-    
+
     public void sortById() {
         sort("c.id");
     }
-    
+
     public void sortByDriver() {
         sort("d.lastName");
     }
-    
 }

@@ -1,4 +1,4 @@
-package com.ceron.gatevvem.web.core.pagination;
+package web.core.pagination;
 
 /**
  * @author Sam
@@ -205,7 +205,7 @@ public abstract class Paginator {
      * number.
      */
     public boolean isButtonCurrentPage(int buttonNumber) {
-        int displayedButtonNumber = 0;
+        int displayedButtonNumber;
 
         switch (buttonNumber) {
             case 1:
@@ -222,6 +222,9 @@ public abstract class Paginator {
                 break;
             case 5:
                 displayedButtonNumber = getFifthButtonNumber();
+                break;
+            default:
+                displayedButtonNumber = 0;
                 break;
         }
 

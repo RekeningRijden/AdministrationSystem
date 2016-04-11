@@ -10,6 +10,7 @@ import main.domain.enums.SortOrder;
 
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ import java.util.List;
 public abstract class CarDao extends AbstractDao<Car> {
 
     public List<Car> getSortedFilteredAndPaged(int first, int pageSize,
-            String sortValue, SortOrder sortOrder, String filter) {
+                                               String sortValue, SortOrder sortOrder, String filter) {
 
         String queryString = "FROM Car c LEFT JOIN c.driver d";
         queryString += filter.isEmpty() ? "" : getFilteredQueryString();
@@ -43,12 +44,14 @@ public abstract class CarDao extends AbstractDao<Car> {
 
         return (int) (long) query.getSingleResult();
     }
-    
+
     private String getFilteredQueryString() {
         return " WHERE c.licencePlate LIKE :filter OR d.lastName LIKE :filter";
     }
 
     public List<Car> getCarsFromDriverWithId(Long driverId) {
-        return getEntityManager().createNamedQuery("findAllCarsFromDriverWithId").setParameter("driverId", driverId).getResultList();
+        return getEntityManager().createNamedQuery("findAllCarsFromDriverWithId", Car.class)
+                .setParameter("driverId", driverId)
+                .getResultList();
     }
 }

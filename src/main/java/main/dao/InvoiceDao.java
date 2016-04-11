@@ -7,14 +7,17 @@ import java.util.List;
 /**
  * Created by Eric on 03-04-16.
  */
-public abstract class InvoiceDao extends AbstractDao {
+public abstract class InvoiceDao extends AbstractDao<Invoice> {
 
     /**
      * Get all invoices belonging to a cartracker
+     *
      * @param cartrackerId The id of the cartracker
      * @return All invoices belonging to a cartracker
      */
     public List<Invoice> getInvoicesForCartrackerWithId(Long cartrackerId) {
-        return getEntityManager().createNamedQuery("findAllInvoicesForUserWithId").setParameter("cartrackerId", cartrackerId).getResultList();
+        return getEntityManager().createNamedQuery("findAllInvoicesForUserWithId", Invoice.class)
+                .setParameter("cartrackerId", cartrackerId)
+                .getResultList();
     }
 }

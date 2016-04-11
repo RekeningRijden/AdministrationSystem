@@ -1,7 +1,8 @@
-package com.ceron.gatevvem.web.core.helper;
+package web.core.helpers;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -9,7 +10,11 @@ import java.util.logging.Logger;
 /**
  * @author Bas
  */
-public class RedirectHelper {
+public final class RedirectHelper {
+
+    private RedirectHelper() {
+        //Utility class constructor cannot be called
+    }
 
     public static void redirect(String relativeUrl) {
         redirect(relativeUrl, true);

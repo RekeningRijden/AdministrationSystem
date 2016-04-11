@@ -5,20 +5,21 @@
  */
 package web.beans.car;
 
-import com.ceron.gatevvem.web.core.helper.ContextHelper;
-import com.ceron.gatevvem.web.core.helper.FrontendHelper;
 import main.domain.Car;
 import main.domain.Driver;
+import main.domain.Ownership;
 import main.service.CarService;
+import web.core.helpers.ContextHelper;
+import web.core.helpers.FrontendHelper;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
 import java.io.Serializable;
 
 /**
- *
  * @author maikel
  */
 @ManagedBean
@@ -36,18 +37,23 @@ public class CarBean implements Serializable {
         if (!ContextHelper.isAjaxRequest()) {
             if (carId != null) {
                 car = carService.findById(carId);
-            }else{
+            } else {
                 car = new Car();
-                car.setDriver(new Driver());
+
+                Ownership ownership = new Ownership();
+                ownership.setDriver(new Driver());
+                ownership.setCar(car);
+
+                car.getOwnerships().add(ownership);
             }
         }
     }
-    
-    public void save(){
-        if(carService.hasBeenPersisted(car)){
+
+    public void save() {
+        if (carService.hasBeenPersisted(car)) {
             carService.update(car);
             FrontendHelper.displaySuccessSmallBox("De auto is geupdate");
-        }else{
+        } else {
             carService.create(car);
             FrontendHelper.displaySuccessSmallBox("De auto is aangemaakt");
         }
@@ -70,5 +76,4 @@ public class CarBean implements Serializable {
         this.car = car;
     }
     //</editor-fold>    
-
 }

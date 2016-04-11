@@ -6,6 +6,7 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -20,11 +21,16 @@ public class CarTest {
     @Deployment
     public static Archive<?> createDeployment() {
         WebArchive jar = ShrinkWrap.create(WebArchive.class)
-                .addPackages(true, "dao", "domain", "org.netbeans.rest.application.config", "resources", "service")
+                .addPackages(true, "main", "org.netbeans.rest.application.config", "resources", "web")
                 .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 
         System.out.println(jar.toString(true));
         return jar;
+    }
+
+    @Test
+    public void lel(){
+
     }
 }

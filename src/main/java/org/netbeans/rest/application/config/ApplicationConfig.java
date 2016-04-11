@@ -6,10 +6,10 @@
 package org.netbeans.rest.application.config;
 
 import javax.ws.rs.core.Application;
+
 import java.util.Set;
 
 /**
- *
  * @author Eric
  */
 @javax.ws.rs.ApplicationPath("api")
@@ -31,5 +31,4 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(resources.ApiResources.class);
     }
-    
 }

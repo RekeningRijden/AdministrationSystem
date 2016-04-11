@@ -4,6 +4,7 @@ import main.dao.UserDao;
 import main.domain.User;
 
 import javax.ejb.Stateless;
+
 import java.io.Serializable;
 
 /**

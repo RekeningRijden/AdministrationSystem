@@ -1,14 +1,17 @@
 package main.domain;
 
 import javax.persistence.*;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Sam
  */
 @Entity
 @Table(name = "Car")
-@NamedQuery(name = "findAllCarsFromDriverWithId", query = "SELECT c FROM Car c WHERE c.driver.id = :driverId")
+@NamedQuery(name = "findAllCarsFromDriverWithId", query = "SELECT o.car FROM Ownership o WHERE o.driver.id = :driverId")
 public class Car implements Serializable, IEntity {
 
     @Id
@@ -18,13 +21,13 @@ public class Car implements Serializable, IEntity {
     private Long cartrackerId;
     private String licencePlate;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Driver driver;
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
+    private List<Ownership> ownerships;
 
     public Car() {
-        // Empty constructor for JPA
+        this.ownerships = new ArrayList<>();
     }
-    
+
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
     @Override
     public Long getId() {
@@ -51,12 +54,12 @@ public class Car implements Serializable, IEntity {
         this.licencePlate = licencePlate;
     }
 
-    public Driver getDriver() {
-        return driver;
+    public List<Ownership> getOwnerships() {
+        return ownerships;
     }
 
-    public void setDriver(Driver driver) {
-        this.driver = driver;
+    public void setOwnerships(List<Ownership> ownerships) {
+        this.ownerships = ownerships;
     }
     //</editor-fold>
 
@@ -70,7 +73,6 @@ public class Car implements Serializable, IEntity {
         Car car = (Car) o;
 
         return id != null ? id.equals(car.id) : car.id == null;
-
     }
 
     @Override

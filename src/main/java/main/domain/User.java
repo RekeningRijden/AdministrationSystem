@@ -3,6 +3,7 @@ package main.domain;
 import main.domain.enums.Permission;
 
 import javax.persistence.*;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,14 +26,13 @@ public class User implements Serializable, IEntity {
     private List<Permission> permissions;
 
     public User() {
-        // Empty constructor for JPA
+        permissions = new ArrayList<>();
     }
 
     public User(String username, String password) {
+        this();
         this.username = username;
         this.password = password;
-
-        this.permissions = new ArrayList<>();
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
@@ -80,14 +80,12 @@ public class User implements Serializable, IEntity {
         User user = (User) o;
 
         return id != null ? id.equals(user.id) : user.id == null;
-
     }
 
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
     }
-
 
     //</editor-fold>
 }

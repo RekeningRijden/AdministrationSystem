@@ -10,8 +10,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.List;
 
+import java.util.List;
 
 /**
  * Created by Eric on 02-04-16.
@@ -45,6 +45,7 @@ public class ApiResources {
 
     /**
      * For testing purposes only
+     *
      * @param driver The new Driver
      * @return The newly created Driver
      */
@@ -56,6 +57,7 @@ public class ApiResources {
 
     /**
      * Gets a driver based on his id
+     *
      * @param driverId The id of the driver
      * @return The driver with the corresponding id
      */
@@ -68,6 +70,7 @@ public class ApiResources {
 
     /**
      * Gets all invoices from a driver based on his id
+     *
      * @param driverId The id of the driver
      * @return The invoices belonging to the driver
      */
@@ -80,6 +83,7 @@ public class ApiResources {
 
     /**
      * Get a invoice based on the invoiceId (This only works if every invoice has an unique id, not an unique id per user)
+     *
      * @param invoiceId The id of the invoice
      * @return The invoice belonging to the invoiceId
      */
@@ -87,13 +91,14 @@ public class ApiResources {
     @Path("/{userId}/invoices/{invoiceId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Invoice getInvoiceWithId(@PathParam("invoiceId") Long invoiceId) {
-        return (Invoice) invoiceService.findById(invoiceId);
+        return invoiceService.findById(invoiceId);
     }
 
     /**
      * Updates the PaymentStatus for a specific invoice
+     *
      * @param invoiceId The id of the invoice
-     * @param status The new status of the invoice
+     * @param status    The new status of the invoice
      * @return The invoice with the updated status
      */
     @PUT
@@ -101,10 +106,9 @@ public class ApiResources {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Invoice updateInvoicePaymentStatus(@PathParam("invoiceId") Long invoiceId, PaymentStatus status) {
-        Invoice invoice = (Invoice) invoiceService.findById(invoiceId);
+        Invoice invoice = invoiceService.findById(invoiceId);
         invoice.setPaymentStatus(status);
         invoiceService.update(invoice);
         return invoice;
     }
-
 }

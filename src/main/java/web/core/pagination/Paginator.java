@@ -1,4 +1,4 @@
-package com.ceron.gatevvem.web.core.pagination;
+package web.core.pagination;
 
 /**
  * @author Sam

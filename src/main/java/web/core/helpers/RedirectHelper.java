@@ -1,7 +1,8 @@
-package com.ceron.gatevvem.web.core.helper;
+package web.core.helpers;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -6,6 +6,7 @@ import main.domain.Invoice;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class InvoiceService extends InvoiceDao implements Serializable {
 
     /**
      * Gets all invoices from all cars of a driver
+     *
      * @param driverId The id of the driver
      * @return All invoices for a driver
      */

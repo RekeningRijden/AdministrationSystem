@@ -1,12 +1,12 @@
 package web.model;
 
-import com.ceron.gatevvem.web.core.pagination.Paginator;
+import java.util.ArrayList;
+import java.util.List;
+
 import main.dao.AbstractDao;
 import main.domain.IEntity;
 import main.domain.enums.SortOrder;
-
-import java.util.ArrayList;
-import java.util.List;
+import web.core.pagination.Paginator;
 
 /**
  * Base implementation for filterable and sortable dataTables with pagination.
@@ -16,7 +16,7 @@ import java.util.List;
  * takes care of the lifecycle.
  *
  * @param <ServiceType> used to store a DataSourceService
- * @param <EntityType> used to store a domain Entity
+ * @param <EntityType>  used to store a domain Entity
  * @author Sam
  */
 public abstract class DataTableModel<ServiceType extends AbstractDao<EntityType>, EntityType extends IEntity> extends Paginator {
@@ -117,6 +117,7 @@ public abstract class DataTableModel<ServiceType extends AbstractDao<EntityType>
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
+
     /**
      * Get the data that passed all the filters.
      *

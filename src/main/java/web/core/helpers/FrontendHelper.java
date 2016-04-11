@@ -1,4 +1,4 @@
-package com.ceron.gatevvem.web.core.helper;
+package web.core.helpers;
 
 import org.primefaces.context.RequestContext;
 

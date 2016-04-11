@@ -1,7 +1,17 @@
 package main.domain;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  * @author Sam
@@ -20,8 +30,11 @@ public class Driver implements Serializable, IEntity {
     @OneToOne
     private Address address;
 
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
+    private List<Ownership> ownerships;
+
     public Driver() {
-        // Empty constructor for JPA
+        this.ownerships = new ArrayList<>();
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
@@ -57,9 +70,17 @@ public class Driver implements Serializable, IEntity {
     public void setAddress(Address address) {
         this.address = address;
     }
-    
-    public String getFullName(){
+
+    public String getFullName() {
         return firstName + " " + lastName;
+    }
+
+    public List<Ownership> getOwnerships() {
+        return ownerships;
+    }
+
+    public void setOwnerships(List<Ownership> ownerships) {
+        this.ownerships = ownerships;
     }
 
     //</editor-fold>
@@ -74,14 +95,12 @@ public class Driver implements Serializable, IEntity {
         Driver driver = (Driver) o;
 
         return id != null ? id.equals(driver.id) : driver.id == null;
-
     }
 
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
     }
-
 
     //</editor-fold>
 }

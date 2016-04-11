@@ -5,6 +5,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Sam
@@ -66,18 +67,25 @@ public class Car implements Serializable, IEntity {
     //<editor-fold defaultstate="collapsed" desc="HashCode/Equals">
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Car car = (Car) o;
-
-        return id != null ? id.equals(car.id) : car.id == null;
+    public int hashCode() {
+        int hash = 5;
+        hash = 89 * hash + Objects.hashCode(this.id);
+        return hash;
     }
 
     @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Car other = (Car) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
 
     //</editor-fold>

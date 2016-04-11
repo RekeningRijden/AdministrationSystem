@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Sam
@@ -73,18 +74,25 @@ public class User implements Serializable, IEntity {
     //<editor-fold defaultstate="collapsed" desc="HashCode/Equals">
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        User user = (User) o;
-
-        return id != null ? id.equals(user.id) : user.id == null;
+    public int hashCode() {
+        int hash = 5;
+        hash = 79 * hash + Objects.hashCode(this.id);
+        return hash;
     }
 
     @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final User other = (User) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
 
     //</editor-fold>

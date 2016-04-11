@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Created by Eric on 02-04-16.
@@ -78,19 +79,27 @@ public class Invoice implements Serializable, IEntity {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="HashCode/Equals">
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Invoice invoice = (Invoice) o;
-
-        return id != null ? id.equals(invoice.id) : invoice.id == null;
-    }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Invoice other = (Invoice) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
 
     //</editor-fold>

@@ -10,7 +10,11 @@ import java.util.logging.Logger;
 /**
  * @author Bas
  */
-public class RedirectHelper {
+public final class RedirectHelper {
+
+    private RedirectHelper() {
+        //Utility class constructor cannot be called
+    }
 
     public static void redirect(String relativeUrl) {
         redirect(relativeUrl, true);

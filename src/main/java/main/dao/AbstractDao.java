@@ -14,10 +14,10 @@ import java.util.List;
 /**
  * Base class for all persistence database actions.
  *
- * @param <EntityType> The database entity class type used for all operations
+ * @param <T> The database entity class type used for all operations
  * @author Sam
  */
-public abstract class AbstractDao<EntityType extends IEntity> {
+public abstract class AbstractDao<T extends IEntity> {
 
     @PersistenceContext(name = "AdministrationPoep")
     private EntityManager entityManager;
@@ -25,22 +25,22 @@ public abstract class AbstractDao<EntityType extends IEntity> {
     /**
      * @return Entity Type for all operations.
      */
-    protected abstract Class<EntityType> getEntityClass();
+    protected abstract Class<T> getEntityClass();
 
     protected EntityManager getEntityManager() {
         return entityManager;
     }
 
-    public EntityType create(EntityType entity) {
+    public T create(T entity) {
         entityManager.persist(entity);
         return entity;
     }
 
-    public EntityType update(EntityType entity) {
+    public T update(T entity) {
         return entityManager.merge(entity);
     }
 
-    public void remove(EntityType entity) {
+    public void remove(T entity) {
         entityManager.remove(entityManager.merge(entity));
     }
 
@@ -52,23 +52,23 @@ public abstract class AbstractDao<EntityType extends IEntity> {
         return entityManager.createNamedQuery(getEntityClass() + ".count", getEntityClass()).getResultList().size();
     }
 
-    public EntityType findById(Object id) {
+    public T findById(Object id) {
         return entityManager.find(getEntityClass(), id);
     }
 
-    public boolean hasBeenPersisted(EntityType entity) {
+    public boolean hasBeenPersisted(T entity) {
         return entity.getId() != null;
     }
 
     /**
      * @return all results from a Entity Type table.
      */
-    public List<EntityType> getAll() {
+    public List<T> getAll() {
         CriteriaBuilder qb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<EntityType> c = qb.createQuery(getEntityClass());
+        CriteriaQuery<T> c = qb.createQuery(getEntityClass());
         c.from(getEntityClass());
 
-        TypedQuery<EntityType> query = entityManager.createQuery(c);
+        TypedQuery<T> query = entityManager.createQuery(c);
         return query.getResultList();
     }
 
@@ -90,7 +90,7 @@ public abstract class AbstractDao<EntityType extends IEntity> {
      * @return one result from a executed TypedQuery. This method avoids
      * possible NoResultExceptions being thrown.
      */
-    protected EntityType oneResult(TypedQuery<EntityType> q) {
+    protected T oneResult(TypedQuery<T> q) {
         q.setMaxResults(1);
         return q.getResultList().isEmpty()
                 ? null : q.getResultList().get(0);

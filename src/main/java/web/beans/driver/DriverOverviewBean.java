@@ -15,7 +15,7 @@ import javax.inject.Named;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.faces.view.ViewScoped;
+import javax.enterprise.context.SessionScoped;
 import main.domain.Driver;
 import main.service.DriverService;
 
@@ -24,7 +24,7 @@ import main.service.DriverService;
  */
 @ManagedBean
 @Named
-@ViewScoped
+@SessionScoped
 public class DriverOverviewBean extends DataTableModel<DriverService, Driver> implements Serializable {
 
     @Inject

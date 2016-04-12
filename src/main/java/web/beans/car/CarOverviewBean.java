@@ -15,14 +15,14 @@ import javax.inject.Named;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.faces.view.ViewScoped;
+import javax.enterprise.context.SessionScoped;
 
 /**
  * @author maikel
  */
 @ManagedBean
 @Named
-@ViewScoped
+@SessionScoped
 public class CarOverviewBean extends DataTableModel<CarService, Car> implements Serializable {
 
     @Inject

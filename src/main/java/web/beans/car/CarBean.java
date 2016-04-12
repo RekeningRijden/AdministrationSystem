@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 
 import main.service.DriverService;
 
@@ -31,7 +31,7 @@ import main.service.DriverService;
  */
 @ManagedBean
 @Named
-@SessionScoped
+@ViewScoped
 public class CarBean implements Serializable {
 
     @Inject

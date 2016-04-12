@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      >
+
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
 
     <ui:composition template="../../templates/main.xhtml">
 
@@ -81,6 +82,13 @@
                                     <header>
                                         <span class="widget-icon"> <i class="fa fa-table"/> </span>
                                         <h2>History</h2>
+                                        <div class="widget-toolbar" role="menu">
+                                            <h:commandLink class="btn btn-primary" onclick="$('#newDriverModal').modal('show')" action="#{carBean.updateDriver()}">
+                                                <i class="fa fa-check"/>
+                                                <f:ajax render="@none" execute="@this"/>
+                                                New driver
+                                            </h:commandLink>
+                                        </div>
                                     </header>
                                     <div>
                                         <div class="jarviswidget-editbox">
@@ -112,17 +120,20 @@
                                                                             </h:outputText>
                                                                         </td>
                                                                         <td>
-                                                                            <h:panelGroup rendered="#{carBean.carId eq null}">
+                                                                            <h:panelGroup rendered="#{ownership.endDate eq null}">
                                                                                 <h:outputText value="Current driver"/>
                                                                             </h:panelGroup>
-                                                                            <h:panelGroup rendered="#{carBean.carId ne null}">
+                                                                            <h:panelGroup rendered="#{ownership.endDate ne null}">
                                                                                 <h:outputText value="#{ownership.endDate}" >  
                                                                                     <f:convertDateTime pattern="dd-MM-yyyy" />
                                                                                 </h:outputText>
                                                                             </h:panelGroup>
                                                                         </td>
                                                                         <td>
-                                                                            <h:outputText value="#{ownership.driver.fullName}"/>
+                                                                            <h:outputLink value="../driver/driver.xhtml">
+                                                                                <f:param name="driverId" value="#{ownership.driver.id}"/>
+                                                                                <h:outputText value="#{ownership.driver.fullName}" />  
+                                                                            </h:outputLink>
                                                                         </td>
                                                                     </tr>
                                                                 </ui:repeat>
@@ -138,6 +149,45 @@
                         </div>
                     </section>
                 </h:form>
+            </div>
+            <div class="modal fade" id="newDriverModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <a class="close" onclick="$('#newDriverModal').modal('hide')">
+                                x
+                            </a>
+                            <h4>New driver</h4>
+                        </div>
+                        <div class="modal-body">
+                            <h:form id="modal-form-1">
+                                <h:messages id="msgs" class="text-danger"/>
+                                <fieldset>
+                                    <div class="row">
+                                        <section class="col-xs-12">
+                                            <div class="form-group">
+                                                <label class="control-label">Driver</label>
+                                                <h:selectOneMenu class="form-control" value="#{carBean.selectedDriver}">
+                                                    <f:converter converterId="driverConverter"/>
+                                                    <f:selectItems value="#{carBean.drivers}" var="driver" itemLabel="#{driver.fullName}" itemValue="#{driver}"/>  
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </section>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" jsf:action="#{carBean.saveDriver()}">
+                                        <i class="fa fa-check"/>
+                                        Opslaan
+                                        <f:ajax execute="@form" render=":form msgs"/>
+                                    </button>
+                                    <h:commandLink class="btn btn-default" onclick="$('#newDriverModal').modal('hide')">
+                                        #{txt.CANCEL}
+                                        <f:ajax execute="@this" render="@none"/>
+                                    </h:commandLink>
+                                </fieldset>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </ui:define>
     </ui:composition>

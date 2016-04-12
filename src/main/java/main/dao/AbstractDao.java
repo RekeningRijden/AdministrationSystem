@@ -19,7 +19,7 @@ import java.util.List;
  */
 public abstract class AbstractDao<T extends IEntity> {
 
-    @PersistenceContext(name = "AdministrationPoep")
+    @PersistenceContext(name = "AdministrationPu")
     private EntityManager entityManager;
 
     /**

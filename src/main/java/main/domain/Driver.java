@@ -28,7 +28,7 @@ public class Driver implements Serializable, IEntity {
     private String firstName;
     private String lastName;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 
     @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)

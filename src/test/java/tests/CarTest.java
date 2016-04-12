@@ -40,7 +40,7 @@ public class CarTest {
         //Create car and check if certain values that must not be null are not null.
         Car car = new Car();
 
-        Assert.assertNotNull("List of car ownerships is not instantiated", car.getOwnerships());
+        Assert.assertNotNull("List of car ownerships is not instantiated", car.getPastOwnerships());
 
         //Create a car
         carService.create(car);

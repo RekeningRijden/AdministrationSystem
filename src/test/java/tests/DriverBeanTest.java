@@ -4,6 +4,7 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
 import org.junit.After;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
@@ -30,5 +31,10 @@ public class DriverBeanTest {
         for (Driver driver : driverService.getAll()) {
             driverService.remove(driver);
         }
+    }
+
+    @Test
+    public void placeHolderTest() {
+
     }
 }

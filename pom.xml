@@ -225,16 +225,16 @@
                                     <cargo.glassfish.domain.debug>true</cargo.glassfish.domain.debug>
                                     <cargo.logging>high</cargo.logging>
                                 </properties>
-                                <deployer>
-                                    <deployables>
-                                        <deployable>
-                                            <properties>
-                                                <context>/Administration</context>
-                                            </properties>
-                                        </deployable>
-                                    </deployables>
-                                </deployer>
                             </configuration>
+                            <deployer>
+                                <deployables>
+                                    <deployable>
+                                        <properties>
+                                            <context>/Administration</context>
+                                        </properties>
+                                    </deployable>
+                                </deployables>
+                            </deployer>
                         </configuration>
                         <dependencies>
                             <dependency>

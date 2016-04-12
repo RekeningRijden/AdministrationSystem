@@ -5,10 +5,12 @@
  */
 package web.beans.car;
 
+import main.communication.Communicator;
 import main.domain.Car;
 import main.domain.Driver;
 import main.domain.Ownership;
 import main.service.CarService;
+import org.codehaus.jettison.json.JSONException;
 import web.core.helpers.ContextHelper;
 import web.core.helpers.FrontendHelper;
 
@@ -16,6 +18,7 @@ import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -64,11 +67,17 @@ public class CarBean implements Serializable {
     public void save() {
         if (carService.hasBeenPersisted(car)) {
             carService.update(car);
-            FrontendHelper.displaySuccessSmallBox("De auto is geupdate");
+            FrontendHelper.displaySuccessSmallBox("De auto is geüpdate");
         } else {
-            car.getPastOwnerships().add(car.getCurrentOwnership());
-            carService.create(car);
-            FrontendHelper.displaySuccessSmallBox("De auto is aangemaakt");
+            try {
+                car.setCartrackerId(Communicator.requestNewCartracker());
+                car.getPastOwnerships().add(car.getCurrentOwnership());
+                carService.create(car);
+                FrontendHelper.displaySuccessSmallBox("De auto is toegevoegd");
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+                FrontendHelper.displayErrorSmallBox("De auto kon niet toegevoegd worden");
+            }
         }
     }
 

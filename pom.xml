@@ -226,15 +226,6 @@
                                     <cargo.logging>high</cargo.logging>
                                 </properties>
                             </configuration>
-                            <deployer>
-                                <deployables>
-                                    <deployable>
-                                        <properties>
-                                            <context>/Administration</context>
-                                        </properties>
-                                    </deployable>
-                                </deployables>
-                            </deployer>
                         </configuration>
                         <dependencies>
                             <dependency>

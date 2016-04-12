@@ -30,4 +30,5 @@ hs_err_pid*
 MovementSystemApi.iml
 nb-configuration.xml
 .mvn/timing.properties
+/administrationsystem/
 

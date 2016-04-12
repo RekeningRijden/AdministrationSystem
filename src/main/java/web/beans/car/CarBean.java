@@ -18,6 +18,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author maikel
@@ -43,8 +44,9 @@ public class CarBean implements Serializable {
                 Ownership ownership = new Ownership();
                 ownership.setDriver(new Driver());
                 ownership.setCar(car);
+                ownership.setStartDate(new Date());
 
-                car.getOwnerships().add(ownership);
+                car.setCurrentOwnership(ownership);
             }
         }
     }
@@ -54,6 +56,7 @@ public class CarBean implements Serializable {
             carService.update(car);
             FrontendHelper.displaySuccessSmallBox("De auto is geupdate");
         } else {
+            car.getPastOwnerships().add(car.getCurrentOwnership());
             carService.create(car);
             FrontendHelper.displaySuccessSmallBox("De auto is aangemaakt");
         }

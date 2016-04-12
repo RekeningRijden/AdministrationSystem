@@ -21,7 +21,7 @@ public abstract class CarDao extends AbstractDao<Car> {
     public List<Car> getSortedFilteredAndPaged(int first, int pageSize,
                                                String sortValue, SortOrder sortOrder, String filter) {
 
-        String queryString = "FROM Car c LEFT JOIN c.driver d";
+        String queryString = "FROM Car c LEFT JOIN c.currentOwnership.driver d";
         queryString += filter.isEmpty() ? "" : getFilteredQueryString();
         queryString += sortValue.isEmpty() ? "" : getSortedQueryString(sortValue, sortOrder);
 
@@ -34,7 +34,7 @@ public abstract class CarDao extends AbstractDao<Car> {
     }
 
     public int getFilteredRowCount(String filter) {
-        String queryString = "SELECT COUNT(c.id) FROM Car c LEFT JOIN c.driver d";
+        String queryString = "SELECT COUNT(c.id) FROM Car c LEFT JOIN c.currentOwnership.driver d";
         queryString += filter.isEmpty() ? "" : getFilteredQueryString();
 
         Query query = getEntityManager().createQuery(queryString);

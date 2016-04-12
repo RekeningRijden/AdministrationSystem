@@ -38,7 +38,7 @@ public class Ownership implements Serializable, IEntity {
 
     @ManyToOne
     private Car car;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Driver driver;
 
     public Ownership() {

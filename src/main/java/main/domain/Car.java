@@ -23,10 +23,13 @@ public class Car implements Serializable, IEntity {
     private String licencePlate;
 
     @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
-    private List<Ownership> ownerships;
+    private List<Ownership> pastOwnerships;
+    
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Ownership currentOwnership;
 
     public Car() {
-        this.ownerships = new ArrayList<>();
+        this.pastOwnerships = new ArrayList<>();
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
@@ -39,6 +42,14 @@ public class Car implements Serializable, IEntity {
         this.id = id;
     }
 
+    public Ownership getCurrentOwnership() {
+        return currentOwnership;
+    }
+
+    public void setCurrentOwnership(Ownership currentOwnership) {
+        this.currentOwnership = currentOwnership;
+    }
+
     public Long getCartrackerId() {
         return cartrackerId;
     }
@@ -47,20 +58,20 @@ public class Car implements Serializable, IEntity {
         this.cartrackerId = cartrackerId;
     }
 
+    public List<Ownership> getPastOwnerships() {
+        return pastOwnerships;
+    }
+
+    public void setPastOwnerships(List<Ownership> pastOwnerships) {
+        this.pastOwnerships = pastOwnerships;
+    }
+
     public String getLicencePlate() {
         return licencePlate;
     }
 
     public void setLicencePlate(String licencePlate) {
         this.licencePlate = licencePlate;
-    }
-
-    public List<Ownership> getOwnerships() {
-        return ownerships;
-    }
-
-    public void setOwnerships(List<Ownership> ownerships) {
-        this.ownerships = ownerships;
     }
     //</editor-fold>
 

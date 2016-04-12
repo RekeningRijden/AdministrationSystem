@@ -46,35 +46,4 @@ public class InvoiceService extends InvoiceDao implements Serializable {
 
         return invoices;
     }
-
-    public List<Invoice> getSortedFilteredAndPaged(int first, int pageSize,
-                                               String sortValue, SortOrder sortOrder, String filter) {
-
-        String queryString = "SELECT i FROM Invoice i";
-        queryString += filter.isEmpty() ? "" : getFilteredQueryString();
-        queryString += sortValue.isEmpty() ? "" : getSortedQueryString(sortValue, sortOrder);
-
-        TypedQuery<Invoice> query = getEntityManager().createQuery(queryString, Invoice.class);
-        if (!filter.isEmpty()) {
-            query.setParameter("filter", "%" + filter + "%");
-        }
-
-        return query.setFirstResult(first).setMaxResults(pageSize).getResultList();
-    }
-
-    public int getFilteredRowCount(String filter) {
-        String queryString = "SELECT COUNT(i.id) FROM Invoice i LEFT JOIN i.ownership o";
-        queryString += filter.isEmpty() ? "" : getFilteredQueryString();
-
-        Query query = getEntityManager().createQuery(queryString);
-        if (!filter.isEmpty()) {
-            query.setParameter("filter", "%" + filter + "%");
-        }
-
-        return (int) (long) query.getSingleResult();
-    }
-
-    private String getFilteredQueryString() {
-        return " WHERE i.paymentStatus LIKE :filter OR CAST(i.period CHAR(255)) LIKE :filter OR (concat(o.driver.firstName, ' ', o.driver.lastName) LIKE :filter";
-    }
 }

@@ -3,23 +3,34 @@ package web.beans;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import main.domain.Invoice;
 import main.service.InvoiceService;
+import web.core.helpers.FrontendHelper;
 import web.model.DataTableModel;
 
 /**
  * @author Sam
  */
 @Named
-@SessionScoped
+@ViewScoped
 public class InvoiceOverviewBean extends DataTableModel<InvoiceService, Invoice> implements Serializable {
 
     @Inject
     private InvoiceService invoiceService;
+
+    private Invoice invoice;
+
+    /**
+     * Save a invoice to the database and display a success message when finished.
+     */
+    public void save() {
+        invoiceService.update(invoice);
+        FrontendHelper.displaySuccessSmallBox("Saved");
+    }
 
     @Override
     protected InvoiceService getService() {
@@ -41,23 +52,33 @@ public class InvoiceOverviewBean extends DataTableModel<InvoiceService, Invoice>
         return "i.id";
     }
 
-    public void sortByPaymentStatus(){
+    public void sortByPaymentStatus() {
         sort("i.paymentStatus");
     }
 
-    public void sortByDriver(){
+    public void sortByDriver() {
         sort("o.driver.firstName");
     }
 
-    public void sortById(){
+    public void sortById() {
         sort("i.id");
     }
 
-    public void sortByPeriod(){
+    public void sortByPeriod() {
         sort("i.period");
     }
 
-    public void sortByTotalAmount(){
+    public void sortByTotalAmount() {
         sort("i.totalAmount");
     }
+
+    //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
+    }
+    //</editor-fold>
 }

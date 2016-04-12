@@ -7,7 +7,7 @@ package web.beans.driver;
 
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import main.domain.Address;
@@ -22,7 +22,7 @@ import web.core.helpers.FrontendHelper;
  */
 @ManagedBean
 @Named
-@SessionScoped
+@ViewScoped
 public class DriverBean implements Serializable {
 
     @Inject

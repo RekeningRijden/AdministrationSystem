@@ -1,0 +1,198 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+    <ui:composition template="../../templates/main.xhtml">
+
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{leftMenuBean.setCurrentMenuItem('driverOverview')}" />
+        </f:metadata>
+
+        <ui:param name="sortIsAscending" value="#{driverOverviewBean.sortIsAscending}"/>
+        <ui:param name="sortedOn" value="#{driverOverviewBean.sortedOn}"/>
+        <ui:param name="dataListTotalSize" value="#{driverOverviewBean.dataListTotalSize}"/>
+
+        <ui:define name="content">
+            <div id="content">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+                        <h1 class="page-title txt-color-blueDark visible-xs visible-sm visible-md visible-lg">
+                            <i class="fa fa-user fa-fw "/> 
+                            Driver overview
+                        </h1>
+                    </div>
+                </div>
+
+                <section id="widget-grid" class="">
+                    <div class="row">
+                        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" 
+                                 data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-sortable="false">     
+                                <header>
+                                    <span class="widget-icon"> <i class="fa fa-table"/> </span>
+                                    <h2>Driver overview</h2>
+                                </header>
+                                <div>
+                                    <div class="jarviswidget-editbox">
+                                    </div>
+
+                                    <div class="widget-body">
+                                        <h:form id="form">
+                                            <div class="row">
+                                                <div class="col-md-5 col-sm-6 col-xs-8">
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <span class="input-group-btn">
+                                                                <h:commandLink class="btn btn-primary" action="#{driverOverviewBean.filter()}">
+                                                                    <i class="fa fa-search"/>
+                                                                    <f:ajax execute="@form" render="@form"/>
+                                                                </h:commandLink>
+                                                            </span>
+                                                            <input class="form-control" type="text"
+                                                                   jsf:value="#{driverOverviewBean.filter}"
+                                                                   placeholder="Zoek..."/>
+                                                            <span class="input-group-btn">
+                                                                <h:commandLink class="btn btn-danger" action="#{driverOverviewBean.resetFilter()}">
+                                                                    <i class="fa fa-remove"/>
+                                                                    <f:ajax execute="@form" render="@form"/>
+                                                                </h:commandLink>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-7 col-sm-6 col-xs-4">
+                                                    <h:outputLink class="btn btn-primary pull-right" value="driver.xhtml" >
+                                                        <i class="fa fa-plus"/>
+                                                        Toevoegen
+                                                    </h:outputLink>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <ui:fragment rendered="#{driverOverviewBean.displayedList.isEmpty()}">
+                                                        <div class="alert alert-warning fade in">
+                                                            <i class="fa fa-warning"/>
+                                                            Geen resultaten gevonden
+                                                        </div>
+                                                    </ui:fragment>
+                                                    <ui:fragment rendered="#{!driverOverviewBean.displayedList.isEmpty()}">
+                                                        <table class="table table-striped table-bordered table-hover table-condensed">
+                                                            <thead>
+                                                                <tr>
+                                                                    <f:ajax execute="@form" render="@form">
+                                                                        <th>
+                                                                            <h:commandLink value="Firstname" action="#{driverOverviewBean.sortByFirstName()}"/>
+                                                                            <h:commandLink  class="#{sortIsAscending ? 'fa fa-long-arrow-up' : 'fa fa-long-arrow-down'} pull-right" 
+                                                                                            action="#{driverOverviewBean.sortByFirstName()}"
+                                                                                            rendered="#{sortedOn eq 'd.firstName'}"/>
+                                                                            <h:commandLink class="fa fa-arrows-v pull-right" 
+                                                                                           action="#{driverOverviewBean.sortByFirstName()}"
+                                                                                           rendered="#{sortedOn != 'd.firstName'}"/>
+                                                                        </th>
+                                                                        <th>
+                                                                            <h:commandLink value="Lastname" action="#{driverOverviewBean.sortByLastName()}"/>
+                                                                            <h:commandLink  class="#{sortIsAscending ? 'fa fa-long-arrow-up' : 'fa fa-long-arrow-down'} pull-right" 
+                                                                                            action="#{driverOverviewBean.sortByLastName()}"
+                                                                                            rendered="#{sortedOn eq 'd.lastName'}"/>
+                                                                            <h:commandLink class="fa fa-arrows-v pull-right" 
+                                                                                           action="#{driverOverviewBean.sortByLastName()}"
+                                                                                           rendered="#{sortedOn != 'd.lastName'}"/>
+                                                                        </th>
+                                                                    </f:ajax>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <ui:repeat var="item" value="#{driverOverviewBean.displayedList}">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <h:outputLink value="driver.xhtml">
+                                                                                <f:param name="driverId" value="#{item.id}"/>
+                                                                                <h:outputText value="#{item.firstName}" />  
+                                                                            </h:outputLink>
+                                                                        </td>
+                                                                        <td>
+                                                                            <h:outputLink value="driver.xhtml">
+                                                                                <f:param name="driverId" value="#{item.id}"/>
+                                                                                <h:outputText value="#{item.lastName}" />  
+                                                                            </h:outputLink>
+                                                                        </td>
+                                                                    </tr>
+                                                                </ui:repeat>
+                                                            </tbody>
+                                                        </table>
+                                                    </ui:fragment>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-6 col-xs-12 hidden-xs">
+                                                    <div id="datatable_tabletools_info" class="dataTables_info" role="status" aria-live="polite">
+                                                        <h:panelGroup
+                                                            rendered="#{dataListTotalSize != 0}">
+                                                            Pagina
+                                                            <span class="txt-color-darken">
+                                                                #{driverOverviewBean.currentPage}
+                                                            </span>
+                                                            van de
+                                                            <span class="text-primary">
+                                                                #{driverOverviewBean.lastPageNumber}
+                                                            </span>
+
+                                                            <h:outputLabel value=" - "/>
+                                                            <span class="txt-color-darken">
+                                                                #{dataListTotalSize}
+                                                            </span>
+
+                                                            <ui:fragment rendered="#{dataListTotalSize == 1}">Resultaat</ui:fragment>
+                                                            <ui:fragment rendered="#{dataListTotalSize != 1}">Resultaten</ui:fragment>
+                                                        </h:panelGroup>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6 col-xs-12" style="max-height: 30px;">
+                                                    <div class="btn-group btn-group-sm pull-right">
+                                                        <f:ajax execute="@form" render="@form">
+                                                            <h:commandButton class="btn btn-default"  value="&#60;&#60;" action="#{driverOverviewBean.firstPage()}" disabled="#{driverOverviewBean.prevNextButtonDisabled}"/>
+                                                            <h:commandButton class="#{driverOverviewBean.isButtonCurrentPage(1) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{driverOverviewBean.getFirstButtonNumber()}" action="#{driverOverviewBean.beforePreviousPage()}" disabled="#{driverOverviewBean.isButtonDisabled(1)}"/>
+                                                            <h:commandButton class="#{driverOverviewBean.isButtonCurrentPage(2) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{driverOverviewBean.getSecondButtonNumber()}" action="#{driverOverviewBean.previousPage()}" disabled="#{driverOverviewBean.isButtonDisabled(2)}"/>
+                                                            <h:commandButton class="#{driverOverviewBean.isButtonCurrentPage(3) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{driverOverviewBean.getThirdButtonNumber()}" action="#{driverOverviewBean.currentPage()}" disabled="#{driverOverviewBean.isButtonDisabled(3)}"/>
+                                                            <h:commandButton class="#{driverOverviewBean.isButtonCurrentPage(4) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{driverOverviewBean.fourthButtonNumber}" action="#{driverOverviewBean.nextPage()}" disabled="#{driverOverviewBean.isButtonDisabled(4)}"/>
+                                                            <h:commandButton class="#{driverOverviewBean.isButtonCurrentPage(5) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{driverOverviewBean.fifthButtonNumber}" action="#{driverOverviewBean.afterNextPage()}" disabled="#{driverOverviewBean.isButtonDisabled(5)}"/>
+                                                            <h:commandButton class="btn btn-default"  value="&#62;&#62;" action="#{driverOverviewBean.lastPage()}" disabled="#{driverOverviewBean.prevNextButtonDisabled}"/>
+                                                        </f:ajax>
+                                                    </div>
+                                                    <div class="pull-right">
+                                                        <label class="select">
+                                                            <h:selectOneMenu
+                                                                class="form-control input-sm"
+                                                                value="#{driverOverviewBean.itemsPerPage}">
+                                                                <f:ajax event="change" execute="@form"
+                                                                        render="@form"/>
+                                                                <f:selectItem itemLabel="15"
+                                                                              itemValue="15"/>
+                                                                <f:selectItem itemLabel="25"
+                                                                              itemValue="25"/>
+                                                                <f:selectItem itemLabel="35"
+                                                                              itemValue="35"/>
+                                                            </h:selectOneMenu>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </h:form>
+                                    </div> 
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+            </div>
+        </ui:define>
+    </ui:composition> 
+</html>
+

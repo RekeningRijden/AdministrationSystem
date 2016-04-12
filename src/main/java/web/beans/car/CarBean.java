@@ -19,7 +19,8 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
+
 import main.service.DriverService;
 
 /**
@@ -43,7 +44,6 @@ public class CarBean implements Serializable {
 
     public void init() {
         if (!ContextHelper.isAjaxRequest()) {
-            drivers = driverService.getAll();
             if (carId != null) {
                 car = carService.findById(carId);
             } else {
@@ -56,6 +56,8 @@ public class CarBean implements Serializable {
 
                 car.setCurrentOwnership(ownership);
             }
+
+            drivers = driverService.getAll();
         }
     }
 
@@ -69,8 +71,8 @@ public class CarBean implements Serializable {
             FrontendHelper.displaySuccessSmallBox("De auto is aangemaakt");
         }
     }
-    
-    public void updateDriver(){
+
+    public void updateSelectedDriver() {
         selectedDriver = car.getCurrentOwnership().getDriver();
     }
 
@@ -91,6 +93,7 @@ public class CarBean implements Serializable {
 
             car = carService.update(car);
         }
+        FrontendHelper.hideModal("newDriverModal");
     }
 
     //<editor-fold defaultstate="collapsed" desc="getters and setters">

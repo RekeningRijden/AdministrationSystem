@@ -83,9 +83,9 @@
                                         <span class="widget-icon"> <i class="fa fa-table"/> </span>
                                         <h2>History</h2>
                                         <div class="widget-toolbar" role="menu">
-                                            <h:commandLink class="btn btn-primary" onclick="$('#newDriverModal').modal('show')" action="#{carBean.updateDriver()}">
+                                            <h:commandLink class="btn btn-primary" onclick="$('#newDriverModal').modal('show')" action="#{carBean.updateSelectedDriver()}">
                                                 <i class="fa fa-check"/>
-                                                <f:ajax render="@none" execute="@this"/>
+                                                <f:ajax render=":modal-form-1" execute="@this"/>
                                                 New driver
                                             </h:commandLink>
                                         </div>
@@ -180,7 +180,7 @@
                                         <f:ajax execute="@form" render=":form msgs"/>
                                     </button>
                                     <h:commandLink class="btn btn-default" onclick="$('#newDriverModal').modal('hide')">
-                                        #{txt.CANCEL}
+                                        Cancel
                                         <f:ajax execute="@this" render="@none"/>
                                     </h:commandLink>
                                 </fieldset>

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package web.beans.car;
+package web.beans.driver;
 
 import main.domain.Car;
 import main.service.CarService;
@@ -16,6 +16,8 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.view.ViewScoped;
+import main.domain.Driver;
+import main.service.DriverService;
 
 /**
  * @author maikel
@@ -23,36 +25,40 @@ import javax.faces.view.ViewScoped;
 @ManagedBean
 @Named
 @ViewScoped
-public class CarOverviewBean extends DataTableModel<CarService, Car> implements Serializable {
+public class DriverOverviewBean extends DataTableModel<DriverService, Driver> implements Serializable {
 
     @Inject
-    private CarService carService;
+    private DriverService driverService;
 
     @Override
-    protected CarService getService() {
-        return carService;
+    protected DriverService getService() {
+        return driverService;
     }
 
     @Override
-    protected List<Car> getData() {
-        return carService.getSortedFilteredAndPaged(getStartIndex(), getItemsPerPage(), getSortedOn(), getSortOrder(), getFilter());
+    protected List<Driver> getData() {
+        return driverService.getSortedFilteredAndPaged(getStartIndex(), getItemsPerPage(), getSortedOn(), getSortOrder(), getFilter());
     }
 
     @Override
     protected int getRowCount() {
-        return carService.getFilteredRowCount(getFilter());
+        return driverService.getFilteredRowCount(getFilter());
     }
 
     @Override
     protected String getDefaultSort() {
-        return "c.id";
+        return "d.id";
     }
 
     public void sortById() {
-        sort("c.id");
+        sort("d.id");
     }
 
-    public void sortByDriver() {
+    public void sortByLastName() {
         sort("d.lastName");
+    }
+    
+    public void sortByFirstName() {
+        sort("d.firstName");
     }
 }

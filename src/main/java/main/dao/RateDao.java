@@ -5,6 +5,7 @@
  */
 package main.dao;
 
+import javax.persistence.TypedQuery;
 import main.domain.Rate;
 
 /**
@@ -12,5 +13,12 @@ import main.domain.Rate;
  * @author martijn
  */
 public abstract class RateDao extends AbstractDao<Rate> {
+    
+    public Rate getByValue(String value) {
+        TypedQuery<Rate> q = getEntityManager().createQuery("SELECT r FROM Rate r WHERE r.rateValue = :value", Rate.class)
+                .setParameter("value", value);
+
+        return q.getResultList().isEmpty() ? null : q.getResultList().get(0);
+    }
     
 }

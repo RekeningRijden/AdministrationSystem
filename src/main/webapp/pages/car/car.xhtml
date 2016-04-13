@@ -50,19 +50,29 @@
                                         <div class="widget-body">
                                             <fieldset>
                                                 <div class="row">
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label class="control-label"><i class="fa fa-star-o"/>Licence plate</label>
                                                             <h:inputText id="licencePlate" class="form-control" value="#{carBean.car.licencePlate}"/>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Rate</label>
+                                                            <h:selectOneMenu class="form-control" value="#{carBean.car.rate}">
+                                                                <f:converter converterId="rateConverter"/>
+                                                                <f:selectItem itemLabel="--" itemValue="#{null}" /> 
+                                                                <f:selectItems value="#{carBean.rates}" var="rate" itemLabel="#{rate.rateValue}" itemValue="#{rate}"/>  
+                                                            </h:selectOneMenu>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label class="control-label"><i class="fa fa-star-o"/>Driver first name</label>
                                                             <h:inputText class="form-control" disabled="true" value="#{carBean.car.currentOwnership.driver.firstName}"/>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label class="control-label"><i class="fa fa-star-o"/>Driver last name</label>
                                                             <h:inputText class="form-control" disabled="true" value="#{carBean.car.currentOwnership.driver.lastName}"/>

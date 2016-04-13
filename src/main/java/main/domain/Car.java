@@ -21,6 +21,8 @@ public class Car implements Serializable, IEntity {
 
     private Long cartrackerId;
     private String licencePlate;
+    @ManyToOne
+    private Rate rate;
 
     @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
     private List<Ownership> pastOwnerships;
@@ -73,8 +75,18 @@ public class Car implements Serializable, IEntity {
     public void setLicencePlate(String licencePlate) {
         this.licencePlate = licencePlate;
     }
+    
+    public Rate getRate() {
+        return rate;
+    }
+
+    public void setRate(Rate rate) {
+        this.rate = rate;
+    }
+
     //</editor-fold>
 
+    
     //<editor-fold defaultstate="collapsed" desc="HashCode/Equals">
 
     @Override

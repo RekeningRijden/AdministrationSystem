@@ -23,8 +23,10 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.faces.view.ViewScoped;
+import main.domain.Rate;
 
 import main.service.DriverService;
+import main.service.RateService;
 
 /**
  * @author maikel
@@ -38,12 +40,16 @@ public class CarBean implements Serializable {
     private CarService carService;
     @Inject
     private DriverService driverService;
+    @Inject
+    private RateService rateService;
 
     private Long carId;
     private Car car;
 
     private List<Driver> drivers;
     private Driver selectedDriver;
+
+    private List<Rate> rates;
 
     public void init() {
         if (!ContextHelper.isAjaxRequest()) {
@@ -61,6 +67,7 @@ public class CarBean implements Serializable {
             }
 
             drivers = driverService.getAll();
+            rates = rateService.getAll();
         }
     }
 
@@ -69,14 +76,18 @@ public class CarBean implements Serializable {
             carService.update(car);
             FrontendHelper.displaySuccessSmallBox("De auto is geüpdate");
         } else {
-            try {
-                car.setCartrackerId(Communicator.requestNewCartracker());
-                car.getPastOwnerships().add(car.getCurrentOwnership());
-                carService.create(car);
-                FrontendHelper.displaySuccessSmallBox("De auto is toegevoegd");
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
-                FrontendHelper.displayErrorSmallBox("De auto kon niet toegevoegd worden");
+            if (car.getCurrentOwnership().getDriver() != null) {
+                try {
+                    car.setCartrackerId(Communicator.requestNewCartracker());
+                    car.getPastOwnerships().add(car.getCurrentOwnership());
+                    carService.create(car);
+                    FrontendHelper.displaySuccessSmallBox("De auto is toegevoegd");
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
+                    FrontendHelper.displayErrorSmallBox("De auto kon niet toegevoegd worden");
+                }
+            } else {
+                FrontendHelper.displayErrorSmallBox("Selecteer een bestuurder");
             }
         }
     }
@@ -112,6 +123,14 @@ public class CarBean implements Serializable {
 
     public void setCarId(Long carId) {
         this.carId = carId;
+    }
+
+    public List<Rate> getRates() {
+        return rates;
+    }
+
+    public void setRates(List<Rate> rates) {
+        this.rates = rates;
     }
 
     public List<Driver> getDrivers() {

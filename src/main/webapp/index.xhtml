@@ -9,6 +9,7 @@
     <ui:composition template="/templates/main.xhtml">
         <f:metadata>
             <f:event type="preRenderView" listener="#{leftMenuBean.setCurrentMenuItem('index')}" />
+            <f:event type="preRenderView" listener="#{indexBean.init()}" />
         </f:metadata>
 
         <ui:define name="content">

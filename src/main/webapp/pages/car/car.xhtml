@@ -53,19 +53,19 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label class="control-label"><i class="fa fa-star-o"/>Licence plate</label>
-                                                            <h:inputText class="form-control" value="#{carBean.car.licencePlate}"/>
+                                                            <h:inputText id="licencePlate" class="form-control" value="#{carBean.car.licencePlate}"/>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label class="control-label"><i class="fa fa-star-o"/>Driver first name</label>
-                                                            <h:inputText class="form-control" disabled="#{carBean.car.id ne null}" value="#{carBean.car.currentOwnership.driver.firstName}"/>
+                                                            <h:inputText class="form-control" disabled="true" value="#{carBean.car.currentOwnership.driver.firstName}"/>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label class="control-label"><i class="fa fa-star-o"/>Driver last name</label>
-                                                            <h:inputText class="form-control" disabled="#{carBean.car.id ne null}" value="#{carBean.car.currentOwnership.driver.lastName}"/>
+                                                            <h:inputText class="form-control" disabled="true" value="#{carBean.car.currentOwnership.driver.lastName}"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -86,7 +86,7 @@
                                             <h:commandLink class="btn btn-primary" onclick="$('#newDriverModal').modal('show')" action="#{carBean.updateSelectedDriver()}">
                                                 <i class="fa fa-check"/>
                                                 <f:ajax render=":modal-form-1" execute="@this"/>
-                                                New driver
+                                                Add driver
                                             </h:commandLink>
                                         </div>
                                     </header>
@@ -183,12 +183,36 @@
                                         Cancel
                                         <f:ajax execute="@this" render="@none"/>
                                     </h:commandLink>
+                                    <h:outputLink class="btn btn-success pull-right" value="../driver/driver.xhtml" >
+                                        <i class="fa fa-plus"/>
+                                        Nieuw
+                                    </h:outputLink>
                                 </fieldset>
                             </h:form>
                         </div>
                     </div>
                 </div>
             </div>
+            <script type="text/javascript">
+                $(window).bind("load", function () {
+                    $('#form').bootstrapValidator({
+                        framework: 'bootstrap',
+                        fields: {
+                            'form:licencePlate': {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'Mag niet leeg zijn'
+                                    },
+                                    regexp: {
+                                        regexp: /^(?:[A-Z]{2}-\d{2}-\d{2})|(?:\d{2}-[A-Z]{2}-\d{2})|(?:\d{2}-\d{2}-[A-Z]{2})$/,
+                                        message: 'Vul een geldig portugees kenteken in'
+                                    }
+                                }
+                            }
+                        }
+                    });
+                });
+            </script>
         </ui:define>
     </ui:composition>
 </html>

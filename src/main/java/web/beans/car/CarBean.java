@@ -17,7 +17,7 @@ import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import main.communication.Communicator;
+import main.core.communcation.Communicator;
 import main.domain.Car;
 import main.domain.Driver;
 import main.domain.Ownership;

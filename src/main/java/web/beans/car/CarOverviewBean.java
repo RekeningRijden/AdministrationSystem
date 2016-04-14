@@ -10,6 +10,7 @@ import main.service.CarService;
 import web.model.DataTableModel;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -22,7 +23,7 @@ import javax.enterprise.context.SessionScoped;
  */
 @ManagedBean
 @Named
-@SessionScoped
+@ViewScoped
 public class CarOverviewBean extends DataTableModel<CarService, Car> implements Serializable {
 
     @Inject

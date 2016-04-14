@@ -5,26 +5,24 @@
  */
 package web.beans.driver;
 
-import main.domain.Car;
-import main.service.CarService;
-import web.model.DataTableModel;
+import java.io.Serializable;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import java.io.Serializable;
-import java.util.List;
-import javax.enterprise.context.SessionScoped;
 import main.domain.Driver;
 import main.service.DriverService;
+import web.model.DataTableModel;
 
 /**
  * @author maikel
  */
 @ManagedBean
 @Named
-@SessionScoped
+@ViewScoped
 public class DriverOverviewBean extends DataTableModel<DriverService, Driver> implements Serializable {
 
     @Inject

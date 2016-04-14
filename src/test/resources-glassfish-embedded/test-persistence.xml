@@ -9,6 +9,7 @@
         <class>main.domain.Driver</class>
         <class>main.domain.Invoice</class>
         <class>main.domain.Ownership</class>
+        <class>main.domain.Rate</class>
         <class>main.domain.User</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>

@@ -5,35 +5,35 @@
  */
 package web.beans.car;
 
-import main.communication.Communicator;
-import main.domain.Car;
-import main.domain.Driver;
-import main.domain.Ownership;
-import main.service.CarService;
 import org.codehaus.jettison.json.JSONException;
-import web.core.helpers.ContextHelper;
-import web.core.helpers.FrontendHelper;
-
-import javax.faces.bean.ManagedBean;
-import javax.inject.Inject;
-import javax.inject.Named;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.faces.view.ViewScoped;
-import main.domain.Rate;
 
+import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import main.communication.Communicator;
+import main.domain.Car;
+import main.domain.Driver;
+import main.domain.Ownership;
+import main.domain.Rate;
+import main.service.CarService;
 import main.service.DriverService;
 import main.service.RateService;
+import web.core.helpers.ContextHelper;
+import web.core.helpers.FrontendHelper;
 
 /**
  * @author maikel
  */
 @ManagedBean
 @Named
-@ViewScoped
+@SessionScoped
 public class CarBean implements Serializable {
 
     @Inject

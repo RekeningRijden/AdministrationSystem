@@ -33,6 +33,11 @@ public class Communicator {
      */
     private static final String BASE_URL_PRODUCTION = "http://movement.s63a.marijn.ws/api/trackers";
 
+    /**
+     * Gets all known cartrackers from the Movementsystem Api
+     * @return All known cartrackers
+     * @throws IOException When trying to execute the http request or converts the response to a String
+     */
     public static List<CarTracker> getAllCartrackers() throws IOException {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         HttpGet get = new HttpGet(BASE_URL_TEST);

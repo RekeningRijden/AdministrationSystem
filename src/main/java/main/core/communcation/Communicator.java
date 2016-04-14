@@ -31,7 +31,7 @@ public class Communicator {
 
     public static List<CarTracker> getAllCartrackers() throws IOException {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-        HttpGet get = new HttpGet(BASE_URL_TEST);
+        HttpGet get = new HttpGet(BASE_URL_PRODUCTION);
         HttpResponse response = httpClient.execute(get);
 
         String responseString = EntityUtils.toString(response.getEntity(), "UTF-8");

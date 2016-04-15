@@ -1,4 +1,4 @@
-package tests;
+package tests.entity;
 
 import junit.framework.Assert;
 
@@ -13,6 +13,7 @@ import javax.inject.Inject;
 
 import main.domain.Car;
 import main.service.CarService;
+import tests.TestHelper;
 
 /**
  * @author Sam

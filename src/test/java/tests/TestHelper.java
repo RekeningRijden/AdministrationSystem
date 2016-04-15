@@ -8,7 +8,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 /**
  * @author Sam
  */
-final class TestHelper {
+public final class TestHelper {
 
     private TestHelper() {
         //Utility class constructor cannot be called
@@ -17,7 +17,7 @@ final class TestHelper {
     /**
      * @return a jar with all the classes used by Arquillian.
      */
-    static Archive<?> createDeployment() {
+    public static Archive<?> createDeployment() {
         WebArchive war = ShrinkWrap.create(WebArchive.class)
                 .addPackages(true, "main", "org.netbeans.rest.application.config", "resources", "web")
                 .addAsResource("test-persistence.xml", "META-INF/persistence.xml")

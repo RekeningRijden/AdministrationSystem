@@ -54,4 +54,11 @@ public abstract class CarDao extends AbstractDao<Car> {
                 .setParameter("driverId", driverId)
                 .getResultList();
     }
+
+    public Car getCarByCartrackerId(Long cartrackerId) {
+        TypedQuery<Car> q = getEntityManager().createQuery("SELECT c FROM Car c WHERE c.cartrackerId = :cartrackerId", Car.class)
+                .setParameter("cartrackerId", cartrackerId);
+
+        return oneResult(q);
+    }
 }

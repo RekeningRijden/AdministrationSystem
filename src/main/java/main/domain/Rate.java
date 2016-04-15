@@ -6,7 +6,9 @@
 package main.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,7 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- *
  * @author martijn
  */
 @Entity
@@ -26,6 +27,7 @@ public class Rate implements Serializable, IEntity {
     private Long id;
 
     private String rateValue;
+    private BigDecimal rate;
 
     public Rate() {
 
@@ -41,6 +43,10 @@ public class Rate implements Serializable, IEntity {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getRateValue() {
         return rateValue;
     }
@@ -48,6 +54,15 @@ public class Rate implements Serializable, IEntity {
     public void setRateValue(String rateValue) {
         this.rateValue = rateValue;
     }
+
+    public BigDecimal getRate() {
+        return rate;
+    }
+
+    public void setRate(BigDecimal rate) {
+        this.rate = rate;
+    }
+
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Hashcode/equals">

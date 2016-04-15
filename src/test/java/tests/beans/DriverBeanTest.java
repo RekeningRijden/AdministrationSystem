@@ -1,6 +1,4 @@
-package tests;
-
-import junit.framework.Assert;
+package tests.beans;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -11,16 +9,15 @@ import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 
-import main.domain.Car;
 import main.domain.Driver;
-import main.service.CarService;
 import main.service.DriverService;
+import tests.TestHelper;
 
 /**
  * @author Sam
  */
 @RunWith(Arquillian.class)
-public class DriverTest {
+public class DriverBeanTest {
 
     @Deployment
     public static Archive<?> createDeployment() {
@@ -29,8 +26,6 @@ public class DriverTest {
 
     @Inject
     private DriverService driverService;
-    @Inject
-    private CarService carService;
 
     @After
     public void after() {
@@ -40,15 +35,7 @@ public class DriverTest {
     }
 
     @Test
-    public void createDriverTest() {
-        //Create driver and check if certain values that must not be null are not null.
-        Driver driver = new Driver();
+    public void placeHolderTest() {
 
-        Assert.assertNotNull("List of driver ownerships is not instantiated", driver.getOwnerships());
-
-        //Create a driver
-        driverService.create(driver);
-        Assert.assertEquals("Driver is not created", 1, driverService.getAll().size());
-        Assert.assertNotNull("Driver Id is not set by the database", driver.getId());
     }
 }

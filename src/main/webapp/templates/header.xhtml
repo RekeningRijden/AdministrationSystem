@@ -1,37 +1,38 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:jsf="http://java.sun.com/jsf">
 
-<ui:composition>
-    <h:form>
-        <header id="header">
-            <div id="logo-group">
-                <div class="hidden-xs pull-left" style="width: 30px; height: 45px;"></div>
-                <img src="/resources/img/logo-small.png" width="70" height="40"
-                     style="padding-left: 15px; padding-top: 4px;" alt="S63A"/>
-            </div>
-
-            <div class="pull-right" style="min-width: 110px;">
-                <div class="header-button-group pull-right">
-                    <h:commandLink class="btn btn-primary btn-sm" style="margin-right: 4px;">
-                        <i class="fa fa-user fa-lg"/>
-                        <f:ajax execute="@this" render="@none"/>
-                    </h:commandLink>
-
-                    <h:commandLink class="btn btn-primary btn-sm">
-                        <i class="fa fa-sign-out fa-lg"/>
-                    </h:commandLink>
-
-                    <ui:fragment rendered="#{userInfoBean.loggedInUserIsSystemUser()}">
-                        <a href="javascript:void(0);" class="btn btn-primary btn-sm"
-                           data-action="minifyMenu" title="Collapse Menu">
-                            <i class="fa fa-reorder fa-lg"/>
-                        </a>
-                    </ui:fragment>
+    <ui:composition>
+        <h:form>
+            <header id="header">
+                <div id="logo-group">
+                    <div class="hidden-xs pull-left" style="width: 30px; height: 45px;"></div>
+                    <img src="/resources/img/logo-small.png" width="70" height="40"
+                         style="padding-left: 15px; padding-top: 4px;" alt="S63A"/>
                 </div>
-            </div>
-        </header>
-    </h:form>
-</ui:composition>
+
+                <div class="pull-right" style="min-width: 110px;">
+                    <div class="header-button-group pull-right">
+                        <h:commandLink class="btn btn-primary btn-sm" style="margin-right: 4px;">
+                            <i class="fa fa-user fa-lg"/>
+                            <f:ajax execute="@this" render="@none"/>
+                        </h:commandLink>
+
+                        <h:commandLink class="btn btn-primary btn-sm">
+                            <i class="fa fa-sign-out fa-lg"/>
+                        </h:commandLink>
+
+                        <ui:fragment rendered="#{userInfoBean.loggedInUserIsSystemUser()}">
+                            <a href="javascript:void(0);" class="btn btn-primary btn-sm"
+                               data-action="minifyMenu" title="Collapse Menu">
+                                <i class="fa fa-reorder fa-lg"/>
+                            </a>
+                        </ui:fragment>
+                    </div>
+                </div>
+            </header>
+        </h:form>
+    </ui:composition>
 </html>

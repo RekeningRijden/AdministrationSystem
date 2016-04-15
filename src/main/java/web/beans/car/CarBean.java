@@ -27,13 +27,14 @@ import main.service.DriverService;
 import main.service.RateService;
 import web.core.helpers.ContextHelper;
 import web.core.helpers.FrontendHelper;
+import javax.faces.view.ViewScoped;
 
 /**
  * @author maikel
  */
 @ManagedBean
 @Named
-@SessionScoped
+@ViewScoped
 public class CarBean implements Serializable {
 
     @Inject

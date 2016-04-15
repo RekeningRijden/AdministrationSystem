@@ -71,12 +71,12 @@ public class CarBean implements Serializable {
     }
 
     public void save() {
-        if (carService.hasBeenPersisted(car)) {
+        if (car.getCartrackerId() != null && carService.hasBeenPersisted(car)) {
             carService.update(car);
             FrontendHelper.displaySuccessSmallBox("De auto is geüpdate");
             RedirectHelper.redirect("/pages/car/carOverview.xhtml");
         } else {
-            if (car.getCurrentOwnership().getDriver().getId() != null) {
+            if (car.getCurrentOwnership().getDriver() != null) {
                 try {
                     car.setCartrackerId(Communicator.requestNewCartracker());
                     car.getPastOwnerships().add(car.getCurrentOwnership());

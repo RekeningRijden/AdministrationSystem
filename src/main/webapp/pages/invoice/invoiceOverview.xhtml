@@ -146,10 +146,10 @@
                                                         <ui:repeat var="item" value="#{invoiceOverviewBean.displayedList}">
                                                             <tr>
                                                                 <td>
-                                                                    <h:outputLink value="invoice.xhtml">
-                                                                        <f:param name="invoiceId" value="#{item.id}"/>
-                                                                        <h:outputText value="#{item.id}"/>
-                                                                    </h:outputLink>
+                                                                    <!--<h:outputLink value="invoice.xhtml">-->
+                                                                        <!--<f:param name="invoiceId" value="#{item.id}"/>-->
+                                                                        <!--<h:outputText value="#{item.id}"/>-->
+                                                                    <!--</h:outputLink>-->
                                                                 </td>
                                                                 <td>
                                                                     <h:outputText value="#{item.ownership.driver.fullName}"/>

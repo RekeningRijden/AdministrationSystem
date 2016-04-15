@@ -53,6 +53,7 @@ public class KilometerRateBean implements Serializable {
 
     public void addEnergyLabel() {
         rateService.create(rate);
+        this.rates = rateService.getAll();
     }
 
     public void removeRate() {

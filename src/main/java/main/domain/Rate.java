@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,14 +30,15 @@ public class Rate implements Serializable, IEntity {
     private Long id;
 
     private String name;
-
+    @Column(precision = 20, scale = 10)
     private BigDecimal value;
 
     public Rate() {
-
+        this.value = BigDecimal.ZERO;
     }
 
     public Rate(String name) {
+        this();
         this.name = name;
     }
 

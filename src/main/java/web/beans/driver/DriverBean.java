@@ -31,7 +31,7 @@ public class DriverBean implements Serializable {
     private Long driverId;
     private Driver driver;
 
-    @PostConstruct
+    //@PostConstruct
     public void init() {
         if (!ContextHelper.isAjaxRequest()) {
             if (driverId != null) {

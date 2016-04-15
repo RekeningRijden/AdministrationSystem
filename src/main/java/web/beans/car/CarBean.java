@@ -12,8 +12,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -32,7 +30,6 @@ import javax.faces.view.ViewScoped;
 /**
  * @author maikel
  */
-@ManagedBean
 @Named
 @ViewScoped
 public class CarBean implements Serializable {

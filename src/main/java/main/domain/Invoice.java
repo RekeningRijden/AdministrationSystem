@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Created by Eric on 02-04-16.
@@ -68,6 +69,7 @@ public class Invoice implements Serializable, IEntity {
         this.totalAmount = totalAmount;
     }
 
+    @XmlTransient
     public Ownership getOwnership() {
         return ownership;
     }

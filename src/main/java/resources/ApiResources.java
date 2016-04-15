@@ -79,7 +79,7 @@ public class ApiResources {
     @GET
     @Path("/{userId}/invoices/{invoiceId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Invoice getInvoiceWithId(@PathParam("invoiceId") Long invoiceId) {
+    public Invoice getInvoiceWithId(@PathParam("userId") Long userId, @PathParam("invoiceId") Long invoiceId) {
         return invoiceService.findById(invoiceId);
     }
 
@@ -94,7 +94,7 @@ public class ApiResources {
     @Path("/{userId}/invoices/{invoiceId}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Invoice updateInvoicePaymentStatus(@PathParam("invoiceId") Long invoiceId, PaymentStatus status) {
+    public Invoice updateInvoicePaymentStatus(@PathParam("userId") Long userId, @PathParam("invoiceId") Long invoiceId, PaymentStatus status) {
         Invoice invoice = invoiceService.findById(invoiceId);
         invoice.setPaymentStatus(status);
         invoiceService.update(invoice);

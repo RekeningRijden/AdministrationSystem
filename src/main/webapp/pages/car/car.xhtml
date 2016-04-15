@@ -31,6 +31,7 @@
                         <div class="row">
                             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" 
+                                     data-widget-fullscreenbutton="false" data-widget-togglebutton="false"
                                      data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-sortable="false">     
                                     <header>
                                         <span class="widget-icon"> <i class="fa fa-table"/> </span>
@@ -87,15 +88,15 @@
                         <div class="row">
                             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" 
+                                     data-widget-fullscreenbutton="false" data-widget-togglebutton="false"
                                      data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-sortable="false">     
                                     <header>
                                         <span class="widget-icon"> <i class="fa fa-table"/> </span>
-                                        <h2>History</h2>
+                                        <h2>Ownerships</h2>
                                         <div class="widget-toolbar" role="menu">
                                             <h:commandLink class="btn btn-primary" onclick="$('#newDriverModal').modal('show')" action="#{carBean.updateSelectedDriver()}">
-                                                <i class="fa fa-check"/>
                                                 <f:ajax render=":modal-form-1" execute="@this"/>
-                                                Add driver
+                                                Update ownership
                                             </h:commandLink>
                                         </div>
                                     </header>

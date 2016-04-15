@@ -53,4 +53,8 @@ public class CarOverviewBean extends DataTableModel<CarService, Car> implements 
     public void sortByDriver() {
         sort("d.lastName");
     }
+    
+    public void sortByLicencePlate() {
+        sort("c.licencePlate");
+    }
 }

@@ -31,6 +31,7 @@
                     <div class="row">
                         <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" 
+                                 data-widget-fullscreenbutton="false" data-widget-togglebutton="false"
                                  data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-sortable="false">     
                                 <header>
                                     <span class="widget-icon"> <i class="fa fa-table"/> </span>
@@ -86,7 +87,13 @@
                                                                 <tr>
                                                                     <f:ajax execute="@form" render="@form">
                                                                         <th>
-                                                                            Licence plate
+                                                                            <h:commandLink value="Licence plate" action="#{carOverviewBean.sortByLicencePlate()}"/>
+                                                                            <h:commandLink  class="#{sortIsAscending ? 'fa fa-long-arrow-up' : 'fa fa-long-arrow-down'} pull-right" 
+                                                                                            action="#{carOverviewBean.sortByLicencePlate()}"
+                                                                                            rendered="#{sortedOn eq 'c.licencePlate'}"/>
+                                                                            <h:commandLink class="fa fa-arrows-v pull-right" 
+                                                                                           action="#{carOverviewBean.sortByLicencePlate()}"
+                                                                                           rendered="#{sortedOn != 'c.licencePlate'}"/>
                                                                         </th>
                                                                         <th>
                                                                             <h:commandLink value="Driver" action="#{carOverviewBean.sortByDriver()}"/>
@@ -110,7 +117,10 @@
                                                                             </h:outputLink>
                                                                         </td>
                                                                         <td>
-                                                                            <h:outputText value="#{item.currentOwnership.driver.getFullName()}" />
+                                                                            <h:outputLink value="../driver/driver.xhtml">
+                                                                                <f:param name="driverId" value="#{item.currentOwnership.driver.id}"/>
+                                                                                <h:outputText value="#{item.currentOwnership.driver.getFullName()}" />  
+                                                                            </h:outputLink>
                                                                         </td>
                                                                     </tr>
                                                                 </ui:repeat>

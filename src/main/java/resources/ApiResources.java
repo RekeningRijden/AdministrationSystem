@@ -33,7 +33,7 @@ public class ApiResources {
     private InvoiceService invoiceService;
 
     /**
-     * For testing purposes only
+     * For TESTING purposes only
      *
      * @return a test string
      */
@@ -44,7 +44,7 @@ public class ApiResources {
     }
 
     /**
-     * For testing purposes only
+     * For TESTING purposes only
      *
      * @param driver The new Driver
      * @return The newly created Driver

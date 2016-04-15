@@ -9,19 +9,16 @@ import main.domain.Car;
 import main.service.CarService;
 import web.model.DataTableModel;
 
-import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.enterprise.context.SessionScoped;
 
 /**
  * @author maikel
  */
-@ManagedBean
 @Named
 @ViewScoped
 public class CarOverviewBean extends DataTableModel<CarService, Car> implements Serializable {
@@ -55,5 +52,9 @@ public class CarOverviewBean extends DataTableModel<CarService, Car> implements 
 
     public void sortByDriver() {
         sort("d.lastName");
+    }
+    
+    public void sortByLicencePlate() {
+        sort("c.licencePlate");
     }
 }

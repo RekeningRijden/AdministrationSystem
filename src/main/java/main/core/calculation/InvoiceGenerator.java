@@ -85,6 +85,6 @@ public class InvoiceGenerator {
             totalDistance += Calculator.calcuateTotalDistance(period);
         }
 
-        return car.getRate().getRate().multiply(new BigDecimal(totalDistance));
+        return car.getRate().getValue().multiply(new BigDecimal(totalDistance));
     }
 }

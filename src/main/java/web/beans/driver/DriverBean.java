@@ -6,9 +6,9 @@
 package web.beans.driver;
 
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
 
 import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -17,12 +17,12 @@ import main.domain.Driver;
 import main.service.DriverService;
 import web.core.helpers.ContextHelper;
 import web.core.helpers.FrontendHelper;
+import web.core.helpers.RedirectHelper;
 
 /**
  *
  * @author maikel
  */
-@ManagedBean
 @Named
 @SessionScoped
 public class DriverBean implements Serializable {
@@ -33,6 +33,7 @@ public class DriverBean implements Serializable {
     private Long driverId;
     private Driver driver;
 
+    //@PostConstruct
     public void init() {
         if (!ContextHelper.isAjaxRequest()) {
             if (driverId != null) {
@@ -58,6 +59,7 @@ public class DriverBean implements Serializable {
             driverService.create(driver);
             FrontendHelper.displaySuccessSmallBox("De bestuurder is aangemaakt");
         }
+        RedirectHelper.redirect("/pages/driver/driverOverview.xhtml");
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters / Setters">

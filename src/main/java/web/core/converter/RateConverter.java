@@ -20,11 +20,11 @@ public class RateConverter implements Converter, Serializable {
     private RateService rateService;
 
     @Override
-    public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        if (value == null || value.isEmpty()) {
+    public Object getAsObject(FacesContext context, UIComponent component, String name) {
+        if (name == null || name.isEmpty()) {
             return null;
         } else {
-            return rateService.getByValue(value);
+            return rateService.getByName(name);
         }
     }
 
@@ -33,6 +33,6 @@ public class RateConverter implements Converter, Serializable {
         if (value == null) {
             return "";
         }
-        return ((Rate) value).getRateValue();
+        return ((Rate) value).getName();
     }
 }

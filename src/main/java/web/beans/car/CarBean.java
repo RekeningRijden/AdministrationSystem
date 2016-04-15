@@ -13,11 +13,10 @@ import java.util.Date;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import main.communication.Communicator;
+import main.core.communcation.Communicator;
 import main.domain.Car;
 import main.domain.Driver;
 import main.domain.Ownership;
@@ -27,11 +26,12 @@ import main.service.DriverService;
 import main.service.RateService;
 import web.core.helpers.ContextHelper;
 import web.core.helpers.FrontendHelper;
+import javax.faces.view.ViewScoped;
+import web.core.helpers.RedirectHelper;
 
 /**
  * @author maikel
  */
-@ManagedBean
 @Named
 @SessionScoped
 public class CarBean implements Serializable {
@@ -72,9 +72,10 @@ public class CarBean implements Serializable {
     }
 
     public void save() {
-        if (carService.hasBeenPersisted(car)) {
+        if (car.getCartrackerId() != null && carService.hasBeenPersisted(car)) {
             carService.update(car);
             FrontendHelper.displaySuccessSmallBox("De auto is geüpdate");
+            RedirectHelper.redirect("/pages/car/carOverview.xhtml");
         } else {
             if (car.getCurrentOwnership().getDriver() != null) {
                 try {
@@ -82,6 +83,7 @@ public class CarBean implements Serializable {
                     car.getPastOwnerships().add(car.getCurrentOwnership());
                     carService.create(car);
                     FrontendHelper.displaySuccessSmallBox("De auto is toegevoegd");
+                    RedirectHelper.redirect("/pages/car/carOverview.xhtml");
                 } catch (IOException | JSONException e) {
                     e.printStackTrace();
                     FrontendHelper.displayErrorSmallBox("De auto kon niet toegevoegd worden");

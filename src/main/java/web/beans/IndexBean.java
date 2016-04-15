@@ -6,7 +6,6 @@
 package web.beans;
 
 import java.io.Serializable;
-import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -17,7 +16,6 @@ import main.service.RateService;
  *
  * @author maikel
  */
-@ManagedBean
 @Named
 @ViewScoped
 public class IndexBean implements Serializable {

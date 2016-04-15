@@ -95,7 +95,7 @@ public class InvoiceGenerationTest {
 
     private Car buildCar() {
         Rate rate = new Rate();
-        rate.setRate(new BigDecimal(2.0));
+        rate.setValue(new BigDecimal(2.0));
 
         rateService.create(rate);
 

@@ -1,15 +1,13 @@
 package web.beans;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.inject.Named;
 
 import java.io.Serializable;
+import javax.enterprise.context.SessionScoped;
 
 /**
  * @author administration
  */
-@ManagedBean
 @Named
 @SessionScoped
 public class LeftMenuBean implements Serializable {

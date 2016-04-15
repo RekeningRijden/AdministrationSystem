@@ -1,5 +1,7 @@
 package main.domain;
 
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,6 +38,7 @@ public class Ownership implements Serializable, IEntity {
     @OneToMany(mappedBy = "ownership", cascade = CascadeType.ALL)
     private List<Invoice> invoices;
 
+    @XmlInverseReference(mappedBy = "currentOwnership")
     @ManyToOne
     private Car car;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

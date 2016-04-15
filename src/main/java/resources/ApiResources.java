@@ -32,6 +32,12 @@ public class ApiResources {
     @Inject
     private InvoiceService invoiceService;
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Driver> getDrivers() {
+        return driverService.getAll();
+    }
+
     /**
      * For TESTING purposes only
      *

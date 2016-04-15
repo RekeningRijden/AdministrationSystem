@@ -1,5 +1,7 @@
 package main.domain;
 
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,7 @@ public class Driver implements Serializable, IEntity {
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 
+    @XmlInverseReference(mappedBy = "driver")
     @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
     private List<Ownership> ownerships;
 

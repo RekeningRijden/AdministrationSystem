@@ -183,11 +183,11 @@
                                             </div>
                                         </section>
                                     </div>
-                                    <button type="submit" class="btn btn-primary" jsf:action="#{carBean.saveDriver()}">
+                                    <h:commandLink type="submit" class="btn btn-primary" action="#{carBean.saveDriver()}">
                                         <i class="fa fa-check"/>
                                         Opslaan
                                         <f:ajax execute="@form" render=":form msgs"/>
-                                    </button>
+                                    </h:commandLink>
                                     <h:commandLink class="btn btn-default" onclick="$('#newDriverModal').modal('hide')">
                                         Cancel
                                         <f:ajax execute="@this" render="@none"/>

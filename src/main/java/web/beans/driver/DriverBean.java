@@ -31,7 +31,7 @@ public class DriverBean implements Serializable {
     private Driver driver;
 
     public void init() {
-        if (!ContextHelper.isAjaxRequest()) {
+        //if (!ContextHelper.isAjaxRequest()) {
             if (driverId != null) {
                 driver = driverService.findById(driverId);
                 if (driver.getAddress() == null) {
@@ -44,7 +44,7 @@ public class DriverBean implements Serializable {
                 Address address = new Address();
                 driver.setAddress(address);
             }
-        }
+        //}
     }
 
     public void save() {

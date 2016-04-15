@@ -16,6 +16,7 @@ import main.domain.Driver;
 import main.service.DriverService;
 import web.core.helpers.ContextHelper;
 import web.core.helpers.FrontendHelper;
+import web.core.helpers.RedirectHelper;
 
 /**
  *
@@ -57,6 +58,7 @@ public class DriverBean implements Serializable {
             driverService.create(driver);
             FrontendHelper.displaySuccessSmallBox("De bestuurder is aangemaakt");
         }
+        RedirectHelper.redirect("/pages/driver/driverOverview.xhtml");
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters / Setters">

@@ -10,7 +10,7 @@
         <f:metadata>
             <f:viewParam name="driverId" value="#{driverBean.driverId}" />
 
-            <f:event type="preRenderView" listener="#{leftMenuBean.setCurrentMenuItem('')}" />
+            <f:event type="preRenderView" listener="#{leftMenuBean.setCurrentMenuItem('driver')}" />
             <f:event type="preRenderView" listener="#{driverBean.init()}" />
         </f:metadata>
 

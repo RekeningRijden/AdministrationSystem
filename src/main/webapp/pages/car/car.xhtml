@@ -11,7 +11,7 @@
         <f:metadata>
             <f:viewParam name="carId" value="#{carBean.carId}" />
 
-            <f:event type="preRenderView" listener="#{leftMenuBean.setCurrentMenuItem('')}" />
+            <f:event type="preRenderView" listener="#{leftMenuBean.setCurrentMenuItem('car')}" />
             <f:event type="preRenderView" listener="#{carBean.init()}" />
         </f:metadata>
 

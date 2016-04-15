@@ -26,6 +26,7 @@ import main.service.RateService;
 import web.core.helpers.ContextHelper;
 import web.core.helpers.FrontendHelper;
 import javax.faces.view.ViewScoped;
+import web.core.helpers.RedirectHelper;
 
 /**
  * @author maikel
@@ -73,13 +74,15 @@ public class CarBean implements Serializable {
         if (carService.hasBeenPersisted(car)) {
             carService.update(car);
             FrontendHelper.displaySuccessSmallBox("De auto is geüpdate");
+            RedirectHelper.redirect("/pages/car/carOverview.xhtml");
         } else {
-            if (car.getCurrentOwnership().getDriver() != null) {
+            if (car.getCurrentOwnership().getDriver().getId() != null) {
                 try {
                     car.setCartrackerId(Communicator.requestNewCartracker());
                     car.getPastOwnerships().add(car.getCurrentOwnership());
                     carService.create(car);
                     FrontendHelper.displaySuccessSmallBox("De auto is toegevoegd");
+                    RedirectHelper.redirect("/pages/car/carOverview.xhtml");
                 } catch (IOException | JSONException e) {
                     e.printStackTrace();
                     FrontendHelper.displayErrorSmallBox("De auto kon niet toegevoegd worden");

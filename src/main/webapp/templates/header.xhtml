@@ -1,8 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:jsf="http://java.sun.com/jsf">
+      xmlns:h="http://java.sun.com/jsf/html">
 
     <ui:composition>
         <h:form>
@@ -13,12 +11,11 @@
                          style="padding-left: 15px; padding-top: 4px;" alt="S63A"/>
                 </div>
 
-                <div class="pull-right" style="min-width: 110px;">
-                    <div class="header-button-group pull-right">
-                        <h:commandLink class="btn btn-primary btn-sm" style="margin-right: 4px;">
-                            <i class="fa fa-user fa-lg"/>
-                            <f:ajax execute="@this" render="@none"/>
-                        </h:commandLink>
+            <div class="pull-right" style="min-width: 110px;">
+                <div class="header-button-group pull-right">
+                    <h:outputLink class="btn btn-primary btn-sm" value="/pages/profile/profile.xhtml" style="margin-right: 4px;">
+                        <i class="fa fa-user fa-lg"/>
+                    </h:outputLink>
 
                         <h:commandLink class="btn btn-primary btn-sm">
                             <i class="fa fa-sign-out fa-lg"/>

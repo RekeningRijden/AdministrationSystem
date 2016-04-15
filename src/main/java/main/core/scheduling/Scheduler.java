@@ -1,37 +1,27 @@
 package main.core.scheduling;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.Serializable;
 
-import main.core.communcation.Communicator;
-import main.domain.simulation.CarTracker;
+import javax.ejb.Schedule;
+import javax.ejb.Singleton;
+import javax.inject.Inject;
+
+import main.core.calculation.InvoiceGenerator;
 
 /**
  * @author Sam
  */
-public class Scheduler {
+@Singleton
+public class Scheduler implements Serializable {
 
-    public Scheduler() {
+    @Inject
+    private InvoiceGenerator invoiceGenerator;
 
-    }
-
-    public void start() {
-        try {
-            List<CarTracker> trackers = Communicator.getAllCartrackers();
-
-
-
-
-
-
-
-
-
-
-        } catch (IOException e) {
-            Logger.getLogger(Communicator.class.getName()).log(Level.SEVERE, null, e);
-        }
+    /**
+     * Start invoice generation on the first day of the month.
+     */
+    @Schedule(dayOfMonth = "1")
+    public void doWork() {
+        //invoiceGenerator.generate();
     }
 }

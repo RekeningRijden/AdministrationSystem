@@ -17,7 +17,7 @@ public class CarTracker implements Serializable {
 
     private List<TrackingPeriod> trackingPeriods;
 
-    public void CarTracker() {
+    public CarTracker() {
         this.trackingPeriods = new ArrayList<>();
     }
 

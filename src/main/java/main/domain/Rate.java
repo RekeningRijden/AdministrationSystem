@@ -6,15 +6,19 @@
 package main.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import main.core.helper.NumberHelper;
+
 /**
- *
  * @author martijn
  */
 @Entity
@@ -25,14 +29,17 @@ public class Rate implements Serializable, IEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String rateValue;
+    private String name;
+    @Column(precision = 20, scale = 10)
+    private BigDecimal value;
 
     public Rate() {
-
+        this.value = BigDecimal.ZERO;
     }
 
-    public Rate(String rateValue) {
-        this.rateValue = rateValue;
+    public Rate(String name) {
+        this();
+        this.name = name;
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
@@ -41,12 +48,12 @@ public class Rate implements Serializable, IEntity {
         return id;
     }
 
-    public String getRateValue() {
-        return rateValue;
+    public String getName() {
+        return name;
     }
 
-    public void setRateValue(String rateValue) {
-        this.rateValue = rateValue;
+    public void setName(String name) {
+        this.name = name;
     }
     //</editor-fold>
 
@@ -71,6 +78,22 @@ public class Rate implements Serializable, IEntity {
             return false;
         }
         return true;
+    }
+
+    public BigDecimal getValue() {
+        return value;
+    }
+
+    public void setValue(BigDecimal value) {
+        this.value = value;
+    }
+
+    public String getValueString() {
+        return NumberHelper.parseToString(value);
+    }
+
+    public void setValueString(String value) {
+        this.value = NumberHelper.parseToBigDecimal(value);
     }
 
 //</editor-fold>

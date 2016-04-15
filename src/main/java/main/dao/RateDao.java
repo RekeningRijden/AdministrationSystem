@@ -14,8 +14,15 @@ import main.domain.Rate;
  */
 public abstract class RateDao extends AbstractDao<Rate> {
     
+    public Rate getByName(String name) {
+        TypedQuery<Rate> q = getEntityManager().createQuery("SELECT r FROM Rate r WHERE r.name = :name", Rate.class)
+                .setParameter("name", name);
+
+        return q.getResultList().isEmpty() ? null : q.getResultList().get(0);
+    }
+
     public Rate getByValue(String value) {
-        TypedQuery<Rate> q = getEntityManager().createQuery("SELECT r FROM Rate r WHERE r.rateValue = :value", Rate.class)
+        TypedQuery<Rate> q = getEntityManager().createQuery("SELECT r FROM Rate r WHERE r.value = :value", Rate.class)
                 .setParameter("value", value);
 
         return q.getResultList().isEmpty() ? null : q.getResultList().get(0);

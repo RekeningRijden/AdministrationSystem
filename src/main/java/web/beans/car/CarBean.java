@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -32,7 +33,7 @@ import web.core.helpers.RedirectHelper;
  * @author maikel
  */
 @Named
-@ViewScoped
+@SessionScoped
 public class CarBean implements Serializable {
 
     @Inject

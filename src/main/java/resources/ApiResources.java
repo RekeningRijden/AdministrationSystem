@@ -35,17 +35,6 @@ public class ApiResources {
     /**
      * For TESTING purposes only
      *
-     * @return a test string
-     */
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getUsers() {
-        return "test";
-    }
-
-    /**
-     * For TESTING purposes only
-     *
      * @param driver The new Driver
      * @return The newly created Driver
      */

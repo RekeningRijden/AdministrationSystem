@@ -20,7 +20,7 @@ import web.model.DataTableModel;
 /**
  * @author maikel
  */
-@ManagedBean
+//@ManagedBean
 @Named
 @ViewScoped
 public class DriverOverviewBean extends DataTableModel<DriverService, Driver> implements Serializable {

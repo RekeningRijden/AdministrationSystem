@@ -21,7 +21,7 @@ import web.core.helpers.FrontendHelper;
  *
  * @author maikel
  */
-@ManagedBean
+//@ManagedBean
 @Named
 @ViewScoped
 public class DriverBean implements Serializable {

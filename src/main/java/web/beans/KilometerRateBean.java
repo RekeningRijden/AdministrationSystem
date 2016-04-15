@@ -5,7 +5,8 @@
  */
 package web.beans;
 
-import javax.faces.bean.ManagedBean;
+import java.io.Serializable;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import main.domain.Rate;
@@ -16,9 +17,9 @@ import main.service.RateService;
  *
  * @author martijn
  */
-@ManagedBean
 @Named
-public class KilometerRateBean {
+@ViewScoped
+public class KilometerRateBean implements Serializable{
     
     @Inject
     private RateService rateService;

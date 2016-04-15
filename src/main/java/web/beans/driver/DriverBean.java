@@ -6,6 +6,7 @@
 package web.beans.driver;
 
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -30,6 +31,7 @@ public class DriverBean implements Serializable {
     private Long driverId;
     private Driver driver;
 
+    @PostConstruct
     public void init() {
         if (!ContextHelper.isAjaxRequest()) {
             if (driverId != null) {

@@ -25,14 +25,16 @@ public class Rate implements Serializable, IEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String rateValue;
+    private String name;
+
+    private String value;
 
     public Rate() {
 
     }
 
-    public Rate(String rateValue) {
-        this.rateValue = rateValue;
+    public Rate(String name) {
+        this.name = name;
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
@@ -41,12 +43,12 @@ public class Rate implements Serializable, IEntity {
         return id;
     }
 
-    public String getRateValue() {
-        return rateValue;
+    public String getName() {
+        return name;
     }
 
-    public void setRateValue(String rateValue) {
-        this.rateValue = rateValue;
+    public void setName(String name) {
+        this.name = name;
     }
     //</editor-fold>
 
@@ -71,6 +73,14 @@ public class Rate implements Serializable, IEntity {
             return false;
         }
         return true;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 
 //</editor-fold>

@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -85,7 +87,7 @@ public class CarBean implements Serializable {
                     FrontendHelper.displaySuccessSmallBox("De auto is toegevoegd");
                     RedirectHelper.redirect("/pages/car/carOverview.xhtml");
                 } catch (IOException | JSONException e) {
-                    e.printStackTrace();
+                    Logger.getLogger(CarBean.class.getName()).log(Level.SEVERE, null, e);
                     FrontendHelper.displayErrorSmallBox("De auto kon niet toegevoegd worden");
                 }
             } else {

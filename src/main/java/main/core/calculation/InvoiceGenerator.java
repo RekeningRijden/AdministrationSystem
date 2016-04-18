@@ -2,6 +2,7 @@ package main.core.calculation;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -24,7 +25,7 @@ import main.service.CarService;
  * @author Sam
  */
 @Named
-public class InvoiceGenerator {
+public class InvoiceGenerator implements Serializable{
 
     @Inject
     private CarService carService;
@@ -85,6 +86,6 @@ public class InvoiceGenerator {
             totalDistance += Calculator.calcuateTotalDistance(period);
         }
 
-        return car.getRate().getValue().multiply(new BigDecimal(totalDistance));
+        return car.getRate().getValue().multiply(BigDecimal.valueOf(totalDistance));
     }
 }

@@ -81,7 +81,7 @@ public class CarBean implements Serializable {
                 try {
                     car.setCartrackerId(Communicator.requestNewCartracker());
                     car.getPastOwnerships().add(car.getCurrentOwnership());
-                    car = carService.create(car);
+                    car = carService.update(car);
                     FrontendHelper.displaySuccessSmallBox("De auto is toegevoegd");
                     RedirectHelper.redirect("/pages/car/carOverview.xhtml");
                 } catch (IOException | JSONException e) {

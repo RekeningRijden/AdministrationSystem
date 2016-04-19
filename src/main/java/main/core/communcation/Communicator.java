@@ -44,7 +44,7 @@ public class Communicator {
     public static Long requestNewCartracker() throws IOException, JSONException {
         //Request
         HttpClient httpClient = HttpClientBuilder.create().build();
-        HttpPost post = new HttpPost(BASE_URL_TEST);
+        HttpPost post = new HttpPost(BASE_URL_PRODUCTION);
         HttpResponse response = httpClient.execute(post);
 
         //Response
@@ -62,7 +62,7 @@ public class Communicator {
      */
     public static List<CarTracker> getAllCartrackers() throws IOException {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-        HttpGet get = new HttpGet(BASE_URL_TEST);
+        HttpGet get = new HttpGet(BASE_URL_PRODUCTION);
         HttpResponse response = httpClient.execute(get);
 
         String responseString = EntityUtils.toString(response.getEntity(), "UTF-8");
@@ -79,7 +79,7 @@ public class Communicator {
      */
     public static List<Long> getAllCartrackerIds() throws IOException {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-        HttpGet get = new HttpGet(BASE_URL_TEST + "/ids");
+        HttpGet get = new HttpGet(BASE_URL_PRODUCTION + "/ids");
         HttpResponse response = httpClient.execute(get);
 
         String responseString = EntityUtils.toString(response.getEntity(), "UTF-8");
@@ -105,7 +105,7 @@ public class Communicator {
         String endDate = dateInMonth.withDayOfMonth(dateInMonth.lengthOfMonth()).toString();
 
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-        HttpGet get = new HttpGet(BASE_URL_TEST
+        HttpGet get = new HttpGet(BASE_URL_PRODUCTION
                 + "/"
                 + id
                 + "/movements/_byperiod?startDate="

@@ -1,6 +1,7 @@
 package main.core.communcation;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpResponse;
@@ -44,7 +45,7 @@ public class Communicator {
     public static Long requestNewCartracker() throws IOException, JSONException {
         //Request
         HttpClient httpClient = HttpClientBuilder.create().build();
-        HttpPost post = new HttpPost(BASE_URL_TEST);
+        HttpPost post = new HttpPost(BASE_URL_PRODUCTION);
         HttpResponse response = httpClient.execute(post);
 
         //Response
@@ -62,11 +63,11 @@ public class Communicator {
      */
     public static List<CarTracker> getAllCartrackers() throws IOException {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-        HttpGet get = new HttpGet(BASE_URL_TEST);
+        HttpGet get = new HttpGet(BASE_URL_PRODUCTION);
         HttpResponse response = httpClient.execute(get);
 
         String responseString = EntityUtils.toString(response.getEntity(), "UTF-8");
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
         return gson.fromJson(responseString, new TypeToken<List<CarTracker>>() {
         }.getType());
     }
@@ -79,11 +80,11 @@ public class Communicator {
      */
     public static List<Long> getAllCartrackerIds() throws IOException {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-        HttpGet get = new HttpGet(BASE_URL_TEST + "/ids");
+        HttpGet get = new HttpGet(BASE_URL_PRODUCTION + "/ids");
         HttpResponse response = httpClient.execute(get);
 
         String responseString = EntityUtils.toString(response.getEntity(), "UTF-8");
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
         return gson.fromJson(responseString, new TypeToken<List<Long>>() {
         }.getType());
     }
@@ -105,7 +106,7 @@ public class Communicator {
         String endDate = dateInMonth.withDayOfMonth(dateInMonth.lengthOfMonth()).toString();
 
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-        HttpGet get = new HttpGet(BASE_URL_TEST
+        HttpGet get = new HttpGet(BASE_URL_PRODUCTION
                 + "/"
                 + id
                 + "/movements/_byperiod?startDate="
@@ -116,7 +117,7 @@ public class Communicator {
         HttpResponse response = httpClient.execute(get);
 
         String responseString = EntityUtils.toString(response.getEntity(), "UTF-8");
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
         return gson.fromJson(responseString, new TypeToken<List<TrackingPeriod>>() {
         }.getType());
     }

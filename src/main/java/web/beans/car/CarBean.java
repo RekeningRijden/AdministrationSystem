@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -73,7 +75,7 @@ public class CarBean implements Serializable {
 
     public void save() {
         if (car.getCartrackerId() != null && carService.hasBeenPersisted(car)) {
-            carService.update(car);
+            car = carService.update(car);
             FrontendHelper.displaySuccessSmallBox("De auto is geüpdate");
             RedirectHelper.redirect("/pages/car/carOverview.xhtml");
         } else {
@@ -81,11 +83,11 @@ public class CarBean implements Serializable {
                 try {
                     car.setCartrackerId(Communicator.requestNewCartracker());
                     car.getPastOwnerships().add(car.getCurrentOwnership());
-                    carService.create(car);
+                    car = carService.update(car);
                     FrontendHelper.displaySuccessSmallBox("De auto is toegevoegd");
                     RedirectHelper.redirect("/pages/car/carOverview.xhtml");
                 } catch (IOException | JSONException e) {
-                    e.printStackTrace();
+                    Logger.getLogger(CarBean.class.getName()).log(Level.SEVERE, null, e);
                     FrontendHelper.displayErrorSmallBox("De auto kon niet toegevoegd worden");
                 }
             } else {
@@ -102,18 +104,22 @@ public class CarBean implements Serializable {
         if (selectedDriver.equals(car.getCurrentOwnership().getDriver())) {
             FrontendHelper.displayErrorSmallBox("Dit is al de bestuurder");
         } else {
-            car.getCurrentOwnership().setEndDate(new Date());
-            car = carService.update(car);
+            if (car.getCurrentOwnership().getId() != null) {
+                car.getCurrentOwnership().setEndDate(new Date());
+                car = carService.update(car);
 
-            Ownership ownership = new Ownership();
-            ownership.setDriver(selectedDriver);
-            ownership.setCar(car);
-            ownership.setStartDate(new Date());
+                Ownership ownership = new Ownership();
+                ownership.setDriver(selectedDriver);
+                ownership.setCar(car);
+                ownership.setStartDate(new Date());
 
-            car.setCurrentOwnership(ownership);
-            car.getPastOwnerships().add(car.getCurrentOwnership());
+                car.setCurrentOwnership(ownership);
+                car.getPastOwnerships().add(car.getCurrentOwnership());
 
-            car = carService.update(car);
+                car = carService.update(car);
+            }else{
+                car.getCurrentOwnership().setDriver(selectedDriver);
+            }
         }
         FrontendHelper.hideModal("newDriverModal");
     }

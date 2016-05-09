@@ -5,7 +5,53 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<f:view>
-    <h:outputLabel value="Hello, world"/>
-</f:view>
+
+
+<ui:composition template="../../templates/main.xhtml">
+
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{leftMenuBean.setCurrentMenuItem('profile')}" />
+        <f:event type="preRenderView" listener="#{kilometerRateBean.init()}" />
+    </f:metadata>
+
+    <ui:define name="content">
+        <div id="content">
+            <h:form id="registerForm">
+                <table>
+                    <tr>
+                        <td><h:outputText value="Voornaam:" /></td>
+                        <td><h:inputText id="fname" value="#{loginBean.firstName}"
+                                         required="true" requiredMessage="Please enter your first name" /></td>
+                        <td><h:message for="fname" style="color:red" /></td>
+                    </tr>
+                    <tr>
+                        <td><h:outputText value="Achternaam:" /></td>
+                        <td><h:inputText id="lname" value="#{loginBean.lastName}"
+                                         required="true" requiredMessage="Please enter your last name" /></td>
+                        <td><h:message for="lname" style="color:red" /></td>
+                    </tr>
+                    <tr>
+                        <td><h:outputText value="Email:" /></td>
+                        <td><h:inputText id="email" value="#{loginBean.email}"
+                                         required="true" requiredMessage="Please enter your email id" /></td>
+                        <td><h:message for="email" style="color:red" /></td>
+                    </tr>
+                    <tr>
+                        <td><h:outputText value="Wachtwoord:" /></td>
+                        <td><h:inputSecret id="psw" value="#{loginBean.password}"
+                                           required="true" requiredMessage="Please enter your password" /></td>
+                        <td><h:message for="psw" style="color:red" /></td>
+                    </tr>
+                    <tr>
+                        <td />
+                        <td><h:commandButton value="Register" action="#{loginBean.register()}" /></td>
+                    </tr>
+                    <tr>
+                        <td><h:outputLink value="car.xhtml">Home</h:outputLink></td>
+                    </tr>
+                </table>
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>
 </html>

@@ -4,12 +4,16 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import main.domain.Driver;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -121,6 +125,29 @@ public class Communicator {
         return gson.fromJson(responseString, new TypeToken<List<TrackingPeriod>>() {
         }.getType());
     }
+
+    public static Long addDriver(Driver driver) throws IOException, JSONException {
+        Gson gson = new Gson();
+        HttpClient httpClient = HttpClientBuilder.create().build();
+        HttpPut post = new HttpPut("http://billdriver.s63a.marijn.ws/api/users");
+
+        String jsonBody = gson.toJson(driver);
+        StringEntity postingString = new StringEntity(jsonBody, "UTF-8");
+
+        System.out.println(jsonBody);
+
+        post.setEntity(postingString);
+        post.setHeader(HTTP.CONTENT_TYPE, "application/json");
+
+        HttpResponse response = httpClient.execute(post);
+
+        //Response
+        String responseString = EntityUtils.toString(response.getEntity(), "UTF-8");
+        JSONObject json = new JSONObject(responseString);
+        System.out.println("JSON Response: " + json);
+        return json.getLong("id");
+    }
+
 }
 
 

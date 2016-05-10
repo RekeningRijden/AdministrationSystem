@@ -5,6 +5,7 @@
  */
 package web.beans.driver;
 
+import java.io.IOException;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 
@@ -12,9 +13,12 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import main.core.communcation.Communicator;
 import main.domain.Address;
 import main.domain.Driver;
 import main.service.DriverService;
+import org.codehaus.jettison.json.JSONException;
 import web.core.helpers.ContextHelper;
 import web.core.helpers.FrontendHelper;
 import web.core.helpers.RedirectHelper;
@@ -56,7 +60,15 @@ public class DriverBean implements Serializable {
             driverService.update(driver);
             FrontendHelper.displaySuccessSmallBox("De bestuurder is geupdate");
         } else {
-            driverService.create(driver);
+            driver = driverService.create(driver);
+            //register in bill driver application
+
+            try {
+                Communicator.addDriver(driver);
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+
             FrontendHelper.displaySuccessSmallBox("De bestuurder is aangemaakt");
         }
         RedirectHelper.redirect("/pages/driver/driverOverview.xhtml");

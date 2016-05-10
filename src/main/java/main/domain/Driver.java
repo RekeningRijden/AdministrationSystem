@@ -31,6 +31,8 @@ public class Driver implements Serializable, IEntity {
     private String firstName;
     private String lastName;
 
+    private String email;
+
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 
@@ -80,6 +82,14 @@ public class Driver implements Serializable, IEntity {
 
     public String getFullName() {
         return firstName + " " + lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @XmlTransient

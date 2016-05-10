@@ -5,6 +5,7 @@
       xmlns:jsf="http://java.sun.com/jsf">
 
     <ui:composition>
+        <ui:param name="root" value="#{request.contextPath}"/>
         <ui:param name="currentMenuItem" value="#{leftMenuBean.currentMenuItem}"/>
 
         <h:form>
@@ -12,16 +13,16 @@
                 <nav>
                     <ul>
                         <li class="#{currentMenuItem eq 'index' ? 'active' : ''}">
-                            <a href="/index.xhtml"><i class="fa fa-lg fa-fw fa-home"/><span class="menu-item-parent">Index</span></a>
+                            <a href="#{root}/index.xhtml"><i class="fa fa-lg fa-fw fa-home"/><span class="menu-item-parent">Index</span></a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-lg fa-fw fa-car"/><span class="menu-item-parent">Car</span></a>
                             <ul>
                                 <li class="#{currentMenuItem eq 'carOverview' ? 'active' : ''}">
-                                    <a href="/pages/car/carOverview.xhtml">Overview</a>
+                                    <a href="#{root}/pages/car/carOverview.xhtml">Overview</a>
                                 </li>
                                 <li class="#{currentMenuItem eq 'car' ? 'active' : ''}">
-                                    <a href="/pages/car/car.xhtml">Add car</a>
+                                    <a href="#{root}/pages/car/car.xhtml">Add car</a>
                                 </li>
                             </ul>
                         </li>
@@ -29,10 +30,10 @@
                             <a href="#"><i class="fa fa-lg fa-fw fa-user"/><span class="menu-item-parent">Driver</span></a>
                             <ul>
                                 <li class="#{currentMenuItem eq 'driverOverview' ? 'active' : ''}">
-                                    <a href="/pages/driver/driverOverview.xhtml">Overview</a>
+                                    <a href="#{root}/pages/driver/driverOverview.xhtml">Overview</a>
                                 </li>
                                 <li class="#{currentMenuItem eq 'driver' ? 'active' : ''}">
-                                    <a href="/pages/driver/driver.xhtml">Add driver</a>
+                                    <a href="#{root}/pages/driver/driver.xhtml">Add driver</a>
                                 </li>
                             </ul>
                         </li>
@@ -40,7 +41,7 @@
                             <a href="#"><i class="fa fa-lg fa-fw fa-book"/><span class="menu-item-parent">Invoice</span></a>
                             <ul>
                                 <li class="#{currentMenuItem eq 'invoiceOverview' ? 'active' : ''}">
-                                    <a href="/pages/invoice/invoiceOverview.xhtml">Overview</a>
+                                    <a href="#{root}/pages/invoice/invoiceOverview.xhtml">Overview</a>
                                 </li>
                             </ul>
                         </li>
@@ -48,7 +49,7 @@
                             <a href="#"><i class="fa fa-lg fa-fw fa-pie-chart"/><span class="menu-item-parent">Rate</span></a>
                             <ul>
                                 <li class="#{currentMenuItem eq 'rate' ? 'active' : ''}">
-                                    <a href="/pages/rate/rate.xhtml">Overview</a>
+                                    <a href="#{root}/pages/rate/rate.xhtml">Overview</a>
                                 </li>
                             </ul>
                         </li>

@@ -3,17 +3,19 @@
       xmlns:h="http://java.sun.com/jsf/html">
 
     <ui:composition>
+        <ui:param name="root" value="#{request.contextPath}"/>
+        
         <h:form>
             <header id="header">
                 <div id="logo-group">
                     <div class="hidden-xs pull-left" style="width: 30px; height: 45px;"></div>
-                    <img src="/resources/img/logo-small.png" width="70" height="40"
+                    <img src="#{root}/resources/img/logo-small.png" width="70" height="40"
                          style="padding-left: 15px; padding-top: 4px;" alt="S63A"/>
                 </div>
 
             <div class="pull-right" style="min-width: 110px;">
                 <div class="header-button-group pull-right">
-                    <h:outputLink class="btn btn-primary btn-sm" value="/pages/profile/profile.xhtml" style="margin-right: 4px;">
+                    <h:outputLink class="btn btn-primary btn-sm" value="#{root}/pages/profile/profile.xhtml" style="margin-right: 4px;">
                         <i class="fa fa-user fa-lg"/>
                     </h:outputLink>
 

@@ -4,35 +4,36 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:jsf="http://java.sun.com/jsf">
     <ui:composition>
+        <ui:param name="root" value="#{request.contextPath}"/>
 
         <!-- JQUERY-UI -->
-        <script src="/resources/js/libs/jquery-ui-1.10.3.min.js" ></script>
+        <script src="#{root}/resources/js/libs/jquery-ui-1.10.3.min.js" ></script>
 
         <!-- IMPORTANT: APP CONFIG -->
-        <script src="/resources/js/app.config.js"></script>
+        <script src="#{root}/resources/js/app.config.js"></script>
 
         <!-- BOOTSTRAP JS -->
-        <script src="/resources/js/bootstrap/bootstrap.min.js"></script>
+        <script src="#{root}/resources/js/bootstrap/bootstrap.min.js"></script>
 
         <!-- CUSTOM NOTIFICATION -->
-        <script src="/resources/js/notification/SmartNotification.min.js"></script>
+        <script src="#{root}/resources/js/notification/SmartNotification.min.js"></script>
 
         <!-- JARVIS WIDGETS -->
-        <script src="/resources/js/smartwidgets/jarvis.widget.min.js"></script>
+        <script src="#{root}/resources/js/smartwidgets/jarvis.widget.min.js"></script>
 
         <!-- browser msie issue fix -->
-        <script src="/resources/js/plugin/msie-fix/jquery.mb.browser.min.js"></script>
+        <script src="#{root}/resources/js/plugin/msie-fix/jquery.mb.browser.min.js"></script>
 
         <!-- MAIN APP JS FILE -->
-        <script src="/resources/js/app.min.js"></script>
+        <script src="#{root}/resources/js/app.min.js"></script>
 
-        <script src="/resources/js/plugin/bootstrapvalidator/bootstrapValidator.min.js"></script>
+        <script src="#{root}/resources/js/plugin/bootstrapvalidator/bootstrapValidator.min.js"></script>
 
         <!-- PAGE RELATED PLUGIN(S) -->
-        <script src="/resources/js/plugin/summernote/summernote.min.js"></script>
+        <script src="#{root}/resources/js/plugin/summernote/summernote.min.js"></script>
 
-        <script src="/resources/js/bootstrap-filestyle.min.js"></script>
+        <script src="#{root}/resources/js/bootstrap-filestyle.min.js"></script>
 
-        <script src="/resources/js/main.min.js"></script>
+        <script src="#{root}/resources/js/main.min.js"></script>
     </ui:composition>
 </html>

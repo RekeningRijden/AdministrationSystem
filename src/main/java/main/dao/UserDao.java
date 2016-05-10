@@ -24,4 +24,8 @@ public abstract class UserDao extends AbstractDao<User> {
 
     }
 
+    public void register(String firstname, String lastname, String email, String password) {
+
+    }
+
 }

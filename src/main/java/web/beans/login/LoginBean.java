@@ -26,7 +26,7 @@ public class LoginBean implements Serializable {
     private String username;
     private String password;
 
-    private String to = "/pages/dashboard.xhtml";
+    private String to = "/pages/profile/profile.xhtml";
 
     @PostConstruct
     public void createDefault() {

@@ -8,24 +8,40 @@
 <ui:composition template="../../templates/main.xhtml">
 
     <f:metadata>
-        <!--<f:event type="preRenderView" listener="#{leftMenuBean.setCurrentMenuItem('profile')}" />-->
+        <f:viewParam name="to" value="#{loginBean.to}" />
     </f:metadata>
 
     <ui:define name="content">
         <div id="content">
             <h:form id="form">
-                <h:outputText value="Username" />
-                <h:inputText id="username" value="#{loginBean.uname}"></h:inputText>
-                <h:message for="username"></h:message>
-                <br /><br />
+                <fieldset>
+                    <legend>Log In</legend>
+                    <div class="form-group">
+                        <label class="control-label">Gebruikersnaam</label>
+                        <h:inputText class="form-control"
+                                     value="#{loginBean.username}"/>
+                    </div>
 
-                <h:outputText value="Password" />
-                <h:inputSecret id="password" value="#{loginBean.password}"></h:inputSecret>
-                <h:message for="password"></h:message>
-                <br /><br />
+                    <div class="form-group">
+                        <label class="control-label">Wachtwoord</label>
+                        <h:inputSecret class="form-control"
+                                       value="#{loginBean.password}"/>
+                    </div>
 
-                <h:commandButton action="#{loginBean.loginProject()}"
-                                 value="Login" update="loginForm" ajax="true"></h:commandButton>
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <small>Alle rechten voorbehouden!</small>
+                        </div>
+                        <div class="col-xs-4">
+                            <h:commandButton id="login-btn"
+                                             class="btn btn-primary pull-right"
+                                             action="#{loginBean.login()}"
+                                             value="Login">
+                                <f:ajax execute="@form" render="@form"/>
+                            </h:commandButton>
+                        </div>
+                    </div>
+                </fieldset>
             </h:form>
         </div>
     </ui:define>

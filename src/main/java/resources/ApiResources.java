@@ -100,9 +100,9 @@ public class ApiResources {
     @Path("/{userId}/invoices/{invoiceId}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Invoice updateInvoicePaymentStatus(@PathParam("userId") Long userId, @PathParam("invoiceId") Long invoiceId, PaymentStatus status) {
+    public Invoice updateInvoicePaymentStatus(@PathParam("userId") Long userId, @PathParam("invoiceId") Long invoiceId, Invoice inv) {
         Invoice invoice = invoiceService.findById(invoiceId);
-        invoice.setPaymentStatus(status);
+        invoice.setPaymentStatus(inv.getPaymentStatus());
         invoiceService.update(invoice);
         return invoice;
     }

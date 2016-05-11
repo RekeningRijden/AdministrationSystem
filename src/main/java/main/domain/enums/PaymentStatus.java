@@ -7,7 +7,18 @@ import java.io.Serializable;
  */
 public enum PaymentStatus implements Serializable{
 
-    PAID,
-    OPEN,
-    CANCELLED;
+    PAID("Paid"),
+    OPEN("Open"),
+    CANCELLED("Cancelled");
+    
+    private final String name;
+
+    private PaymentStatus(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

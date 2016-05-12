@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * @author Sam
@@ -26,11 +27,9 @@ public class Car implements Serializable, IEntity {
     @ManyToOne
     private Rate rate;
 
-    @XmlInverseReference(mappedBy = "car")
     @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
     private List<Ownership> pastOwnerships;
 
-    @XmlInverseReference(mappedBy = "car")
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Ownership currentOwnership;
 
@@ -48,6 +47,7 @@ public class Car implements Serializable, IEntity {
         this.id = id;
     }
 
+    @XmlTransient
     public Ownership getCurrentOwnership() {
         return currentOwnership;
     }
@@ -64,6 +64,7 @@ public class Car implements Serializable, IEntity {
         this.cartrackerId = cartrackerId;
     }
 
+    @XmlTransient
     public List<Ownership> getPastOwnerships() {
         return pastOwnerships;
     }

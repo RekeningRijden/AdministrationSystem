@@ -36,14 +36,13 @@ public class Driver implements Serializable, IEntity {
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 
-    @XmlInverseReference(mappedBy = "driver")
     @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
     private List<Ownership> ownerships;
 
     public Driver() {
         this.ownerships = new ArrayList<>();
-        firstName = "";
-        lastName = "";
+        this.firstName = "";
+        this.lastName = "";
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">

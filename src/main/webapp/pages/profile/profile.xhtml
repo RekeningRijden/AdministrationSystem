@@ -3,9 +3,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <ui:composition template="../../templates/main.xhtml">
+    <ui:param name="root" value="#{request.contextPath}"/>
 
     <f:metadata>
         <f:event type="preRenderView" listener="#{leftMenuBean.setCurrentMenuItem('profile')}" />
@@ -15,11 +17,36 @@
     <ui:define name="content">
         <div id="content">
             <h:form id="form">
-                <h:selectManyCheckbox value="#{kilometerRateBean.checkPermissions}">
-                    <f:selectItem itemValue="KM_PRICE" itemLabel="KM_PRICE" />
-                </h:selectManyCheckbox>
-                <br />
-                <h:commandButton value="Submit" action="#{kilometerRateBean.editPermissions(kilometerRateBean.user)}" />
+                <fieldset>
+                    <legend>Profiel</legend>
+                    <div class="form-group">
+                        <strong><label class="control-label">Gebruikersnaam:</label></strong>
+                        <br></br>
+                        #{userInfoBean.loggedInUsername}
+                    </div>
+
+                    <div class="form-group">
+                        <strong><label class="control-label">Group:</label></strong>
+                        <br></br>
+                        #{userInfoBean.loggedInGroup.name}
+                    </div>
+
+                    <div class="form-group">
+                        <strong><label class="control-label">Permissions:</label></strong>
+                        <br></br>
+                        #{userInfoBean.loggedInPermissions}
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <c:if test="#{userInfoBean.loggedInGroup.id == 1}">
+                                <h:outputLink class="btn btn-primary btn-sm" value="#{root}/pages/profile/permissions.xhtml">
+                                    <i class="fa fa-edit fa-lg"/>
+                                </h:outputLink>
+                            </c:if>
+                        </div>
+                    </div>
+                </fieldset>
             </h:form>
         </div>
     </ui:define>

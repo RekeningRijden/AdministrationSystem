@@ -1,6 +1,7 @@
 package web.beans.login;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -26,17 +27,7 @@ public class LoginBean implements Serializable {
     private String username;
     private String password;
 
-    private String to = "/pages/profile/profile.xhtml";
-
-    @PostConstruct
-    public void createDefault() {
-        if (userService.getAll().isEmpty()) {
-            User u = new User();
-            u.setUsername("admin");
-            u.setPassword(PasswordGenerator.encryptPassword("admin", "admin"));
-            userService.create(u);
-        }
-    }
+    private String to = "/index.xhtml";
 
     public void login() {
         String typedUsername = username.toLowerCase();

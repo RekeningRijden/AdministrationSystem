@@ -1,9 +1,12 @@
 package web.beans.login;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import main.domain.User;
+import main.domain.UserGroup;
+import main.domain.enums.Permission;
 import web.core.helpers.RedirectHelper;
 
 /**
@@ -30,5 +33,13 @@ public class UserInfoBean implements Serializable {
 
     public String getLoggedInUsername() {
         return getLoggedInUser().getUsername();
+    }
+
+    public UserGroup getLoggedInGroup() {
+        return getLoggedInUser().getUserGroup();
+    }
+
+    public List<Permission> getLoggedInPermissions() {
+        return getLoggedInUser().getPermissions();
     }
 }

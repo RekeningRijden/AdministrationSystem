@@ -23,17 +23,24 @@ public class User implements Serializable, IEntity {
     private String username;
     private String password;
 
+    @ManyToOne
+    private UserGroup userGroup;
+
     @ElementCollection
+    @Enumerated(EnumType.STRING)
     private List<Permission> permissions;
 
     public User() {
         permissions = new ArrayList<>();
+        permissions.add(Permission.KM_PRICE);
     }
 
     public User(String username, String password) {
         this();
         this.username = username;
         this.password = password;
+        permissions = new ArrayList<>();
+        permissions.add(Permission.KM_PRICE);
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
@@ -69,6 +76,16 @@ public class User implements Serializable, IEntity {
     public void setPermissions(List<Permission> permissions) {
         this.permissions = permissions;
     }
+
+    public UserGroup getUserGroup() {
+        return userGroup;
+    }
+
+    public void setUserGroup(UserGroup group) {
+        this.userGroup = group;
+    }
+
+
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="HashCode/Equals">
@@ -94,6 +111,5 @@ public class User implements Serializable, IEntity {
         }
         return true;
     }
-
     //</editor-fold>
 }

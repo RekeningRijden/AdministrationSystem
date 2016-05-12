@@ -7,6 +7,8 @@
 
 <ui:composition template="../../templates/main.xhtml">
 
+    <ui:param name="root" value="#{request.contextPath}"/>
+
     <f:metadata>
         <f:viewParam name="to" value="#{loginBean.to}" />
     </f:metadata>
@@ -29,6 +31,9 @@
                     </div>
 
                     <div class="row">
+                        <div class="col-xs-8">
+                            <small><a href="#{root}/pages/profile/register.xhtml">Registreren</a></small>
+                        </div>
                         <div class="col-xs-8">
                             <small>Alle rechten voorbehouden!</small>
                         </div>

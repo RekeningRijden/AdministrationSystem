@@ -60,22 +60,6 @@ public class KilometerRateBean implements Serializable {
         rateService.remove(rate);
     }
 
-    public String getPermissions() {
-        return Permission.values()[0].toString();
-    }
-
-    public void editPermissions(User user) {
-        List<Permission> permissions = user.getPermissions();
-        permissions.clear();
-
-        for (String permission : checkPermissions) {
-            if (Objects.equals(permission, "KM_PRICE")) {
-                permissions.add(Permission.KM_PRICE);
-            }
-        }
-        user.setPermissions(permissions);
-    }
-
     public void prepareNewRateCreation() {
         rate = new Rate();
     }

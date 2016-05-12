@@ -147,9 +147,9 @@ public class ApiResources {
     @GET
     @Path("/{userId}/invoices/{invoiceId}/cartracker")
     @Produces(MediaType.APPLICATION_JSON)
-    public Long getCartrackerByInvoice(@PathParam("userId") Long userId, @PathParam("invoiceId") Long invoiceId) {
+    public Car getCartrackerByInvoice(@PathParam("userId") Long userId, @PathParam("invoiceId") Long invoiceId) {
         Invoice invoice = invoiceService.findById(invoiceId);
-        return invoice.getOwnership().getCar().getCartrackerId();
+        return invoice.getOwnership().getCar();
     }
     
 }

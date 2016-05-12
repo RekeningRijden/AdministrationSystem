@@ -10,6 +10,7 @@
     <class>main.domain.Ownership</class>
     <class>main.domain.User</class>
     <class>main.domain.Rate</class>
+    <class>main.domain.UserGroup</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>

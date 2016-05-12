@@ -1,10 +1,8 @@
 package resources;
 
-import main.domain.Car;
 import main.domain.Driver;
 import main.domain.Invoice;
 import main.domain.enums.PaymentStatus;
-import main.service.CarService;
 import main.service.DriverService;
 import main.service.InvoiceService;
 
@@ -33,8 +31,6 @@ public class ApiResources {
 
     @Inject
     private InvoiceService invoiceService;
-    @Inject
-    private CarService carService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -109,18 +105,5 @@ public class ApiResources {
         invoice.setPaymentStatus(inv.getPaymentStatus());
         invoiceService.update(invoice);
         return invoice;
-    }
-
-    /**
-     * Gets a Car based on its licencePlate
-     *
-     * @param licencePlate of the Car
-     * @return the Car with the corresponding licencePlate
-     */
-    @GET
-    @Path("/cars/{licencePlate}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Car getCarWithLicencePlate(@PathParam("licencePlate") String licencePlate) {
-        return carService.getCarByLicencePlate(licencePlate);
     }
 }

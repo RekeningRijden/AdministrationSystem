@@ -10,45 +10,40 @@
 <ui:composition template="../../templates/main.xhtml">
 
     <f:metadata>
-        <!--<f:event type="preRenderView" listener="#{leftMenuBean.setCurrentMenuItem('profile')}" />-->
+        <f:viewParam name="to" value="#{loginBean.to}" />
     </f:metadata>
 
     <ui:define name="content">
         <div id="content">
-            <h:form id="registerForm">
-                <table>
-                    <tr>
-                        <td><h:outputText value="Voornaam:" /></td>
-                        <td><h:inputText id="fname" value="#{loginBean.firstName}"
-                                         required="true" requiredMessage="Please enter your first name" /></td>
-                        <td><h:message for="fname" style="color:red" /></td>
-                    </tr>
-                    <tr>
-                        <td><h:outputText value="Achternaam:" /></td>
-                        <td><h:inputText id="lname" value="#{loginBean.lastName}"
-                                         required="true" requiredMessage="Please enter your last name" /></td>
-                        <td><h:message for="lname" style="color:red" /></td>
-                    </tr>
-                    <tr>
-                        <td><h:outputText value="Email:" /></td>
-                        <td><h:inputText id="email" value="#{loginBean.email}"
-                                         required="true" requiredMessage="Please enter your email id" /></td>
-                        <td><h:message for="email" style="color:red" /></td>
-                    </tr>
-                    <tr>
-                        <td><h:outputText value="Wachtwoord:" /></td>
-                        <td><h:inputSecret id="psw" value="#{loginBean.password}"
-                                           required="true" requiredMessage="Please enter your password" /></td>
-                        <td><h:message for="psw" style="color:red" /></td>
-                    </tr>
-                    <tr>
-                        <td />
-                        <td><h:commandButton value="Register" action="#{loginBean.register()}" /></td>
-                    </tr>
-                    <tr>
-                        <td><h:outputLink value="car.xhtml">Home</h:outputLink></td>
-                    </tr>
-                </table>
+            <h:form id="form">
+                <fieldset>
+                    <legend>Registreren</legend>
+                    <div class="form-group">
+                        <label class="control-label">Gebruikersnaam (Email)</label>
+                        <h:inputText class="form-control"
+                                     value="#{registerBean.username}"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Wachtwoord</label>
+                        <h:inputSecret class="form-control"
+                                       value="#{registerBean.password}"/>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <small>Alle rechten voorbehouden!</small>
+                        </div>
+                        <div class="col-xs-4">
+                            <h:commandButton id="register-btn"
+                                             class="btn btn-primary pull-right"
+                                             action="#{registerBean.register()}"
+                                             value="Registreren">
+                                <f:ajax execute="@form" render="@form"/>
+                            </h:commandButton>
+                        </div>
+                    </div>
+                </fieldset>
             </h:form>
         </div>
     </ui:define>

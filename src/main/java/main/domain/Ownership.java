@@ -83,7 +83,6 @@ public class Ownership implements Serializable, IEntity {
         this.invoices = invoices;
     }
 
-    @XmlTransient
     public Car getCar() {
         return car;
     }
@@ -92,7 +91,6 @@ public class Ownership implements Serializable, IEntity {
         this.car = car;
     }
 
-    @XmlTransient
     public Driver getDriver() {
         return driver;
     }

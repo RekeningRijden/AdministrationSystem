@@ -1,5 +1,6 @@
 package resources;
 
+import java.util.ArrayList;
 import main.domain.Car;
 import main.domain.Driver;
 import main.domain.Invoice;
@@ -14,6 +15,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 import java.util.List;
+import main.domain.Ownership;
 
 /**
  * Created by Eric on 02-04-16.
@@ -122,5 +124,21 @@ public class ApiResources {
     @Produces(MediaType.APPLICATION_JSON)
     public Car getCarWithLicencePlate(@PathParam("licencePlate") String licencePlate) {
         return carService.getCarByLicencePlate(licencePlate);
+    }
+    
+    /**
+     * Get ownerships by licencePlate
+     * @param licencePlate
+     * @return 
+     */
+    @GET
+    @Path("/cars/{licencePlate}/ownerships")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Ownership> getOwnershipsFromCarWithLicencePlate(@PathParam("licencePlate") String licencePlate) {
+        Car car = carService.getCarByLicencePlate(licencePlate);
+        List<Ownership> ownerships = new ArrayList<>();
+        ownerships.add(car.getCurrentOwnership());
+        ownerships.addAll(car.getPastOwnerships());
+        return ownerships;
     }
 }

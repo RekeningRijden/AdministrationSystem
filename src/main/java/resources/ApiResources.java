@@ -135,10 +135,6 @@ public class ApiResources {
     @Path("/cars/{licencePlate}/ownerships")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Ownership> getOwnershipsFromCarWithLicencePlate(@PathParam("licencePlate") String licencePlate) {
-        Car car = carService.getCarByLicencePlate(licencePlate);
-        List<Ownership> ownerships = new ArrayList<>();
-        ownerships.add(car.getCurrentOwnership());
-        ownerships.addAll(car.getPastOwnerships());
-        return ownerships;
+        return carService.getCarByLicencePlate(licencePlate).getPastOwnerships();
     }
 }

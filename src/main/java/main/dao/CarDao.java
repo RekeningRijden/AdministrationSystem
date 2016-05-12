@@ -61,4 +61,16 @@ public abstract class CarDao extends AbstractDao<Car> {
 
         return oneResult(q);
     }
+
+    /**
+     * Find the Car object in the database which has the given licencePlate.
+     * @param licencePlate to look for.
+     * @return a Car object.
+     */
+    public Car getCarByLicencePlate(String licencePlate){
+        TypedQuery<Car> q = getEntityManager().createQuery("SELECT c FROM Car c WHERE c.licencePlate = :licencePlate", Car.class)
+                .setParameter("licencePlate", licencePlate);
+
+        return oneResult(q);
+    }
 }

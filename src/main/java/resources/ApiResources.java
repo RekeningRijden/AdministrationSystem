@@ -137,4 +137,19 @@ public class ApiResources {
     public List<Ownership> getOwnershipsFromCarWithLicencePlate(@PathParam("licencePlate") String licencePlate) {
         return carService.getCarByLicencePlate(licencePlate).getPastOwnerships();
     }
+    
+    /**
+     * Gets the cartracker id by invoice
+     * @param userId
+     * @param invoiceId
+     * @return the cartrackerId
+     */
+    @GET
+    @Path("/{userId}/invoices/{invoiceId}/cartracker")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Car getCartrackerByInvoice(@PathParam("userId") Long userId, @PathParam("invoiceId") Long invoiceId) {
+        Invoice invoice = invoiceService.findById(invoiceId);
+        return invoice.getOwnership().getCar();
+    }
+    
 }

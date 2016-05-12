@@ -123,4 +123,18 @@ public class ApiResources {
     public Car getCarWithLicencePlate(@PathParam("licencePlate") String licencePlate) {
         return carService.getCarByLicencePlate(licencePlate);
     }
+    
+    /**
+     * Gets the cartracker id by invoice
+     * @param userId
+     * @param invoiceId
+     * @return the cartrackerId
+     */
+    @GET
+    @Path("/{userId}/invoices/{invoiceId}/cartracker")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Long getCartrackerByInvoice(@PathParam("userId") Long userId, @PathParam("invoiceId") Long invoiceId) {
+        Invoice invoice = invoiceService.findById(invoiceId);
+        return invoice.getOwnership().getCar().getCartrackerId();
+    }
 }

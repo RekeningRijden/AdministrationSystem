@@ -1,5 +1,6 @@
 package resources;
 
+import java.util.ArrayList;
 import main.domain.Car;
 import main.domain.Driver;
 import main.domain.Invoice;
@@ -14,6 +15,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 import java.util.List;
+import main.domain.Ownership;
 
 /**
  * Created by Eric on 02-04-16.
@@ -125,6 +127,18 @@ public class ApiResources {
     }
     
     /**
+     * Get ownerships by licencePlate
+     * @param licencePlate
+     * @return 
+     */
+    @GET
+    @Path("/cars/{licencePlate}/ownerships")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Ownership> getOwnershipsFromCarWithLicencePlate(@PathParam("licencePlate") String licencePlate) {
+        return carService.getCarByLicencePlate(licencePlate).getPastOwnerships();
+    }
+    
+    /**
      * Gets the cartracker id by invoice
      * @param userId
      * @param invoiceId
@@ -137,4 +151,5 @@ public class ApiResources {
         Invoice invoice = invoiceService.findById(invoiceId);
         return invoice.getOwnership().getCar().getCartrackerId();
     }
+    
 }

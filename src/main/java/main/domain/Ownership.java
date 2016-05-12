@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * @author Sam
@@ -38,7 +39,6 @@ public class Ownership implements Serializable, IEntity {
     @OneToMany(mappedBy = "ownership", cascade = CascadeType.ALL)
     private List<Invoice> invoices;
 
-    @XmlInverseReference(mappedBy = "currentOwnership")
     @ManyToOne
     private Car car;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -74,6 +74,7 @@ public class Ownership implements Serializable, IEntity {
         this.endDate = endDate;
     }
 
+    @XmlTransient
     public List<Invoice> getInvoices() {
         return invoices;
     }

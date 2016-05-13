@@ -153,9 +153,9 @@ public class ApiResources {
     }
 
     @GET
-    @Path("/{userId}/cars")
+    @Path("/{userId}/ownerships")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Ownership> getCarsByDriver(@PathParam("userId") Long userId) {
+    public List<Ownership> getOwnershipsByDriver(@PathParam("userId") Long userId) {
         Driver driver = driverService.findById(userId);
         return driver.getOwnerships();
     }

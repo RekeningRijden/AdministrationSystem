@@ -151,5 +151,27 @@ public class ApiResources {
         Invoice invoice = invoiceService.findById(invoiceId);
         return invoice.getOwnership().getCar();
     }
+
+    @GET
+    @Path("/{driverId}/cars")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Car> getCarsByDriver(@PathParam("driverId") Long driverId) {
+        Driver driver = driverService.findById(driverId);
+        List<Ownership> ownerships = driver.getOwnerships();
+        List<Car> cars = new ArrayList<>();
+
+        for (Ownership owner : ownerships) {
+            boolean carExists = false;
+            for (Car car : cars) {
+                if(car == owner.getCar()){
+                    carExists = true;
+                }
+            }
+            if(!carExists){
+                cars.add(owner.getCar());
+            }
+        }
+        return cars;
+    }
     
 }

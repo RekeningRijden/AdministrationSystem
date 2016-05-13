@@ -55,6 +55,22 @@ public class ApiResources {
     public Driver addNewDriver(Driver driver) {
         return driverService.create(driver);
     }
+    
+    /**
+     * update driver
+     *
+     * @param driverId
+     * @param driver
+     * @return The updatet created Driver
+     */
+    @POST
+    @Path("/{userId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Driver updateDriver(@PathParam("userId") Long driverId, Driver driver) {
+        Driver d = driverService.findById(driver.getId());
+        d.setAddress(driver.getAddress());
+        return driverService.update(d);
+    }
 
     /**
      * Gets a driver based on his id

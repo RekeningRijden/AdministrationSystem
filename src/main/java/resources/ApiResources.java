@@ -99,7 +99,7 @@ public class ApiResources {
      * Updates the PaymentStatus for a specific invoice
      *
      * @param invoiceId The id of the invoice
-     * @param status    The new status of the invoice
+     * @param userId
      * @return The invoice with the updated status
      */
     @PUT
@@ -153,25 +153,11 @@ public class ApiResources {
     }
 
     @GET
-    @Path("/{driverId}/cars")
+    @Path("/{userId}/cars")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Car> getCarsByDriver(@PathParam("driverId") Long driverId) {
-        Driver driver = driverService.findById(driverId);
-        List<Ownership> ownerships = driver.getOwnerships();
-        List<Car> cars = new ArrayList<>();
-
-        for (Ownership owner : ownerships) {
-            boolean carExists = false;
-            for (Car car : cars) {
-                if(car == owner.getCar()){
-                    carExists = true;
-                }
-            }
-            if(!carExists){
-                cars.add(owner.getCar());
-            }
-        }
-        return cars;
+    public List<Ownership> getCarsByDriver(@PathParam("userId") Long userId) {
+        Driver driver = driverService.findById(userId);
+        return driver.getOwnerships();
     }
     
 }

@@ -6,6 +6,7 @@ import main.service.UserService;
 import web.core.helpers.ContextHelper;
 
 import javax.annotation.PostConstruct;
+import javax.faces.component.UIComponent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -25,7 +26,14 @@ public class UserBean implements Serializable {
 
     private List<Permission> selectedPermissions;
 
+    private Permission[] allPermissions;
+
     private User currentUser;
+
+    @PostConstruct
+    private void init() {
+        allPermissions = Permission.values();
+    }
 
     public void setNewPermissions() {
         List<Permission> permissions = selectedPermissions;
@@ -52,5 +60,13 @@ public class UserBean implements Serializable {
 
     public void setSelectedPermissions(List<Permission> selectedPermissions) {
         this.selectedPermissions = selectedPermissions;
+    }
+
+    public Permission[] getAllPermissions() {
+        return allPermissions;
+    }
+
+    public void setAllPermissions(Permission[] allPermissions) {
+        this.allPermissions = allPermissions;
     }
 }

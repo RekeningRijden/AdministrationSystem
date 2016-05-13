@@ -103,12 +103,19 @@
                             <div class="row">
                                 <div class="col-xs-12">
                                     Medewerker: #{userBean.currentUser.username}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
                                     <h:selectManyCheckbox id="checkboxPermissions" value="#{userBean.selectedPermissions}" converter="permissionConverter">
 
-                                        <f:selectItems value="#{userBean.currentUser.permissions}" var="permission" itemLabel="#{permission}" itemValue="#{permission}" />
+                                        <f:selectItems value="#{userBean.allPermissions}" var="permission" itemLabel="#{permission}" itemValue="#{permission}" />
 
                                     </h:selectManyCheckbox>
-
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
                                     <h:commandLink class="btn btn-primary"
                                                    action="#{userBean.setNewPermissions()}"
                                                    onclick="$('#editPermissionsModal').modal('hide');">

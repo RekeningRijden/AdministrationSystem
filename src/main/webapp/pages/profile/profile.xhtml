@@ -34,7 +34,15 @@
                     <div class="form-group">
                         <strong><label class="control-label">Permissions:</label></strong>
                         <br></br>
-                        #{userInfoBean.loggedInPermissions}
+                        <c:if test="#{!empty(userInfoBean.loggedInUser.permissions)}">
+                            <ui:repeat value="#{userInfoBean.loggedInUser.permissions}" var="permission">
+                                #{permission}
+                                <br></br>
+                            </ui:repeat>
+                        </c:if>
+                        <c:if test="#{empty(userInfoBean.loggedInUser.permissions)}">
+                            No permissions
+                        </c:if>
                     </div>
 
                     <div class="row">
@@ -42,6 +50,7 @@
                             <c:if test="#{userInfoBean.loggedInGroup.id == 1}">
                                 <h:outputLink class="btn btn-primary btn-sm" value="#{root}/pages/profile/permissions.xhtml">
                                     <i class="fa fa-edit fa-lg"/>
+                                    Edit Permissions
                                 </h:outputLink>
                             </c:if>
                         </div>

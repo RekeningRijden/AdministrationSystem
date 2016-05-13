@@ -7,7 +7,7 @@
         <view-handler>util.CustomViewHandler</view-handler>
     </application>-->
     <navigation-rule>
-        <from-view-id>/pages/profile/login.xhtml</from-view-id>
+        <from-view-id>/login.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>profile</from-outcome>
             <to-view-id>/pages/profile/profile.xhtml</to-view-id>

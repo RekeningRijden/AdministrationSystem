@@ -7,6 +7,8 @@ import javax.inject.Inject;
 
 import main.core.helper.PasswordGenerator;
 import main.domain.User;
+import main.domain.UserGroup;
+import main.service.UserGroupService;
 import main.service.UserService;
 
 /**
@@ -18,13 +20,21 @@ public class Initializer {
 
     @Inject
     private UserService userService;
+    @Inject
+    private UserGroupService userGroupService;
 
     @PostConstruct
     public void createUser() {
         if (userService.getAll().isEmpty()) {
+            UserGroup userGroup = new UserGroup();
+            userGroup.setName("administrators");
+
+            userGroupService.create(userGroup);
+
             User user = new User();
             user.setUsername("admin");
             user.setPassword(PasswordGenerator.encryptPassword("admin", "admin"));
+            user.setUserGroup(userGroup);
             userService.create(user);
         }
     }

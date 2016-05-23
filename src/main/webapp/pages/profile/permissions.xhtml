@@ -10,6 +10,7 @@
     <f:metadata>
         <!--<f:event type="preRenderView" listener="#{leftMenuBean.setCurrentMenuItem('profile')}" />-->
         <!--<f:event type="preRenderView" listener="#{kilometerRateBean.init()}" />-->
+        <f:event type="preRenderView" listener="#{userBean.init()}"/>
     </f:metadata>
 
     <ui:define name="content">
@@ -109,7 +110,7 @@
                                 <div class="col-xs-12">
                                     <h:selectManyCheckbox id="checkboxPermissions" value="#{userBean.selectedPermissions}" converter="permissionConverter">
 
-                                        <f:selectItems value="#{userBean.allPermissions}" var="permission" itemLabel="#{permission}" itemValue="#{permission}" />
+                                        <f:selectItems value="#{userBean.allPermissions}" var="permission" itemLabel="#{permission}" itemValue="#{permission}"/>
 
                                     </h:selectManyCheckbox>
                                 </div>

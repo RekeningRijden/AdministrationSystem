@@ -35,7 +35,7 @@
                                  data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-sortable="false">     
                                 <header>
                                     <span class="widget-icon"> <i class="fa fa-table"/> </span>
-                                    <h2>Car overview</h2>
+                                    <h2>Cars</h2>
                                 </header>
                                 <div>
                                     <div class="jarviswidget-editbox">
@@ -55,7 +55,7 @@
                                                             </span>
                                                             <input class="form-control" type="text"
                                                                    jsf:value="#{carOverviewBean.filter}"
-                                                                   placeholder="Zoek..."/>
+                                                                   placeholder="Search..."/>
                                                             <span class="input-group-btn">
                                                                 <h:commandLink class="btn btn-danger" action="#{carOverviewBean.resetFilter()}">
                                                                     <i class="fa fa-remove"/>
@@ -68,7 +68,7 @@
                                                 <div class="col-md-7 col-sm-6 col-xs-4">
                                                     <h:outputLink class="btn btn-primary pull-right" value="car.xhtml">
                                                         <i class="fa fa-plus"/>
-                                                        Toevoegen
+                                                        Add
                                                     </h:outputLink>
                                                 </div>
                                             </div>
@@ -78,7 +78,7 @@
                                                     <ui:fragment rendered="#{carOverviewBean.displayedList.isEmpty()}">
                                                         <div class="alert alert-warning fade in">
                                                             <i class="fa fa-warning"/>
-                                                            Geen resultaten gevonden
+                                                            No results found
                                                         </div>
                                                     </ui:fragment>
                                                     <ui:fragment rendered="#{!carOverviewBean.displayedList.isEmpty()}">
@@ -135,11 +135,11 @@
                                                     <div id="datatable_tabletools_info" class="dataTables_info" role="status" aria-live="polite">
                                                         <h:panelGroup
                                                             rendered="#{dataListTotalSize != 0}">
-                                                            Pagina
+                                                            Page
                                                             <span class="txt-color-darken">
                                                                 #{carOverviewBean.currentPage}
                                                             </span>
-                                                            van de
+                                                            of
                                                             <span class="text-primary">
                                                                 #{carOverviewBean.lastPageNumber}
                                                             </span>
@@ -149,8 +149,8 @@
                                                                 #{dataListTotalSize}
                                                             </span>
 
-                                                            <ui:fragment rendered="#{dataListTotalSize == 1}">Resultaat</ui:fragment>
-                                                            <ui:fragment rendered="#{dataListTotalSize != 1}">Resultaten</ui:fragment>
+                                                            <ui:fragment rendered="#{dataListTotalSize == 1}">Result</ui:fragment>
+                                                            <ui:fragment rendered="#{dataListTotalSize != 1}">Results</ui:fragment>
                                                         </h:panelGroup>
                                                     </div>
                                                 </div>
@@ -158,13 +158,13 @@
                                                 <div class="col-sm-6 col-xs-12" style="max-height: 30px;">
                                                     <div class="btn-group btn-group-sm pull-right">
                                                         <f:ajax execute="@form" render="@form">
-                                                            <h:commandButton class="btn btn-default"  value="&#60;&#60;" action="#{carOverviewBean.firstPage()}" disabled="#{carOverviewBean.prevNextButtonDisabled}"/>
-                                                            <h:commandButton class="#{carOverviewBean.isButtonCurrentPage(1) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{carOverviewBean.getFirstButtonNumber()}" action="#{carOverviewBean.beforePreviousPage()}" disabled="#{carOverviewBean.isButtonDisabled(1)}"/>
-                                                            <h:commandButton class="#{carOverviewBean.isButtonCurrentPage(2) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{carOverviewBean.getSecondButtonNumber()}" action="#{carOverviewBean.previousPage()}" disabled="#{carOverviewBean.isButtonDisabled(2)}"/>
-                                                            <h:commandButton class="#{carOverviewBean.isButtonCurrentPage(3) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{carOverviewBean.getThirdButtonNumber()}" action="#{carOverviewBean.currentPage()}" disabled="#{carOverviewBean.isButtonDisabled(3)}"/>
-                                                            <h:commandButton class="#{carOverviewBean.isButtonCurrentPage(4) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{carOverviewBean.fourthButtonNumber}" action="#{carOverviewBean.nextPage()}" disabled="#{carOverviewBean.isButtonDisabled(4)}"/>
-                                                            <h:commandButton class="#{carOverviewBean.isButtonCurrentPage(5) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{carOverviewBean.fifthButtonNumber}" action="#{carOverviewBean.afterNextPage()}" disabled="#{carOverviewBean.isButtonDisabled(5)}"/>
-                                                            <h:commandButton class="btn btn-default"  value="&#62;&#62;" action="#{carOverviewBean.lastPage()}" disabled="#{carOverviewBean.prevNextButtonDisabled}"/>
+                                                            <h:commandButton class="btn btn-default"  value="&#60;&#60;" action="#{carOverviewBean.firstPage()}" rendered="!#{carOverviewBean.prevNextButtonDisabled}"/>
+                                                            <h:commandButton class="#{carOverviewBean.isButtonCurrentPage(1) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{carOverviewBean.getFirstButtonNumber()}" action="#{carOverviewBean.beforePreviousPage()}" rendered="!#{carOverviewBean.isButtonDisabled(1)}"/>
+                                                            <h:commandButton class="#{carOverviewBean.isButtonCurrentPage(2) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{carOverviewBean.getSecondButtonNumber()}" action="#{carOverviewBean.previousPage()}" rendered="!#{carOverviewBean.isButtonDisabled(2)}"/>
+                                                            <h:commandButton class="#{carOverviewBean.isButtonCurrentPage(3) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{carOverviewBean.getThirdButtonNumber()}" action="#{carOverviewBean.currentPage()}" rendered="!#{carOverviewBean.isButtonDisabled(3)}"/>
+                                                            <h:commandButton class="#{carOverviewBean.isButtonCurrentPage(4) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{carOverviewBean.fourthButtonNumber}" action="#{carOverviewBean.nextPage()}" rendered="!#{carOverviewBean.isButtonDisabled(4)}"/>
+                                                            <h:commandButton class="#{carOverviewBean.isButtonCurrentPage(5) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{carOverviewBean.fifthButtonNumber}" action="#{carOverviewBean.afterNextPage()}" rendered="!#{carOverviewBean.isButtonDisabled(5)}"/>
+                                                            <h:commandButton class="btn btn-default"  value="&#62;&#62;" action="#{carOverviewBean.lastPage()}" rendered="!#{carOverviewBean.prevNextButtonDisabled}"/>
                                                         </f:ajax>
                                                     </div>
                                                     <div class="pull-right">

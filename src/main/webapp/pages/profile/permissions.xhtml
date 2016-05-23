@@ -38,7 +38,7 @@
                                 <div class="jarviswidget-editbox">
                                 </div>
 
-                                <div class="widget-body">
+                                <div class="widget-body no-padding">
                                     <h:form id="form">
                                         <div class="row">
                                             <div class="col-md-12">
@@ -66,8 +66,7 @@
                                                                         <div class="element-center">
                                                                             <h:commandLink class="btn btn-primary btn-xs"
                                                                                            action="#{userBean.setCurrentUser(user)}"
-                                                                                           onclick="$('#editPermissionsModal').modal('show')"
-                                                                                           value="Edit">
+                                                                                           onclick="$('#editPermissionsModal').modal('show')">
                                                                                 <i class="fa fa-pencil"/>
                                                                                 <f:ajax execute="@this" render=":modal-form-1"/>
                                                                             </h:commandLink>

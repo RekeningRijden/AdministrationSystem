@@ -58,7 +58,6 @@ public class DriverBean implements Serializable {
     public void save() {
         if (driverService.hasBeenPersisted(driver)) {
             driverService.update(driver);
-            FrontendHelper.displaySuccessSmallBox("De bestuurder is geupdate");
         } else {
             driver = driverService.create(driver);
             //register in bill driver application
@@ -68,8 +67,6 @@ public class DriverBean implements Serializable {
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
-
-            FrontendHelper.displaySuccessSmallBox("De bestuurder is aangemaakt");
         }
         RedirectHelper.redirect("/pages/driver/driverOverview.xhtml");
     }

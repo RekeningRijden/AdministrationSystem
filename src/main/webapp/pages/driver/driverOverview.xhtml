@@ -35,7 +35,7 @@
                                  data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-sortable="false">     
                                 <header>
                                     <span class="widget-icon"> <i class="fa fa-table"/> </span>
-                                    <h2>Driver overview</h2>
+                                    <h2>Drivers</h2>
                                 </header>
                                 <div>
                                     <div class="jarviswidget-editbox">
@@ -55,7 +55,7 @@
                                                             </span>
                                                             <input class="form-control" type="text"
                                                                    jsf:value="#{driverOverviewBean.filter}"
-                                                                   placeholder="Zoek..."/>
+                                                                   placeholder="Search..."/>
                                                             <span class="input-group-btn">
                                                                 <h:commandLink class="btn btn-danger" action="#{driverOverviewBean.resetFilter()}">
                                                                     <i class="fa fa-remove"/>
@@ -68,7 +68,7 @@
                                                 <div class="col-md-7 col-sm-6 col-xs-4">
                                                     <h:outputLink class="btn btn-primary pull-right" value="driver.xhtml" >
                                                         <i class="fa fa-plus"/>
-                                                        Toevoegen
+                                                        Add
                                                     </h:outputLink>
                                                 </div>
                                             </div>
@@ -78,7 +78,7 @@
                                                     <ui:fragment rendered="#{driverOverviewBean.displayedList.isEmpty()}">
                                                         <div class="alert alert-warning fade in">
                                                             <i class="fa fa-warning"/>
-                                                            Geen resultaten gevonden
+                                                            No results found
                                                         </div>
                                                     </ui:fragment>
                                                     <ui:fragment rendered="#{!driverOverviewBean.displayedList.isEmpty()}">
@@ -135,11 +135,11 @@
                                                     <div id="datatable_tabletools_info" class="dataTables_info" role="status" aria-live="polite">
                                                         <h:panelGroup
                                                             rendered="#{dataListTotalSize != 0}">
-                                                            Pagina
+                                                            Page
                                                             <span class="txt-color-darken">
                                                                 #{driverOverviewBean.currentPage}
                                                             </span>
-                                                            van de
+                                                            of
                                                             <span class="text-primary">
                                                                 #{driverOverviewBean.lastPageNumber}
                                                             </span>
@@ -149,8 +149,8 @@
                                                                 #{dataListTotalSize}
                                                             </span>
 
-                                                            <ui:fragment rendered="#{dataListTotalSize == 1}">Resultaat</ui:fragment>
-                                                            <ui:fragment rendered="#{dataListTotalSize != 1}">Resultaten</ui:fragment>
+                                                            <ui:fragment rendered="#{dataListTotalSize == 1}">Result</ui:fragment>
+                                                            <ui:fragment rendered="#{dataListTotalSize != 1}">Results</ui:fragment>
                                                         </h:panelGroup>
                                                     </div>
                                                 </div>
@@ -158,13 +158,13 @@
                                                 <div class="col-sm-6 col-xs-12" style="max-height: 30px;">
                                                     <div class="btn-group btn-group-sm pull-right">
                                                         <f:ajax execute="@form" render="@form">
-                                                            <h:commandButton class="btn btn-default"  value="&#60;&#60;" action="#{driverOverviewBean.firstPage()}" disabled="#{driverOverviewBean.prevNextButtonDisabled}"/>
-                                                            <h:commandButton class="#{driverOverviewBean.isButtonCurrentPage(1) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{driverOverviewBean.getFirstButtonNumber()}" action="#{driverOverviewBean.beforePreviousPage()}" disabled="#{driverOverviewBean.isButtonDisabled(1)}"/>
-                                                            <h:commandButton class="#{driverOverviewBean.isButtonCurrentPage(2) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{driverOverviewBean.getSecondButtonNumber()}" action="#{driverOverviewBean.previousPage()}" disabled="#{driverOverviewBean.isButtonDisabled(2)}"/>
-                                                            <h:commandButton class="#{driverOverviewBean.isButtonCurrentPage(3) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{driverOverviewBean.getThirdButtonNumber()}" action="#{driverOverviewBean.currentPage()}" disabled="#{driverOverviewBean.isButtonDisabled(3)}"/>
-                                                            <h:commandButton class="#{driverOverviewBean.isButtonCurrentPage(4) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{driverOverviewBean.fourthButtonNumber}" action="#{driverOverviewBean.nextPage()}" disabled="#{driverOverviewBean.isButtonDisabled(4)}"/>
-                                                            <h:commandButton class="#{driverOverviewBean.isButtonCurrentPage(5) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{driverOverviewBean.fifthButtonNumber}" action="#{driverOverviewBean.afterNextPage()}" disabled="#{driverOverviewBean.isButtonDisabled(5)}"/>
-                                                            <h:commandButton class="btn btn-default"  value="&#62;&#62;" action="#{driverOverviewBean.lastPage()}" disabled="#{driverOverviewBean.prevNextButtonDisabled}"/>
+                                                            <h:commandButton class="btn btn-default"  value="&#60;&#60;" action="#{driverOverviewBean.firstPage()}" rendered="#{!driverOverviewBean.prevNextButtonDisabled}"/>
+                                                            <h:commandButton class="#{driverOverviewBean.isButtonCurrentPage(1) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{driverOverviewBean.getFirstButtonNumber()}" action="#{driverOverviewBean.beforePreviousPage()}" rendered="#{!driverOverviewBean.isButtonDisabled(1)}"/>
+                                                            <h:commandButton class="#{driverOverviewBean.isButtonCurrentPage(2) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{driverOverviewBean.getSecondButtonNumber()}" action="#{driverOverviewBean.previousPage()}" rendered="#{!driverOverviewBean.isButtonDisabled(2)}"/>
+                                                            <h:commandButton class="#{driverOverviewBean.isButtonCurrentPage(3) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{driverOverviewBean.getThirdButtonNumber()}" action="#{driverOverviewBean.currentPage()}" rendered="#{!driverOverviewBean.isButtonDisabled(3)}"/>
+                                                            <h:commandButton class="#{driverOverviewBean.isButtonCurrentPage(4) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{driverOverviewBean.fourthButtonNumber}" action="#{driverOverviewBean.nextPage()}" rendered="#{!driverOverviewBean.isButtonDisabled(4)}"/>
+                                                            <h:commandButton class="#{driverOverviewBean.isButtonCurrentPage(5) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{driverOverviewBean.fifthButtonNumber}" action="#{driverOverviewBean.afterNextPage()}" rendered="#{!driverOverviewBean.isButtonDisabled(5)}"/>
+                                                            <h:commandButton class="btn btn-default"  value="&#62;&#62;" action="#{driverOverviewBean.lastPage()}" rendered="#{!driverOverviewBean.prevNextButtonDisabled}"/>
                                                         </f:ajax>
                                                     </div>
                                                     <div class="pull-right">

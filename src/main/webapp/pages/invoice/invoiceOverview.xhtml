@@ -35,8 +35,8 @@
                              data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false"
                              data-widget-sortable="false">
                             <header>
-                                <span class="widget-icon"> <i class="fa fa-table"/> </span>
-                                <h2>Invoice overview</h2>
+                                <span class="widget-icon"> <i class="fa fa-file"/> </span>
+                                <h2>Invoices</h2>
                             </header>
                             <div>
                                 <div class="jarviswidget-editbox">
@@ -57,7 +57,7 @@
                                                             </span>
                                                         <input class="form-control" type="text"
                                                                jsf:value="#{invoiceOverviewBean.filter}"
-                                                               placeholder="Zoek..."/>
+                                                               placeholder="Search..."/>
                                                             <span class="input-group-btn">
                                                                 <h:commandLink class="btn btn-danger"
                                                                                action="#{invoiceOverviewBean.resetFilter()}">
@@ -221,35 +221,35 @@
                                                     <f:ajax execute="@form" render="@form">
                                                         <h:commandButton class="btn btn-default" value="&#60;&#60;"
                                                                          action="#{invoiceOverviewBean.firstPage()}"
-                                                                         disabled="#{invoiceOverviewBean.prevNextButtonDisabled}"/>
+                                                                         rendered="#{!invoiceOverviewBean.prevNextButtonDisabled}"/>
                                                         <h:commandButton
                                                                 class="#{invoiceOverviewBean.isButtonCurrentPage(1) ? 'btn btn-primary' : 'btn btn-default'}"
                                                                 value="#{invoiceOverviewBean.getFirstButtonNumber()}"
                                                                 action="#{invoiceOverviewBean.beforePreviousPage()}"
-                                                                disabled="#{invoiceOverviewBean.isButtonDisabled(1)}"/>
+                                                                rendered="#{!invoiceOverviewBean.isButtonDisabled(1)}"/>
                                                         <h:commandButton
                                                                 class="#{invoiceOverviewBean.isButtonCurrentPage(2) ? 'btn btn-primary' : 'btn btn-default'}"
                                                                 value="#{invoiceOverviewBean.getSecondButtonNumber()}"
                                                                 action="#{invoiceOverviewBean.previousPage()}"
-                                                                disabled="#{invoiceOverviewBean.isButtonDisabled(2)}"/>
+                                                                rendered="#{!invoiceOverviewBean.isButtonDisabled(2)}"/>
                                                         <h:commandButton
                                                                 class="#{invoiceOverviewBean.isButtonCurrentPage(3) ? 'btn btn-primary' : 'btn btn-default'}"
                                                                 value="#{invoiceOverviewBean.getThirdButtonNumber()}"
                                                                 action="#{invoiceOverviewBean.currentPage()}"
-                                                                disabled="#{invoiceOverviewBean.isButtonDisabled(3)}"/>
+                                                                rendered="#{!invoiceOverviewBean.isButtonDisabled(3)}"/>
                                                         <h:commandButton
                                                                 class="#{invoiceOverviewBean.isButtonCurrentPage(4) ? 'btn btn-primary' : 'btn btn-default'}"
                                                                 value="#{invoiceOverviewBean.fourthButtonNumber}"
                                                                 action="#{invoiceOverviewBean.nextPage()}"
-                                                                disabled="#{invoiceOverviewBean.isButtonDisabled(4)}"/>
+                                                                rendered="#{!invoiceOverviewBean.isButtonDisabled(4)}"/>
                                                         <h:commandButton
                                                                 class="#{invoiceOverviewBean.isButtonCurrentPage(5) ? 'btn btn-primary' : 'btn btn-default'}"
                                                                 value="#{invoiceOverviewBean.fifthButtonNumber}"
                                                                 action="#{invoiceOverviewBean.afterNextPage()}"
-                                                                disabled="#{invoiceOverviewBean.isButtonDisabled(5)}"/>
+                                                                rendered="#{!invoiceOverviewBean.isButtonDisabled(5)}"/>
                                                         <h:commandButton class="btn btn-default" value="&#62;&#62;"
                                                                          action="#{invoiceOverviewBean.lastPage()}"
-                                                                         disabled="#{invoiceOverviewBean.prevNextButtonDisabled}"/>
+                                                                         rendered="#{!invoiceOverviewBean.prevNextButtonDisabled}"/>
                                                     </f:ajax>
                                                 </div>
                                                 <div class="pull-right">

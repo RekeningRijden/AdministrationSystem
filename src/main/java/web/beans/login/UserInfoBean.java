@@ -47,4 +47,8 @@ public class UserInfoBean implements Serializable {
     public List<Permission> getLoggedInPermissions() {
         return getLoggedInUser().getPermissions();
     }
+
+    public boolean hasRatesPermission() {
+        return getLoggedInUser() != null && getLoggedInUser().getPermissions().contains(Permission.KM_PRICE);
+    }
 }

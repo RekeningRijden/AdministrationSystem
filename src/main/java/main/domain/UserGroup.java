@@ -1,6 +1,7 @@
 package main.domain;
 
 import javax.persistence.*;
+
 import java.io.Serializable;
 
 /**

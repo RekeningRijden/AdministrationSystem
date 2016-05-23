@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
@@ -9,38 +8,47 @@
 
 <ui:composition template="../../templates/main.xhtml">
 
+
     <f:metadata>
-        <f:viewParam name="to" value="#{loginBean.to}" />
+        <f:event type="preRenderView" listener="#{leftMenuBean.setCurrentMenuItem('profile')}"/>
+        <f:event type="preRenderView" listener="#{kilometerRateBean.init()}"/>
     </f:metadata>
 
     <ui:define name="content">
+        <ui:param name="root" value="#{request.contextPath}"/>
+
         <div id="content">
             <h:form id="form">
                 <fieldset>
-                    <legend>Registreren</legend>
+                    <legend>Profiel</legend>
                     <div class="form-group">
-                        <label class="control-label">Gebruikersnaam (Email)</label>
-                        <h:inputText class="form-control"
-                                     value="#{registerBean.username}"/>
+                        <strong><label class="control-label">Gebruikersnaam:</label></strong>
+                        <br></br>
+                        #{userInfoBean.loggedInUsername}
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label">Wachtwoord</label>
-                        <h:inputSecret class="form-control"
-                                       value="#{registerBean.password}"/>
+                        <strong><label class="control-label">Group:</label></strong>
+                        <br></br>
+                        #{userInfoBean.loggedInGroup.name}
+                    </div>
+
+                    <div class="form-group">
+                        <strong><label class="control-label">Permissions:</label></strong>
+                        <br></br>
+                        <ui:repeat value="#{userInfoBean.loggedInUser.permissions}" var="permission" rendered="#{!empty(userInfoBean.loggedInUser.permissions)}">
+                            #{permission}
+                            <br></br>
+                        </ui:repeat>
+                        <h:outputText value="No permissions" rendered="#{empty(userInfoBean.loggedInUser.permissions)}"/>
                     </div>
 
                     <div class="row">
-                        <div class="col-xs-8">
-                            <small>Alle rechten voorbehouden!</small>
-                        </div>
                         <div class="col-xs-4">
-                            <h:commandButton id="register-btn"
-                                             class="btn btn-primary pull-right"
-                                             action="#{registerBean.register()}"
-                                             value="Registreren">
-                                <f:ajax execute="@form" render="@form"/>
-                            </h:commandButton>
+                            <h:outputLink class="btn btn-primary btn-sm" value="#{root}/pages/profile/permissions.xhtml" rendered="#{userInfoBean.loggedInGroup.id == 1}">
+                                <i class="fa fa-edit fa-lg"/>
+                                Edit Permissions
+                            </h:outputLink>
                         </div>
                     </div>
                 </fieldset>

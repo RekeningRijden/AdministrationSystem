@@ -5,12 +5,14 @@
  */
 package web.beans.driver;
 
+import org.codehaus.jettison.json.JSONException;
+
 import java.io.IOException;
 import java.io.Serializable;
-import javax.annotation.PostConstruct;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.enterprise.context.SessionScoped;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -18,13 +20,10 @@ import main.core.communcation.Communicator;
 import main.domain.Address;
 import main.domain.Driver;
 import main.service.DriverService;
-import org.codehaus.jettison.json.JSONException;
 import web.core.helpers.ContextHelper;
-import web.core.helpers.FrontendHelper;
 import web.core.helpers.RedirectHelper;
 
 /**
- *
  * @author maikel
  */
 @Named
@@ -65,7 +64,7 @@ public class DriverBean implements Serializable {
             try {
                 Communicator.addDriver(driver);
             } catch (IOException | JSONException e) {
-                e.printStackTrace();
+                Logger.getLogger(DriverBean.class.getName()).log(Level.SEVERE, null, e);
             }
         }
         RedirectHelper.redirect("/pages/driver/driverOverview.xhtml");
@@ -88,5 +87,4 @@ public class DriverBean implements Serializable {
         this.driver = driver;
     }
     //</editor-fold>
-
 }

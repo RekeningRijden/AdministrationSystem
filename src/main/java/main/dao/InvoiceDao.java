@@ -52,7 +52,7 @@ public abstract class InvoiceDao extends AbstractDao<Invoice> {
         return (int) (long) query.getSingleResult();
     }
 
-    private String getFilteredQueryString() {
+    private static String getFilteredQueryString() {
         return " WHERE CAST(i.period CHAR(255)) LIKE :filter " +
                 "OR CAST(i.paymentStatus CHAR(255)) LIKE :filter " +
                 "OR (concat(o.driver.firstName, ' ', o.driver.lastName)) LIKE :filter " +

@@ -33,7 +33,7 @@ public class Initializer {
 
             User user = new User();
             user.setUsername("admin");
-            user.setPassword(PasswordGenerator.encryptPassword("admin", "admin"));
+            user.setPassword(PasswordGenerator.encryptPassword(user.getUsername(), "admin"));
             user.setUserGroup(userGroup);
             userService.create(user);
         }

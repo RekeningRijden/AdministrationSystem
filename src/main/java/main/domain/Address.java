@@ -1,6 +1,7 @@
 package main.domain;
 
 import javax.persistence.*;
+
 import java.io.Serializable;
 
 /**
@@ -78,13 +79,16 @@ public class Address implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Address address = (Address) o;
 
         return id != null ? id.equals(address.id) : address.id == null;
-
     }
 
     @Override

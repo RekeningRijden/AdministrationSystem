@@ -10,7 +10,11 @@ import java.util.Locale;
 /**
  * @author Sam
  */
-public class NumberHelper {
+public final class NumberHelper {
+
+    private NumberHelper(){
+        //Utility class constructor cannot be called.
+    }
 
     /**
      * Parse a String to a BigDecimal.

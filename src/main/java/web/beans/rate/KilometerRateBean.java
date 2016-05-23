@@ -5,21 +5,18 @@
  */
 package web.beans.rate;
 
+import java.io.Serializable;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import main.domain.Rate;
 import main.domain.User;
-import main.domain.enums.Permission;
 import main.service.RateService;
 import web.core.helpers.ContextHelper;
-
-import java.io.Serializable;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * @author martijn

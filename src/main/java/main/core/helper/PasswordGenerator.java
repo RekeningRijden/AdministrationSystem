@@ -13,7 +13,12 @@ import org.apache.commons.codec.binary.Base64;
 /**
  * Created by martijn on 10-5-2016.
  */
-public class PasswordGenerator {
+public final class PasswordGenerator {
+
+    private PasswordGenerator() {
+        //Utility class constructor cannot be called.
+    }
+
     public static String generateRandomPassword(int length) {
         Random random = new Random();
         String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";

@@ -45,7 +45,7 @@ public abstract class CarDao extends AbstractDao<Car> {
         return (int) (long) query.getSingleResult();
     }
 
-    private String getFilteredQueryString() {
+    private static String getFilteredQueryString() {
         return " WHERE c.licencePlate LIKE :filter OR d.lastName LIKE :filter";
     }
 

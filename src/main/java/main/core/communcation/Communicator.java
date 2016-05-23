@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import main.domain.Driver;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -19,6 +20,7 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -28,7 +30,7 @@ import main.domain.simulation.TrackingPeriod;
 /**
  * @author Sam
  */
-public class Communicator {
+public final class Communicator {
 
     /**
      * The test url of the Movementsystem api.
@@ -39,6 +41,15 @@ public class Communicator {
      * The production url of the Movementsystem api.
      */
     private static final String BASE_URL_PRODUCTION = "http://movement.s63a.marijn.ws/api/trackers";
+
+    /**
+     * The date format used in api calls.
+     */
+    private static final String REGULAR_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+
+    private Communicator() {
+        //Utility class constructor cannot be called.
+    }
 
     /**
      * Adds a new cartracker to the movement api
@@ -53,9 +64,8 @@ public class Communicator {
         HttpResponse response = httpClient.execute(post);
 
         //Response
-        String responseString = EntityUtils.toString(response.getEntity(), "UTF-8");
+        String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
         JSONObject json = new JSONObject(responseString);
-        System.out.println("JSON Response: " + json);
         return json.getLong("id");
     }
 
@@ -70,8 +80,8 @@ public class Communicator {
         HttpGet get = new HttpGet(BASE_URL_PRODUCTION);
         HttpResponse response = httpClient.execute(get);
 
-        String responseString = EntityUtils.toString(response.getEntity(), "UTF-8");
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+        String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
+        Gson gson = new GsonBuilder().setDateFormat(REGULAR_DATE_FORMAT).create();
         return gson.fromJson(responseString, new TypeToken<List<CarTracker>>() {
         }.getType());
     }
@@ -87,8 +97,8 @@ public class Communicator {
         HttpGet get = new HttpGet(BASE_URL_PRODUCTION + "/ids");
         HttpResponse response = httpClient.execute(get);
 
-        String responseString = EntityUtils.toString(response.getEntity(), "UTF-8");
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+        String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
+        Gson gson = new GsonBuilder().setDateFormat(REGULAR_DATE_FORMAT).create();
         return gson.fromJson(responseString, new TypeToken<List<Long>>() {
         }.getType());
     }
@@ -120,8 +130,8 @@ public class Communicator {
 
         HttpResponse response = httpClient.execute(get);
 
-        String responseString = EntityUtils.toString(response.getEntity(), "UTF-8");
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+        String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
+        Gson gson = new GsonBuilder().setDateFormat(REGULAR_DATE_FORMAT).create();
         return gson.fromJson(responseString, new TypeToken<List<TrackingPeriod>>() {
         }.getType());
     }
@@ -132,9 +142,7 @@ public class Communicator {
         HttpPut post = new HttpPut("http://billdriver.s63a.marijn.ws/api/users");
 
         String jsonBody = gson.toJson(driver);
-        StringEntity postingString = new StringEntity(jsonBody, "UTF-8");
-
-        System.out.println(jsonBody);
+        StringEntity postingString = new StringEntity(jsonBody, StandardCharsets.UTF_8);
 
         post.setEntity(postingString);
         post.setHeader(HTTP.CONTENT_TYPE, "application/json");
@@ -142,12 +150,10 @@ public class Communicator {
         HttpResponse response = httpClient.execute(post);
 
         //Response
-        String responseString = EntityUtils.toString(response.getEntity(), "UTF-8");
+        String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
         JSONObject json = new JSONObject(responseString);
-        System.out.println("JSON Response: " + json);
         return json.getLong("id");
     }
-
 }
 
 

@@ -1,12 +1,11 @@
 package web.beans.login;
 
 import java.io.Serializable;
-import java.util.List;
-import javax.annotation.PostConstruct;
+
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import main.core.helper.PasswordGenerator;
+
 import main.domain.User;
 import main.service.UserService;
 import web.core.helpers.FrontendHelper;
@@ -66,8 +65,8 @@ public class LoginBean implements Serializable {
         return to;
     }
 
-    public void setTo(String _to) {
-        this.to = _to;
+    public void setTo(String to) {
+        this.to = to;
     }
     //</editor-fold>
 }

@@ -5,6 +5,7 @@ import web.beans.login.UserInfoBean;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Map;
+
 import javax.inject.Inject;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -17,12 +18,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
  * @author Sam
- * <p>
- * Filter used for interception URL requests and redirecting to the login page
- * if needed.
- * </P>
+ *         <p>
+ *         Filter used for interception URL requests and redirecting to the login page
+ *         if needed.
+ *         </P>
  */
 @WebFilter(urlPatterns = {"/pages/*", "/AdministrationSystem/pages/*"})
 public class LoginFilter implements Filter {
@@ -58,7 +58,6 @@ public class LoginFilter implements Filter {
             }
 
             res.sendRedirect(contextPath + "/login.xhtml?to=" + URLEncoder.encode(sb.toString(), "UTF-8"));
-//            res.sendRedirect(contextPath + "/pages/profile/login.xhtml");
         }
 
         chain.doFilter(request, response);
@@ -68,6 +67,5 @@ public class LoginFilter implements Filter {
     public void destroy() {
         //No implementation needed
     }
-
 }
 

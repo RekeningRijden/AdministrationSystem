@@ -18,6 +18,7 @@ public class UserGroup implements Serializable, IEntity {
     private String name;
 
     public UserGroup() {
+        //Default constructor
     }
 
     @Override

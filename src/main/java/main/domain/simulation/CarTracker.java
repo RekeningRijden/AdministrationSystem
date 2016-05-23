@@ -39,12 +39,12 @@ public class CarTracker implements Serializable {
      * @return the current trackingPeriod.
      */
     public TrackingPeriod getCurrentTrackingPeriod() {
-        return trackingPeriods.get((trackingPeriods.size() - 1));
+        return trackingPeriods.get(trackingPeriods.size() - 1);
     }
 
     public Position getLastPosition() {
         if (getCurrentTrackingPeriod().getPositions().isEmpty()) {
-            return trackingPeriods.get((trackingPeriods.size() - 2)).getLastPosition();
+            return trackingPeriods.get(trackingPeriods.size() - 2).getLastPosition();
         } else {
             return getCurrentTrackingPeriod().getLastPosition();
         }

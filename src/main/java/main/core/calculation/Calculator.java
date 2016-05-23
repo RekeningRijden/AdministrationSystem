@@ -8,9 +8,13 @@ import main.domain.simulation.TrackingPeriod;
 /**
  * @author Sam
  */
-public class Calculator {
+public final class Calculator {
 
     private static final double EARTH_RADIUS = 6371.8;
+
+    private Calculator() {
+        //Utility class constructor cannot be called.
+    }
 
     /**
      * Calculate the total distance travelled by a Car in one @{code TrackingPeriod}.

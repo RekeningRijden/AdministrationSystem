@@ -31,7 +31,11 @@ import java.util.logging.Logger;
  *
  * @author Sam
  */
-public class PdfGenerator {
+public final class PdfGenerator {
+
+    private PdfGenerator() {
+        //Utility class constructor cannot be called.
+    }
 
     /**
      * Create a PDF file from the given data.

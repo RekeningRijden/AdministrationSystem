@@ -6,6 +6,7 @@ package main.core.pdf;
  *         Interface declaring predefined PDF file templates.
  *         </p>
  */
+@FunctionalInterface
 public interface ITemplate {
 
     /**

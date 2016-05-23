@@ -27,7 +27,7 @@ public class LoginBean implements Serializable {
     private String username;
     private String password;
 
-    private String to = "/index.xhtml";
+    private String to = "/pages/profile/profile.xhtml";
 
     public void login() {
         String typedUsername = username.toLowerCase();

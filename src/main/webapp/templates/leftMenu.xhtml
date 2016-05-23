@@ -1,8 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:jsf="http://java.sun.com/jsf">
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <ui:composition>
         <ui:param name="currentMenuItem" value="#{leftMenuBean.currentMenuItem}"/>
@@ -12,9 +10,6 @@
             <aside id="left-panel">
                 <nav>
                     <ul>
-                        <li class="#{currentMenuItem eq 'index' ? 'active' : ''}">
-                            <a href="#{root}/index.xhtml"><i class="fa fa-lg fa-fw fa-home"/><span class="menu-item-parent">Index</span></a>
-                        </li>
                         <li>
                             <a href="#"><i class="fa fa-lg fa-fw fa-car"/><span class="menu-item-parent">Car</span></a>
                             <ul>
@@ -37,21 +32,11 @@
                                 </li>
                             </ul>
                         </li>
-                        <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-book"/><span class="menu-item-parent">Invoice</span></a>
-                            <ul>
-                                <li class="#{currentMenuItem eq 'invoiceOverview' ? 'active' : ''}">
-                                    <a href="#{root}/pages/invoice/invoiceOverview.xhtml">Overview</a>
-                                </li>
-                            </ul>
+                        <li class="#{currentMenuItem eq 'invoiceOverview' ? 'active' : ''}">
+                            <a href="#{root}/pages/invoice/invoiceOverview.xhtml"><i class="fa fa-lg fa-fw fa-book"/><span class="menu-item-parent">Invoices</span></a>
                         </li>
-                        <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-pie-chart"/><span class="menu-item-parent">Rate</span></a>
-                            <ul>
-                                <li class="#{currentMenuItem eq 'rate' ? 'active' : ''}">
-                                    <a href="#{root}/pages/rate/rate.xhtml">Overview</a>
-                                </li>
-                            </ul>
+                        <li class="#{currentMenuItem eq 'rate' ? 'active' : ''}">
+                            <a href="#{root}/pages/rate/rate.xhtml"><i class="fa fa-lg fa-fw fa-pie-chart"/><span class="menu-item-parent">Rates</span></a>
                         </li>
                     </ul>
                 </nav>

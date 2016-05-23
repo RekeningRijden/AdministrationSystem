@@ -40,7 +40,7 @@
                                 <div class="jarviswidget-editbox">
                                 </div>
 
-                                <div class="widget-body">
+                                <div class="widget-body no-padding">
                                     <h:form id="form">
                                         <div class="row">
                                             <div class="col-md-12">
@@ -93,8 +93,7 @@
                                                                                     <!--<c:if test="#{permission.name() == 'KM_PRICE'}">-->
                                                                                         <h:commandLink class="btn btn-primary btn-xs"
                                                                                                        action="#{kilometerRateBean.setRate(rate)}"
-                                                                                                       onclick="$('#editRateModal').modal('show')"
-                                                                                                       value="Edit">
+                                                                                                       onclick="$('#editRateModal').modal('show')">
                                                                                             <i class="fa fa-pencil"/>
                                                                                             <f:ajax execute="@this" render=":modal-form-1"/>
                                                                                         </h:commandLink>

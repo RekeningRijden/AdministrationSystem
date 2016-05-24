@@ -77,7 +77,7 @@ public final class PdfGenerator {
 
             document.close();
 
-            out = new FileOutputStream(fileName + ".pdf");
+            out = new FileOutputStream("C:\\School\\" + fileName + ".pdf");
             baos.writeTo(out);
         } catch (IOException | DocumentException e) {
             Logger.getLogger(PdfGenerator.class.getName()).log(Level.SEVERE, null, e);

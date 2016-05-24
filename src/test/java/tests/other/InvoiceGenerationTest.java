@@ -16,6 +16,7 @@ import javax.inject.Inject;
 
 import main.core.calculation.Calculator;
 import main.core.calculation.InvoiceGenerator;
+import main.core.exception.GenerationException;
 import main.domain.Car;
 import main.domain.Rate;
 import main.domain.simulation.CarTracker;
@@ -58,9 +59,9 @@ public class InvoiceGenerationTest {
     }
 
     @Test
-    public void testGeneration() {
+    public void testGeneration() throws GenerationException {
         CarTracker tracker = buildCarTracker();
-        buildCar();
+       buildCar();
 
         invoiceGenerator.generateInvoice(tracker);
 
@@ -77,13 +78,13 @@ public class InvoiceGenerationTest {
     }
 
     @Test
-    public void testPriceCalculation() {
+    public void testPriceCalculation() throws GenerationException {
         CarTracker tracker = buildCarTracker();
-        buildCar();
+        Car car = buildCar();
 
         Assert.assertEquals("Wrong price calculated"
                 , new BigDecimal(140.765 * 2.0).setScale(1, BigDecimal.ROUND_HALF_UP)
-                , invoiceGenerator.calculatePrice(tracker).setScale(1, BigDecimal.ROUND_HALF_UP));
+                , invoiceGenerator.calculatePrice(tracker, car).setScale(1, BigDecimal.ROUND_HALF_UP));
     }
 
     @Test

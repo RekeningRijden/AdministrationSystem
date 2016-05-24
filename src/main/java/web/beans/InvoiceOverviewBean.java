@@ -7,6 +7,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import main.core.calculation.InvoiceGenerator;
 import main.domain.Invoice;
 import main.service.InvoiceService;
 import web.core.helpers.FrontendHelper;
@@ -18,6 +19,9 @@ import web.model.DataTableModel;
 @Named
 @ViewScoped
 public class InvoiceOverviewBean extends DataTableModel<InvoiceService, Invoice> implements Serializable {
+
+    @Inject
+    private InvoiceGenerator invoiceGenerator;
 
     @Inject
     private InvoiceService invoiceService;
@@ -70,6 +74,10 @@ public class InvoiceOverviewBean extends DataTableModel<InvoiceService, Invoice>
 
     public void sortByTotalAmount() {
         sort("i.totalAmount");
+    }
+
+    public void startInvoiceGeneration() {
+        invoiceGenerator.generate();
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">

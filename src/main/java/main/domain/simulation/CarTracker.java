@@ -67,6 +67,10 @@ public class CarTracker implements Serializable {
         this.authorisationCode = authorisationCode;
     }
 
+    public void setTrackingPeriods(List<TrackingPeriod> trackingPeriods){
+        this.trackingPeriods = trackingPeriods;
+    }
+
     public List<TrackingPeriod> getTrackingPeriods() {
         return trackingPeriods;
     }

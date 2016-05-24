@@ -2,8 +2,10 @@ package main.core.communcation;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
+import main.core.exception.CommunicationException;
 import main.domain.Driver;
 
 import org.apache.http.HttpResponse;
@@ -22,6 +24,7 @@ import org.codehaus.jettison.json.JSONObject;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import main.domain.simulation.CarTracker;
@@ -92,15 +95,43 @@ public final class Communicator {
      * @return a List of Longs.
      * @throws IOException when an IOException occurs.
      */
-    public static List<Long> getAllCartrackerIds() throws IOException {
+    public static List<Long> getAllCartrackerIds() throws IOException, CommunicationException {
+        return getAllCartrackerIds(1);
+    }
+
+    public static List<Long> getAllCartrackerIds(int counter) throws IOException, CommunicationException {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         HttpGet get = new HttpGet(BASE_URL_PRODUCTION + "/ids");
         HttpResponse response = httpClient.execute(get);
+        if (response.getStatusLine().getStatusCode() != 200) {
+            throw new CommunicationException("Response did not have status code 200");
+        }
 
         String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
+
+        System.out.println(responseString);
+
         Gson gson = new GsonBuilder().setDateFormat(REGULAR_DATE_FORMAT).create();
-        return gson.fromJson(responseString, new TypeToken<List<Long>>() {
-        }.getType());
+
+        List<Long> ids = null;
+        try {
+            List<LongWrapper> wrappers = gson.fromJson(responseString, new TypeToken<List<LongWrapper>>() {
+            }.getType());
+
+            ids = new ArrayList<>();
+            for (LongWrapper wrapper : wrappers) {
+                ids.add(wrapper.getValue());
+            }
+        } catch (JsonSyntaxException e) {
+            counter++;
+            if (counter < 3) {
+                getAllCartrackerIds(counter);
+            } else {
+                throw new CommunicationException("Gave up on connection after trying three times");
+            }
+        }
+
+        return ids;
     }
 
     /**
@@ -113,7 +144,7 @@ public final class Communicator {
      * @return a List of @{code CarTrackers}.
      * @throws IOException when an IOException occurs.
      */
-    public static List<TrackingPeriod> getTrackingPeriodsByMonth(Long id, int month, int year) throws IOException {
+    public static List<TrackingPeriod> getTrackingPeriodsByMonth(Long id, int month, int year) throws IOException, CommunicationException {
         LocalDate dateInMonth = LocalDate.of(year, month, 1);
 
         String startDate = year + "-" + month + "01";
@@ -124,11 +155,14 @@ public final class Communicator {
                 + "/"
                 + id
                 + "/movements/_byperiod?startDate="
-                + startDate
+                + "2015-03-25"
                 + "&endDate="
-                + endDate);
+                + "2016-07-02");
 
         HttpResponse response = httpClient.execute(get);
+        if (response == null) {
+            throw new CommunicationException("Response is null");
+        }
 
         String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
         Gson gson = new GsonBuilder().setDateFormat(REGULAR_DATE_FORMAT).create();

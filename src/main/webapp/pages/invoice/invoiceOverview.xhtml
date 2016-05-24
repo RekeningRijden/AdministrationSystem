@@ -18,32 +18,42 @@
 
     <ui:define name="content">
         <div id="content">
-            <div class="row">
-                <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
-                    <h1 class="page-title txt-color-blueDark visible-xs visible-sm visible-md visible-lg">
-                        <i class="fa fa-car fa-fw "/>
-                        Invoice overview
-                    </h1>
-                </div>
-            </div>
-
-            <section id="widget-grid" class="">
+            <h:form id="form">
                 <div class="row">
-                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0"
-                             data-widget-fullscreenbutton="false" data-widget-togglebutton="false"
-                             data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false"
-                             data-widget-sortable="false">
-                            <header>
-                                <span class="widget-icon"> <i class="fa fa-file"/> </span>
-                                <h2>Invoices</h2>
-                            </header>
-                            <div>
-                                <div class="jarviswidget-editbox">
-                                </div>
+                    <div class="col-xs-8 col-sm-7 col-md-7 col-lg-4">
+                        <h1 class="page-title txt-color-blueDark visible-xs visible-sm visible-md visible-lg">
+                            <i class="fa fa-car fa-fw "/>
+                            Invoice overview
+                        </h1>
+                    </div>
+                    <div class="col-xs-4 col-sm-5 col-md-5 col-lg-8">
+                        <h:commandLink class="btn btn-primary pull-right"
+                                       action="#{invoiceOverviewBean.startInvoiceGeneration()}"
+                                       style="margin-top: 10px;"
+                                       rendered="#{userInfoBean.loggedInGroup.id eq 1}">
+                            <i class="fa fa-check"/>
+                            Generate
+                            <f:ajax execute="@this" render="@none"/>
+                        </h:commandLink>
+                    </div>
+                </div>
 
-                                <div class="widget-body">
-                                    <h:form id="form">
+                <section id="widget-grid" class="">
+                    <div class="row">
+                        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0"
+                                 data-widget-fullscreenbutton="false" data-widget-togglebutton="false"
+                                 data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false"
+                                 data-widget-sortable="false">
+                                <header>
+                                    <span class="widget-icon"> <i class="fa fa-file"/> </span>
+                                    <h2>Invoices</h2>
+                                </header>
+                                <div>
+                                    <div class="jarviswidget-editbox">
+                                    </div>
+
+                                    <div class="widget-body">
                                         <div class="row">
                                             <div class="col-md-5 col-sm-6 col-xs-8">
                                                 <div class="form-group">
@@ -147,8 +157,8 @@
                                                             <tr>
                                                                 <td>
                                                                     <!--<h:outputLink value="invoice.xhtml">-->
-                                                                        <!--<f:param name="invoiceId" value="#{item.id}"/>-->
-                                                                        <h:outputText value="#{item.id}"/>
+                                                                    <!--<f:param name="invoiceId" value="#{item.id}"/>-->
+                                                                    <h:outputText value="#{item.id}"/>
                                                                     <!--</h:outputLink>-->
                                                                 </td>
                                                                 <td>
@@ -270,56 +280,57 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </h:form>
+
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </article>
-                </div>
-            </section>
+                        </article>
+                    </div>
+                </section>
+            </h:form>
         </div>
+    </ui:define>
 
-        <div class="modal fade" data-backdrop="static" id="editInvoiceModal">
-            <div class="modal-dialog">
-                <h:form id="modal-form-1">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <a class="close" onclick="$('#editInvoiceModal').modal('hide')">
-                                x
-                            </a>
-                            <h5>Invoice #{invoiceOverviewBean.invoice.id}</h5>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Status</label>
-                                        <h:selectOneMenu class="form-control"
-                                                         value="#{invoiceOverviewBean.invoice.paymentStatus}">
-                                            <f:selectItem itemLabel="Paid" itemValue="PAID"/>
-                                            <f:selectItem itemLabel="Open" itemValue="OPEN"/>
-                                            <f:selectItem itemLabel="Cancelled" itemValue="CANCELLED"/>
-                                        </h:selectOneMenu>
-                                    </div>
-
-                                    <h:commandLink class="btn btn-primary"
-                                                   action="#{invoiceOverviewBean.save()}"
-                                                   onclick="$('#editInvoiceModal').modal('hide');">
-                                        <i class="fa fa-check"/>
-                                        Save
-                                        <f:ajax execute="@form" render=":form"/>
-                                    </h:commandLink>
-                                    <a class="btn btn-default" onclick="$('#editInvoiceModal').modal('hide');">
-                                        Cancel
-                                    </a>
+    <div class="modal fade" data-backdrop="static" id="editInvoiceModal">
+        <div class="modal-dialog">
+            <h:form id="modal-form-1">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <a class="close" onclick="$('#editInvoiceModal').modal('hide')">
+                            x
+                        </a>
+                        <h5>Invoice #{invoiceOverviewBean.invoice.id}</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label">Status</label>
+                                    <h:selectOneMenu class="form-control"
+                                                     value="#{invoiceOverviewBean.invoice.paymentStatus}">
+                                        <f:selectItem itemLabel="Paid" itemValue="PAID"/>
+                                        <f:selectItem itemLabel="Open" itemValue="OPEN"/>
+                                        <f:selectItem itemLabel="Cancelled" itemValue="CANCELLED"/>
+                                    </h:selectOneMenu>
                                 </div>
+
+                                <h:commandLink class="btn btn-primary"
+                                               action="#{invoiceOverviewBean.save()}"
+                                               onclick="$('#editInvoiceModal').modal('hide');">
+                                    <i class="fa fa-check"/>
+                                    Save
+                                    <f:ajax execute="@form" render=":form"/>
+                                </h:commandLink>
+                                <a class="btn btn-default" onclick="$('#editInvoiceModal').modal('hide');">
+                                    Cancel
+                                </a>
                             </div>
                         </div>
                     </div>
-                </h:form>
-            </div>
+                </div>
+            </h:form>
         </div>
-    </ui:define>
+    </div>
 </ui:composition>
 </html>
 

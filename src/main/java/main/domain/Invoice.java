@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
+
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -29,6 +30,8 @@ public class Invoice implements Serializable, IEntity {
 
     @ManyToOne
     private Ownership ownership;
+
+    private String filePath;
 
     public Invoice() {
         this.paymentStatus = PaymentStatus.OPEN;
@@ -76,6 +79,14 @@ public class Invoice implements Serializable, IEntity {
 
     public void setOwnership(Ownership ownership) {
         this.ownership = ownership;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 
     //</editor-fold>

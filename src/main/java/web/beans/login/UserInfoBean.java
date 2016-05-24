@@ -40,7 +40,11 @@ public class UserInfoBean implements Serializable {
     }
 
     public UserGroup getLoggedInGroup() {
-        return getLoggedInUser().getUserGroup();
+        if (getLoggedInUser() == null) {
+            return null;
+        } else {
+            return getLoggedInUser().getUserGroup();
+        }
     }
 
     public List<Permission> getLoggedInPermissions() {

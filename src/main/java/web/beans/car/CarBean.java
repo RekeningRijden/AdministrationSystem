@@ -60,7 +60,6 @@ public class CarBean implements Serializable {
                 car = new Car();
 
                 Ownership ownership = new Ownership();
-                ownership.setDriver(new Driver());
                 ownership.setCar(car);
                 ownership.setStartDate(new Date());
 

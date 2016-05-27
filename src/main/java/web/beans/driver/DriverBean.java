@@ -21,6 +21,7 @@ import main.domain.Address;
 import main.domain.Driver;
 import main.service.DriverService;
 import web.core.helpers.ContextHelper;
+import web.core.helpers.FrontendHelper;
 import web.core.helpers.RedirectHelper;
 
 /**
@@ -65,6 +66,8 @@ public class DriverBean implements Serializable {
                 Communicator.addDriver(driver);
             } catch (IOException | JSONException e) {
                 Logger.getLogger(DriverBean.class.getName()).log(Level.SEVERE, null, e);
+
+                FrontendHelper.displayErrorSmallBox("Driver could not be added");
             }
         }
         RedirectHelper.redirect("/pages/driver/driverOverview.xhtml");

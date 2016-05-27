@@ -73,6 +73,10 @@ public class Address implements Serializable {
     public void setCountry(String country) {
         this.country = country;
     }
+
+    public String getStreetAndNr() {
+        return street + " " + streetNr;
+    }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="HashCode/Equals">

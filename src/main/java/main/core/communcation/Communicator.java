@@ -61,32 +61,15 @@ public final class Communicator {
      * @throws IOException Can happen when something is wrong with (StringEntity(jsonBody) en httpClient.execute(post)
      */
     public static Long requestNewCartracker() throws IOException, JSONException {
-        //Request
         HttpClient httpClient = HttpClientBuilder.create().build();
         HttpPost post = new HttpPost(BASE_URL_PRODUCTION);
         HttpResponse response = httpClient.execute(post);
+        checkResponse(response);
 
-        //Response
         String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
         JSONObject json = new JSONObject(responseString);
+
         return json.getLong("id");
-    }
-
-    /**
-     * Gets all known cartrackers from the Movementsystem Api
-     *
-     * @return All known cartrackers
-     * @throws IOException When trying to execute the http request or converts the response to a String
-     */
-    public static List<CarTracker> getAllCartrackers() throws IOException {
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-        HttpGet get = new HttpGet(BASE_URL_PRODUCTION);
-        HttpResponse response = httpClient.execute(get);
-
-        String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
-        Gson gson = new GsonBuilder().setDateFormat(REGULAR_DATE_FORMAT).create();
-        return gson.fromJson(responseString, new TypeToken<List<CarTracker>>() {
-        }.getType());
     }
 
     /**
@@ -95,30 +78,27 @@ public final class Communicator {
      * @return a List of Longs.
      * @throws IOException when an IOException occurs.
      */
-    public static List<Long> getAllCartrackerIds() throws IOException, CommunicationException {
+    public static List<Long> getAllCartrackerIds() throws IOException {
         return getAllCartrackerIds(1);
     }
 
-    public static List<Long> getAllCartrackerIds(int counter) throws IOException, CommunicationException {
+    private static List<Long> getAllCartrackerIds(int counter) throws IOException {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         HttpGet get = new HttpGet(BASE_URL_PRODUCTION + "/ids");
+
         HttpResponse response = httpClient.execute(get);
-        if (response.getStatusLine().getStatusCode() != 200) {
-            throw new CommunicationException("Response did not have status code 200");
-        }
+        checkResponse(response);
 
         String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
-
         System.out.println(responseString);
 
         Gson gson = new GsonBuilder().setDateFormat(REGULAR_DATE_FORMAT).create();
 
-        List<Long> ids = null;
+        List<Long> ids = new ArrayList<>();
         try {
             List<LongWrapper> wrappers = gson.fromJson(responseString, new TypeToken<List<LongWrapper>>() {
             }.getType());
 
-            ids = new ArrayList<>();
             for (LongWrapper wrapper : wrappers) {
                 ids.add(wrapper.getValue());
             }
@@ -144,7 +124,7 @@ public final class Communicator {
      * @return a List of @{code CarTrackers}.
      * @throws IOException when an IOException occurs.
      */
-    public static List<TrackingPeriod> getTrackingPeriodsByMonth(Long id, int month, int year) throws IOException, CommunicationException {
+    public static List<TrackingPeriod> getTrackingPeriodsByMonth(Long id, int month, int year) throws IOException {
         LocalDate dateInMonth = LocalDate.of(year, month, 1);
 
         String startDate = year + "-" + month + "01";
@@ -160,12 +140,11 @@ public final class Communicator {
                 + "2016-07-02");
 
         HttpResponse response = httpClient.execute(get);
-        if (response == null) {
-            throw new CommunicationException("Response is null");
-        }
+        checkResponse(response);
 
         String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
         Gson gson = new GsonBuilder().setDateFormat(REGULAR_DATE_FORMAT).create();
+
         return gson.fromJson(responseString, new TypeToken<List<TrackingPeriod>>() {
         }.getType());
     }
@@ -182,11 +161,29 @@ public final class Communicator {
         post.setHeader(HTTP.CONTENT_TYPE, "application/json");
 
         HttpResponse response = httpClient.execute(post);
+        checkResponse(response);
 
-        //Response
         String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
         JSONObject json = new JSONObject(responseString);
+
         return json.getLong("id");
+    }
+
+    /**
+     * Check if a received response is not null and has the statusCode code of 200.
+     *
+     * @param response to check.
+     * @throws CommunicationException if the response was null or the statusCode was not 200.s
+     */
+    private static void checkResponse(HttpResponse response) throws CommunicationException {
+        if (response == null) {
+            throw new CommunicationException("Response was null");
+        }
+
+        int statusCode = response.getStatusLine().getStatusCode();
+        if (statusCode != 200) {
+            throw new CommunicationException("Response did not have statusCode 200, instead the code was: " + statusCode);
+        }
     }
 }
 

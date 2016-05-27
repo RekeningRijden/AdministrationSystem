@@ -51,7 +51,7 @@ public class InvoiceGenerator implements Serializable {
 
         try {
             ids = Communicator.getAllCartrackerIds();
-        } catch (IOException | CommunicationException e) {
+        } catch (IOException e) {
             Logger.getLogger(Communicator.class.getName()).log(Level.SEVERE, null, e);
         }
 
@@ -65,7 +65,7 @@ public class InvoiceGenerator implements Serializable {
                     tracker.setTrackingPeriods(periods);
 
                     generateInvoice(tracker);
-                } catch (GenerationException | CommunicationException | IOException ex) {
+                } catch (GenerationException | IOException ex) {
                     Logger.getLogger(Communicator.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -94,9 +94,6 @@ public class InvoiceGenerator implements Serializable {
                 + localDate.getYear();
         File invoiceFile = new File(fileName);
 
-        ITemplate template = new MonthlyInvoiceTemplate(tracker, totalPrice);
-        PdfGenerator.generate(invoiceFile.getName(), template);
-
         Instant instant = localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
         Date month = Date.from(instant);
 
@@ -108,6 +105,9 @@ public class InvoiceGenerator implements Serializable {
         invoice.setTotalAmount(totalPrice);
 
         invoiceService.create(invoice);
+
+        ITemplate template = new MonthlyInvoiceTemplate(invoice, 111.0);
+        PdfGenerator.generate(invoiceFile.getName(), template);
     }
 
     /**

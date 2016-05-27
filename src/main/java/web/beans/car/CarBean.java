@@ -93,6 +93,8 @@ public class CarBean implements Serializable {
                 FrontendHelper.displayErrorSmallBox("Selecteer een bestuurder");
             }
         }
+
+        carId = null;
     }
 
     public void updateSelectedDriver() {

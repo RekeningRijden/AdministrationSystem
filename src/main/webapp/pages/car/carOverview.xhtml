@@ -4,196 +4,203 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:jsf="http://java.sun.com/jsf">
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
 
-    <ui:composition template="../../templates/main.xhtml">
+<ui:composition template="../../templates/main.xhtml">
 
-        <f:metadata>
-            <f:event type="preRenderView" listener="#{leftMenuBean.setCurrentMenuItem('carOverview')}" />
-        </f:metadata>
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{leftMenuBean.setCurrentMenuItem('carOverview')}"/>
+    </f:metadata>
 
-        <ui:param name="sortIsAscending" value="#{carOverviewBean.sortIsAscending}"/>
-        <ui:param name="sortedOn" value="#{carOverviewBean.sortedOn}"/>
-        <ui:param name="dataListTotalSize" value="#{carOverviewBean.dataListTotalSize}"/>
+    <ui:param name="sortIsAscending" value="#{carOverviewBean.sortIsAscending}"/>
+    <ui:param name="sortedOn" value="#{carOverviewBean.sortedOn}"/>
+    <ui:param name="dataListTotalSize" value="#{carOverviewBean.dataListTotalSize}"/>
 
-        <ui:define name="content">
-            <div id="content">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
-                        <h1 class="page-title txt-color-blueDark visible-xs visible-sm visible-md visible-lg">
-                            <i class="fa fa-car fa-fw "/> 
-                            Car overview
-                        </h1>
-                    </div>
+    <ui:define name="content">
+        <div id="content">
+            <div class="row">
+                <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+                    <h1 class="page-title txt-color-blueDark visible-xs visible-sm visible-md visible-lg">
+                        <i class="fa fa-car fa-fw "/>
+                        Car overview
+                    </h1>
                 </div>
+            </div>
 
-                <section id="widget-grid" class="">
-                    <div class="row">
-                        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" 
-                                 data-widget-fullscreenbutton="false" data-widget-togglebutton="false"
-                                 data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-sortable="false">     
-                                <header>
-                                    <span class="widget-icon"> <i class="fa fa-table"/> </span>
-                                    <h2>Cars</h2>
-                                </header>
-                                <div>
-                                    <div class="jarviswidget-editbox">
-                                    </div>
+            <section id="widget-grid" class="">
+                <div class="row">
+                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0"
+                             data-widget-fullscreenbutton="false" data-widget-togglebutton="false"
+                             data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-sortable="false">
+                            <header>
+                                <span class="widget-icon"> <i class="fa fa-table"/> </span>
+                                <h2>Cars</h2>
+                            </header>
+                            <div>
+                                <div class="jarviswidget-editbox">
+                                </div>
 
-                                    <div class="widget-body">
-                                        <h:form id="form">
-                                            <div class="row">
-                                                <div class="col-md-5 col-sm-6 col-xs-8">
-                                                    <div class="form-group">
-                                                        <div class="input-group">
+                                <div class="widget-body">
+                                    <h:form id="form">
+                                        <div class="row">
+                                            <div class="col-md-5 col-sm-6 col-xs-8">
+                                                <div class="form-group">
+                                                    <div class="input-group">
                                                             <span class="input-group-btn">
                                                                 <h:commandLink class="btn btn-primary" action="#{carOverviewBean.filter()}">
                                                                     <i class="fa fa-search"/>
                                                                     <f:ajax execute="@form" render="@form"/>
                                                                 </h:commandLink>
                                                             </span>
-                                                            <input class="form-control" type="text"
-                                                                   jsf:value="#{carOverviewBean.filter}"
-                                                                   placeholder="Search..."/>
+                                                        <input class="form-control" type="text"
+                                                               jsf:value="#{carOverviewBean.filter}"
+                                                               placeholder="Search..."/>
                                                             <span class="input-group-btn">
                                                                 <h:commandLink class="btn btn-danger" action="#{carOverviewBean.resetFilter()}">
                                                                     <i class="fa fa-remove"/>
                                                                     <f:ajax execute="@form" render="@form"/>
                                                                 </h:commandLink>
                                                             </span>
-                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-7 col-sm-6 col-xs-4">
-                                                    <h:outputLink class="btn btn-primary pull-right" value="car.xhtml">
-                                                        <i class="fa fa-plus"/>
-                                                        Add
-                                                    </h:outputLink>
-                                                </div>
                                             </div>
-
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <ui:fragment rendered="#{carOverviewBean.displayedList.isEmpty()}">
-                                                        <div class="alert alert-warning fade in">
-                                                            <i class="fa fa-warning"/>
-                                                            No results found
-                                                        </div>
-                                                    </ui:fragment>
-                                                    <ui:fragment rendered="#{!carOverviewBean.displayedList.isEmpty()}">
-                                                        <table class="table table-striped table-bordered table-hover table-condensed">
-                                                            <thead>
-                                                                <tr>
-                                                                    <f:ajax execute="@form" render="@form">
-                                                                        <th>
-                                                                            <h:commandLink value="Licence plate" action="#{carOverviewBean.sortByLicencePlate()}"/>
-                                                                            <h:commandLink  class="#{sortIsAscending ? 'fa fa-long-arrow-up' : 'fa fa-long-arrow-down'} pull-right" 
-                                                                                            action="#{carOverviewBean.sortByLicencePlate()}"
-                                                                                            rendered="#{sortedOn eq 'c.licencePlate'}"/>
-                                                                            <h:commandLink class="fa fa-arrows-v pull-right" 
-                                                                                           action="#{carOverviewBean.sortByLicencePlate()}"
-                                                                                           rendered="#{sortedOn != 'c.licencePlate'}"/>
-                                                                        </th>
-                                                                        <th>
-                                                                            <h:commandLink value="Driver" action="#{carOverviewBean.sortByDriver()}"/>
-                                                                            <h:commandLink  class="#{sortIsAscending ? 'fa fa-long-arrow-up' : 'fa fa-long-arrow-down'} pull-right" 
-                                                                                            action="#{carOverviewBean.sortByDriver()}"
-                                                                                            rendered="#{sortedOn eq 'd.lastName'}"/>
-                                                                            <h:commandLink class="fa fa-arrows-v pull-right" 
-                                                                                           action="#{carOverviewBean.sortByDriver()}"
-                                                                                           rendered="#{sortedOn != 'd.lastName'}"/>
-                                                                        </th>
-                                                                    </f:ajax>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <ui:repeat var="item" value="#{carOverviewBean.displayedList}">
-                                                                    <tr>
-                                                                        <td>
-                                                                            <h:outputLink value="car.xhtml">
-                                                                                <f:param name="carId" value="#{item.id}"/>
-                                                                                <h:outputText value="#{item.licencePlate}" />  
-                                                                            </h:outputLink>
-                                                                        </td>
-                                                                        <td>
-                                                                            <h:outputLink value="../driver/driver.xhtml">
-                                                                                <f:param name="driverId" value="#{item.currentOwnership.driver.id}"/>
-                                                                                <h:outputText value="#{item.currentOwnership.driver.getFullName()}" />  
-                                                                            </h:outputLink>
-                                                                        </td>
-                                                                    </tr>
-                                                                </ui:repeat>
-                                                            </tbody>
-                                                        </table>
-                                                    </ui:fragment>
-                                                </div>
+                                            <div class="col-md-7 col-sm-6 col-xs-4">
+                                                <h:outputLink class="btn btn-primary pull-right" value="car.xhtml">
+                                                    <i class="fa fa-plus"/>
+                                                    Add
+                                                </h:outputLink>
                                             </div>
+                                        </div>
 
-                                            <div class="row">
-                                                <div class="col-sm-6 col-xs-12 hidden-xs">
-                                                    <div id="datatable_tabletools_info" class="dataTables_info" role="status" aria-live="polite">
-                                                        <h:panelGroup
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <ui:fragment rendered="#{carOverviewBean.displayedList.isEmpty()}">
+                                                    <div class="alert alert-warning fade in">
+                                                        <i class="fa fa-warning"/>
+                                                        No results found
+                                                    </div>
+                                                </ui:fragment>
+                                                <ui:fragment rendered="#{!carOverviewBean.displayedList.isEmpty()}">
+                                                    <table class="table table-striped table-bordered table-hover table-condensed">
+                                                        <thead>
+                                                        <tr>
+                                                            <f:ajax execute="@form" render="@form">
+                                                                <th>
+                                                                    <h:commandLink value="Licence plate" action="#{carOverviewBean.sortByLicencePlate()}"/>
+                                                                    <h:commandLink class="#{sortIsAscending ? 'fa fa-long-arrow-up' : 'fa fa-long-arrow-down'} pull-right"
+                                                                                   action="#{carOverviewBean.sortByLicencePlate()}"
+                                                                                   rendered="#{sortedOn eq 'c.licencePlate'}"/>
+                                                                    <h:commandLink class="fa fa-arrows-v pull-right"
+                                                                                   action="#{carOverviewBean.sortByLicencePlate()}"
+                                                                                   rendered="#{sortedOn != 'c.licencePlate'}"/>
+                                                                </th>
+                                                                <th>
+                                                                    <h:commandLink value="Driver" action="#{carOverviewBean.sortByDriver()}"/>
+                                                                    <h:commandLink class="#{sortIsAscending ? 'fa fa-long-arrow-up' : 'fa fa-long-arrow-down'} pull-right"
+                                                                                   action="#{carOverviewBean.sortByDriver()}"
+                                                                                   rendered="#{sortedOn eq 'd.lastName'}"/>
+                                                                    <h:commandLink class="fa fa-arrows-v pull-right"
+                                                                                   action="#{carOverviewBean.sortByDriver()}"
+                                                                                   rendered="#{sortedOn != 'd.lastName'}"/>
+                                                                </th>
+                                                                <th>
+                                                                    Cartracker Id
+                                                                </th>
+                                                            </f:ajax>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <ui:repeat var="item" value="#{carOverviewBean.displayedList}">
+                                                            <tr>
+                                                                <td>
+                                                                    <h:outputLink value="car.xhtml">
+                                                                        <f:param name="carId" value="#{item.id}"/>
+                                                                        <h:outputText value="#{item.licencePlate}"/>
+                                                                    </h:outputLink>
+                                                                </td>
+                                                                <td>
+                                                                    <h:outputLink value="../driver/driver.xhtml">
+                                                                        <f:param name="driverId" value="#{item.currentOwnership.driver.id}"/>
+                                                                        <h:outputText value="#{item.currentOwnership.driver.getFullName()}"/>
+                                                                    </h:outputLink>
+                                                                </td>
+                                                                <td>
+                                                                    <h:outputText value="#{item.cartrackerId}"/>
+                                                                </td>
+
+                                                            </tr>
+                                                        </ui:repeat>
+                                                        </tbody>
+                                                    </table>
+                                                </ui:fragment>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-6 col-xs-12 hidden-xs">
+                                                <div id="datatable_tabletools_info" class="dataTables_info" role="status" aria-live="polite">
+                                                    <h:panelGroup
                                                             rendered="#{dataListTotalSize != 0}">
-                                                            Page
+                                                        Page
                                                             <span class="txt-color-darken">
                                                                 #{carOverviewBean.currentPage}
                                                             </span>
-                                                            of
+                                                        of
                                                             <span class="text-primary">
                                                                 #{carOverviewBean.lastPageNumber}
                                                             </span>
 
-                                                            <h:outputLabel value=" - "/>
+                                                        <h:outputLabel value=" - "/>
                                                             <span class="txt-color-darken">
                                                                 #{dataListTotalSize}
                                                             </span>
 
-                                                            <ui:fragment rendered="#{dataListTotalSize == 1}">Result</ui:fragment>
-                                                            <ui:fragment rendered="#{dataListTotalSize != 1}">Results</ui:fragment>
-                                                        </h:panelGroup>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-sm-6 col-xs-12" style="max-height: 30px;">
-                                                    <div class="btn-group btn-group-sm pull-right">
-                                                        <f:ajax execute="@form" render="@form">
-                                                            <h:commandButton class="btn btn-default"  value="&#60;&#60;" action="#{carOverviewBean.firstPage()}" rendered="!#{carOverviewBean.prevNextButtonDisabled}"/>
-                                                            <h:commandButton class="#{carOverviewBean.isButtonCurrentPage(1) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{carOverviewBean.getFirstButtonNumber()}" action="#{carOverviewBean.beforePreviousPage()}" rendered="!#{carOverviewBean.isButtonDisabled(1)}"/>
-                                                            <h:commandButton class="#{carOverviewBean.isButtonCurrentPage(2) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{carOverviewBean.getSecondButtonNumber()}" action="#{carOverviewBean.previousPage()}" rendered="!#{carOverviewBean.isButtonDisabled(2)}"/>
-                                                            <h:commandButton class="#{carOverviewBean.isButtonCurrentPage(3) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{carOverviewBean.getThirdButtonNumber()}" action="#{carOverviewBean.currentPage()}" rendered="!#{carOverviewBean.isButtonDisabled(3)}"/>
-                                                            <h:commandButton class="#{carOverviewBean.isButtonCurrentPage(4) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{carOverviewBean.fourthButtonNumber}" action="#{carOverviewBean.nextPage()}" rendered="!#{carOverviewBean.isButtonDisabled(4)}"/>
-                                                            <h:commandButton class="#{carOverviewBean.isButtonCurrentPage(5) ? 'btn btn-primary' : 'btn btn-default'}"  value="#{carOverviewBean.fifthButtonNumber}" action="#{carOverviewBean.afterNextPage()}" rendered="!#{carOverviewBean.isButtonDisabled(5)}"/>
-                                                            <h:commandButton class="btn btn-default"  value="&#62;&#62;" action="#{carOverviewBean.lastPage()}" rendered="!#{carOverviewBean.prevNextButtonDisabled}"/>
-                                                        </f:ajax>
-                                                    </div>
-                                                    <div class="pull-right">
-                                                        <label class="select">
-                                                            <h:selectOneMenu
-                                                                class="form-control input-sm"
-                                                                value="#{carOverviewBean.itemsPerPage}">
-                                                                <f:ajax event="change" execute="@form"
-                                                                        render="@form"/>
-                                                                <f:selectItem itemLabel="15"
-                                                                              itemValue="15"/>
-                                                                <f:selectItem itemLabel="25"
-                                                                              itemValue="25"/>
-                                                                <f:selectItem itemLabel="35"
-                                                                              itemValue="35"/>
-                                                            </h:selectOneMenu>
-                                                        </label>
-                                                    </div>
+                                                        <ui:fragment rendered="#{dataListTotalSize == 1}">Result</ui:fragment>
+                                                        <ui:fragment rendered="#{dataListTotalSize != 1}">Results</ui:fragment>
+                                                    </h:panelGroup>
                                                 </div>
                                             </div>
-                                        </h:form>
-                                    </div> 
+
+                                            <div class="col-sm-6 col-xs-12" style="max-height: 30px;">
+                                                <div class="btn-group btn-group-sm pull-right">
+                                                    <f:ajax execute="@form" render="@form">
+                                                        <h:commandButton class="btn btn-default" value="&#60;&#60;" action="#{carOverviewBean.firstPage()}" rendered="!#{carOverviewBean.prevNextButtonDisabled}"/>
+                                                        <h:commandButton class="#{carOverviewBean.isButtonCurrentPage(1) ? 'btn btn-primary' : 'btn btn-default'}" value="#{carOverviewBean.getFirstButtonNumber()}" action="#{carOverviewBean.beforePreviousPage()}" rendered="!#{carOverviewBean.isButtonDisabled(1)}"/>
+                                                        <h:commandButton class="#{carOverviewBean.isButtonCurrentPage(2) ? 'btn btn-primary' : 'btn btn-default'}" value="#{carOverviewBean.getSecondButtonNumber()}" action="#{carOverviewBean.previousPage()}" rendered="!#{carOverviewBean.isButtonDisabled(2)}"/>
+                                                        <h:commandButton class="#{carOverviewBean.isButtonCurrentPage(3) ? 'btn btn-primary' : 'btn btn-default'}" value="#{carOverviewBean.getThirdButtonNumber()}" action="#{carOverviewBean.currentPage()}" rendered="!#{carOverviewBean.isButtonDisabled(3)}"/>
+                                                        <h:commandButton class="#{carOverviewBean.isButtonCurrentPage(4) ? 'btn btn-primary' : 'btn btn-default'}" value="#{carOverviewBean.fourthButtonNumber}" action="#{carOverviewBean.nextPage()}" rendered="!#{carOverviewBean.isButtonDisabled(4)}"/>
+                                                        <h:commandButton class="#{carOverviewBean.isButtonCurrentPage(5) ? 'btn btn-primary' : 'btn btn-default'}" value="#{carOverviewBean.fifthButtonNumber}" action="#{carOverviewBean.afterNextPage()}" rendered="!#{carOverviewBean.isButtonDisabled(5)}"/>
+                                                        <h:commandButton class="btn btn-default" value="&#62;&#62;" action="#{carOverviewBean.lastPage()}" rendered="!#{carOverviewBean.prevNextButtonDisabled}"/>
+                                                    </f:ajax>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <label class="select">
+                                                        <h:selectOneMenu
+                                                                class="form-control input-sm"
+                                                                value="#{carOverviewBean.itemsPerPage}">
+                                                            <f:ajax event="change" execute="@form"
+                                                                    render="@form"/>
+                                                            <f:selectItem itemLabel="15"
+                                                                          itemValue="15"/>
+                                                            <f:selectItem itemLabel="25"
+                                                                          itemValue="25"/>
+                                                            <f:selectItem itemLabel="35"
+                                                                          itemValue="35"/>
+                                                        </h:selectOneMenu>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </h:form>
                                 </div>
                             </div>
-                        </article>
-                    </div>
-                </section>
-            </div>
-        </ui:define>
-    </ui:composition> 
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </div>
+    </ui:define>
+</ui:composition>
 </html>
 

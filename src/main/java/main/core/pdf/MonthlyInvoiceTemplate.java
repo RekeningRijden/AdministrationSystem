@@ -2,6 +2,7 @@ package main.core.pdf;
 
 import java.text.DecimalFormat;
 
+import main.core.exception.GenerationException;
 import main.domain.Driver;
 import main.domain.Invoice;
 
@@ -22,8 +23,13 @@ public class MonthlyInvoiceTemplate implements ITemplate {
     }
 
     @Override
-    public String parse() {
+    public String parse() throws GenerationException {
         Driver driver = invoice.getOwnership().getDriver();
+        if (driver == null) {
+            throw new GenerationException("Driver is null");
+        } else if (driver.getAddress() == null) {
+            throw new GenerationException("Address of driver is null");
+        }
 
         DecimalFormat decimalF = new DecimalFormat();
         decimalF.setMaximumFractionDigits(2);

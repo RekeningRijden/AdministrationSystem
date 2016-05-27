@@ -4,7 +4,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:jsf="http://java.sun.com/jsf">
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
 
 <ui:composition template="../../templates/main.xhtml">
 
@@ -148,6 +148,9 @@
                                                                                    action="#{invoiceOverviewBean.sortByTotalAmount()}"
                                                                                    rendered="#{sortedOn != 'i.totalAmount'}"/>
                                                                 </th>
+                                                                <th>
+                                                                    Cartracker Id
+                                                                </th>
                                                                 <th></th>
                                                             </f:ajax>
                                                         </tr>
@@ -178,6 +181,9 @@
                                                                         <f:convertNumber minFractionDigits="2"
                                                                                          maxFractionDigits="2"/>
                                                                     </h:outputText>
+                                                                </td>
+                                                                <td>
+                                                                    <h:outputText value="#{item.ownership.car.cartrackerId}"/>
                                                                 </td>
                                                                 <td>
                                                                     <ui:fragment

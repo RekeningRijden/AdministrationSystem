@@ -1,5 +1,7 @@
 package main.core.pdf;
 
+import main.core.exception.GenerationException;
+
 /**
  * @author Sam
  *         <p>
@@ -12,5 +14,5 @@ public interface ITemplate {
     /**
      * @return PDF file content.
      */
-    String parse();
+    String parse() throws GenerationException;
 }

@@ -56,7 +56,7 @@ public abstract class InvoiceDao extends AbstractDao<Invoice> {
         return " WHERE CAST(i.period CHAR(255)) LIKE :filter " +
                 "OR CAST(i.paymentStatus CHAR(255)) LIKE :filter " +
                 "OR (concat(o.driver.firstName, ' ', o.driver.lastName)) LIKE :filter " +
-                "OR CAST(i.totalAmount CHAR(255)) LIKE :filter" +
+                "OR CAST(i.totalAmount CHAR(255)) LIKE :filter " +
                 "OR CAST(c.cartrackerId CHAR(255)) LIKE :filter";
     }
 }

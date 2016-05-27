@@ -41,7 +41,7 @@ public class LoginFilter implements Filter {
             HttpServletRequest req = (HttpServletRequest) request;
             HttpServletResponse res = (HttpServletResponse) response;
 
-            String requestURI = req.getRequestURI();
+            String requestURI = req.getRequestURI().substring(21);
             String contextPath = req.getContextPath();
 
             StringBuilder sb = new StringBuilder();

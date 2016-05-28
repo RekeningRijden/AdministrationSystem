@@ -84,7 +84,7 @@ public class CarBean implements Serializable {
                     car = carService.update(car);
                     FrontendHelper.displaySuccessSmallBox("De auto is toegevoegd");
                     RedirectHelper.redirect("/pages/car/carOverview.xhtml");
-                } catch (IOException | JSONException e) {
+                } catch (Exception e) {
                     Logger.getLogger(CarBean.class.getName()).log(Level.SEVERE, null, e);
                     FrontendHelper.displayErrorSmallBox("De auto kon niet toegevoegd worden");
                 }
@@ -117,7 +117,7 @@ public class CarBean implements Serializable {
                 car.getPastOwnerships().add(car.getCurrentOwnership());
 
                 car = carService.update(car);
-            }else{
+            } else {
                 car.getCurrentOwnership().setDriver(selectedDriver);
             }
         }

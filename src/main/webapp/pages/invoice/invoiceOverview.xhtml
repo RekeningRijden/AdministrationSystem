@@ -295,48 +295,49 @@
                 </section>
             </h:form>
         </div>
-    </ui:define>
 
-    <div class="modal fade" data-backdrop="static" id="editInvoiceModal">
-        <div class="modal-dialog">
-            <h:form id="modal-form-1">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <a class="close" onclick="$('#editInvoiceModal').modal('hide')">
-                            x
-                        </a>
-                        <h5>Invoice #{invoiceOverviewBean.invoice.id}</h5>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <label class="control-label">Status</label>
-                                    <h:selectOneMenu class="form-control"
-                                                     value="#{invoiceOverviewBean.invoice.paymentStatus}">
-                                        <f:selectItem itemLabel="Paid" itemValue="PAID"/>
-                                        <f:selectItem itemLabel="Open" itemValue="OPEN"/>
-                                        <f:selectItem itemLabel="Cancelled" itemValue="CANCELLED"/>
-                                    </h:selectOneMenu>
+
+        <div class="modal fade" data-backdrop="static" id="editInvoiceModal">
+            <div class="modal-dialog">
+                <h:form id="modal-form-1">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <a class="close" onclick="$('#editInvoiceModal').modal('hide')">
+                                x
+                            </a>
+                            <h5>Invoice #{invoiceOverviewBean.invoice.id}</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Status</label>
+                                        <h:selectOneMenu class="form-control"
+                                                         value="#{invoiceOverviewBean.invoice.paymentStatus}">
+                                            <f:selectItem itemLabel="Paid" itemValue="PAID"/>
+                                            <f:selectItem itemLabel="Open" itemValue="OPEN"/>
+                                            <f:selectItem itemLabel="Cancelled" itemValue="CANCELLED"/>
+                                        </h:selectOneMenu>
+                                    </div>
+
+                                    <h:commandLink class="btn btn-primary"
+                                                   action="#{invoiceOverviewBean.save()}"
+                                                   onclick="$('#editInvoiceModal').modal('hide');">
+                                        <i class="fa fa-check"/>
+                                        Save
+                                        <f:ajax execute="@form" render=":form"/>
+                                    </h:commandLink>
+                                    <a class="btn btn-default" onclick="$('#editInvoiceModal').modal('hide');">
+                                        Cancel
+                                    </a>
                                 </div>
-
-                                <h:commandLink class="btn btn-primary"
-                                               action="#{invoiceOverviewBean.save()}"
-                                               onclick="$('#editInvoiceModal').modal('hide');">
-                                    <i class="fa fa-check"/>
-                                    Save
-                                    <f:ajax execute="@form" render=":form"/>
-                                </h:commandLink>
-                                <a class="btn btn-default" onclick="$('#editInvoiceModal').modal('hide');">
-                                    Cancel
-                                </a>
                             </div>
                         </div>
                     </div>
-                </div>
-            </h:form>
+                </h:form>
+            </div>
         </div>
-    </div>
+    </ui:define>
 </ui:composition>
 </html>
 

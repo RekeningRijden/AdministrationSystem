@@ -2,48 +2,51 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <ui:composition>
-        <ui:param name="currentMenuItem" value="#{leftMenuBean.currentMenuItem}"/>
-        <ui:param name="root" value="#{request.contextPath}"/>
+<ui:composition>
+    <ui:param name="currentMenuItem" value="#{leftMenuBean.currentMenuItem}"/>
+    <ui:param name="root" value="#{request.contextPath}"/>
 
-        <h:form>
-            <aside id="left-panel">
-                <nav>
-                    <ul>
-                        <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-car"/><span class="menu-item-parent">Car</span></a>
-                            <ul>
-                                <li class="#{currentMenuItem eq 'carOverview' ? 'active' : ''}">
-                                    <a href="#{root}/pages/car/carOverview.xhtml">Overview</a>
-                                </li>
-                                <li class="#{currentMenuItem eq 'car' ? 'active' : ''}">
-                                    <a href="#{root}/pages/car/car.xhtml">Add car</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-lg fa-fw fa-user"/><span class="menu-item-parent">Driver</span></a>
-                            <ul>
-                                <li class="#{currentMenuItem eq 'driverOverview' ? 'active' : ''}">
-                                    <a href="#{root}/pages/driver/driverOverview.xhtml">Overview</a>
-                                </li>
-                                <li class="#{currentMenuItem eq 'driver' ? 'active' : ''}">
-                                    <a href="#{root}/pages/driver/driver.xhtml">Add driver</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="#{currentMenuItem eq 'invoiceOverview' ? 'active' : ''}">
-                            <a href="#{root}/pages/invoice/invoiceOverview.xhtml"><i class="fa fa-lg fa-fw fa-book"/><span class="menu-item-parent">Invoices</span></a>
-                        </li>
-                        <li class="#{currentMenuItem eq 'rate' ? 'active' : ''}">
-                            <a href="#{root}/pages/rate/rate.xhtml"><i class="fa fa-lg fa-fw fa-pie-chart"/><span class="menu-item-parent">Rates</span></a>
-                        </li>
-                    </ul>
-                </nav>
+    <h:form>
+        <aside id="left-panel">
+            <nav>
+                <ul>
+                    <li>
+                        <a href="#"><i class="fa fa-lg fa-fw fa-car"/><span class="menu-item-parent">Car</span></a>
+                        <ul>
+                            <li class="#{currentMenuItem eq 'carOverview' ? 'active' : ''}">
+                                <a href="#{root}/pages/car/carOverview.xhtml">Overview</a>
+                            </li>
+                            <li class="#{currentMenuItem eq 'car' ? 'active' : ''}">
+                                <a href="#{root}/pages/car/car.xhtml">Add car</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-lg fa-fw fa-user"/><span class="menu-item-parent">Driver</span></a>
+                        <ul>
+                            <li class="#{currentMenuItem eq 'driverOverview' ? 'active' : ''}">
+                                <a href="#{root}/pages/driver/driverOverview.xhtml">Overview</a>
+                            </li>
+                            <li class="#{currentMenuItem eq 'driver' ? 'active' : ''}">
+                                <a href="#{root}/pages/driver/driver.xhtml">Add driver</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="#{currentMenuItem eq 'invoiceOverview' ? 'active' : ''}">
+                        <a href="#{root}/pages/invoice/invoiceOverview.xhtml"><i class="fa fa-lg fa-fw fa-book"/><span class="menu-item-parent">Invoices</span></a>
+                    </li>
+                    <li class="#{currentMenuItem eq 'rate' ? 'active' : ''}">
+                        <a href="#{root}/pages/rate/rate.xhtml"><i class="fa fa-lg fa-fw fa-pie-chart"/><span class="menu-item-parent">Rates</span></a>
+                    </li>
+                    <li class="#{currentMenuItem eq 'region' ? 'active' : ''}">
+                        <a href="#{root}/pages/region/regionOverview.xhtml"><i class="fa fa-lg fa-fw fa-pie-chart"/><span class="menu-item-parent">Regions</span></a>
+                    </li>
+                </ul>
+            </nav>
                 <span class="minifyme" data-action="minifyMenu"> 
                     <i class="fa fa-bars hit"/> 
                 </span>
-            </aside>
-        </h:form>
-    </ui:composition>
+        </aside>
+    </h:form>
+</ui:composition>
 </html>

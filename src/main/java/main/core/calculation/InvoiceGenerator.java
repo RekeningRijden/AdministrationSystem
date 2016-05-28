@@ -8,7 +8,9 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,11 +24,13 @@ import main.core.pdf.MonthlyInvoiceTemplate;
 import main.core.pdf.PdfGenerator;
 import main.domain.Car;
 import main.domain.Invoice;
+import main.domain.Region;
 import main.domain.enums.PaymentStatus;
 import main.domain.simulation.CarTracker;
 import main.domain.simulation.TrackingPeriod;
 import main.service.CarService;
 import main.service.InvoiceService;
+import main.service.RegionService;
 
 /**
  * @author Sam
@@ -38,6 +42,8 @@ public class InvoiceGenerator implements Serializable {
     private CarService carService;
     @Inject
     private InvoiceService invoiceService;
+    @Inject
+    private RegionService regionService;
 
     /**
      * Retrieve all the @{code Cartracker} from the MovementSystem
@@ -117,11 +123,25 @@ public class InvoiceGenerator implements Serializable {
      * @return a @{code BigDecimal} representing the total price that has to be paid for the current month.
      */
     public BigDecimal calculatePrice(CarTracker tracker, Car car) {
-        double totalDistance = 0.0;
+        List<Region> regions = regionService.getAll();
+        Map<Region, Double> distances = new HashMap<>();
+
         for (TrackingPeriod period : tracker.getTrackingPeriods()) {
-            totalDistance += Calculator.calcuateTotalDistance(period);
+            distances.putAll(Calculator.calculateTotalDistance(period, regions));
         }
 
-        return car.getRate().getValue().multiply(BigDecimal.valueOf(totalDistance));
+        double totalDistance = 0.0;
+        BigDecimal roadTax = BigDecimal.ZERO;
+        for (Map.Entry<Region, Double> entry : distances.entrySet()) {
+            Region region = entry.getKey();
+            Double distance = entry.getValue();
+
+            totalDistance += distance;
+
+            roadTax = roadTax.add(region.getRoadTaxPerKm().multiply(new BigDecimal(distance)));
+        }
+
+        BigDecimal efficiencyTax = car.getRate().getValue().multiply(new BigDecimal(totalDistance));
+        return efficiencyTax.add(roadTax);
     }
 }

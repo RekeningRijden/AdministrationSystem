@@ -64,7 +64,7 @@ public class DriverBean implements Serializable {
 
             try {
                 Communicator.addDriver(driver);
-            } catch (IOException | JSONException e) {
+            } catch (Exception e) {
                 Logger.getLogger(DriverBean.class.getName()).log(Level.SEVERE, null, e);
 
                 FrontendHelper.displayErrorSmallBox("Driver could not be added");

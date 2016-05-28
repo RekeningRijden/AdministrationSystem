@@ -162,7 +162,6 @@ public class MonthlyInvoiceTemplate implements ITemplate {
         sb.append("</body>");
         sb.append("</html>");
 
-        String s = sb.toString();
         return sb.toString();
     }
 }

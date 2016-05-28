@@ -5,9 +5,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
-import main.core.exception.CommunicationException;
-import main.domain.Driver;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -26,19 +23,17 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import main.domain.simulation.CarTracker;
+import main.core.exception.CommunicationException;
+import main.domain.Driver;
 import main.domain.simulation.TrackingPeriod;
 
 /**
  * @author Sam
  */
 public final class Communicator {
-
-    /**
-     * The test url of the Movementsystem api.
-     */
-    private static final String BASE_URL_TEST = "http://localhost:8080/MovementSystem/api/trackers";
 
     /**
      * The production url of the Movementsystem api.
@@ -58,9 +53,9 @@ public final class Communicator {
      * Adds a new cartracker to the movement api
      *
      * @return The newly added cartracker
-     * @throws IOException Can happen when something is wrong with (StringEntity(jsonBody) en httpClient.execute(post)
+     * @throws Exception Can happen when something is wrong with (StringEntity(jsonBody) en httpClient.execute(post)
      */
-    public static Long requestNewCartracker() throws IOException, JSONException {
+    public static Long requestNewCartracker() throws Exception {
         HttpClient httpClient = HttpClientBuilder.create().build();
         HttpPost post = new HttpPost(BASE_URL_PRODUCTION);
         HttpResponse response = httpClient.execute(post);
@@ -90,7 +85,6 @@ public final class Communicator {
         checkResponse(response);
 
         String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
-        System.out.println(responseString);
 
         Gson gson = new GsonBuilder().setDateFormat(REGULAR_DATE_FORMAT).create();
 
@@ -103,9 +97,11 @@ public final class Communicator {
                 ids.add(wrapper.getValue());
             }
         } catch (JsonSyntaxException e) {
-            counter++;
-            if (counter < 3) {
-                getAllCartrackerIds(counter);
+            Logger.getLogger(Communicator.class.getName()).log(Level.SEVERE, null, e);
+
+            int updatedCounter = counter + 1;
+            if (updatedCounter < 3) {
+                getAllCartrackerIds(updatedCounter);
             } else {
                 throw new CommunicationException("Gave up on connection after trying three times");
             }
@@ -135,9 +131,9 @@ public final class Communicator {
                 + "/"
                 + id
                 + "/movements/_byperiod?startDate="
-                + "2015-03-25"
+                + startDate
                 + "&endDate="
-                + "2016-07-02");
+                + endDate);
 
         HttpResponse response = httpClient.execute(get);
         checkResponse(response);
@@ -149,7 +145,7 @@ public final class Communicator {
         }.getType());
     }
 
-    public static Long addDriver(Driver driver) throws IOException, JSONException {
+    public static Long addDriver(Driver driver) throws Exception {
         Gson gson = new Gson();
         HttpClient httpClient = HttpClientBuilder.create().build();
         HttpPut post = new HttpPut("http://billdriver.s63a.marijn.ws/api/users");

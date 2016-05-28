@@ -16,7 +16,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import main.core.communcation.Communicator;
-import main.core.exception.CommunicationException;
 import main.core.exception.GenerationException;
 import main.core.pdf.ITemplate;
 import main.core.pdf.MonthlyInvoiceTemplate;
@@ -66,7 +65,7 @@ public class InvoiceGenerator implements Serializable {
 
                     generateInvoice(tracker);
                 } catch (GenerationException | IOException ex) {
-                    Logger.getLogger(Communicator.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(InvoiceGenerator.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }

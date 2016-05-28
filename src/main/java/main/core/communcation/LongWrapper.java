@@ -4,17 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Sam
+ * @author Eric
  */
 public class LongWrapper {
 
     private Long value;
 
-    public LongWrapper(Long value) {
-        this.value = value;
+    public LongWrapper() {
+        //Not used
     }
 
-    public LongWrapper() {
+    public LongWrapper(Long value) {
+        this.value = value;
     }
 
     public void setValue(Long value) {

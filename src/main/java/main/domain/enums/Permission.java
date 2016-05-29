@@ -5,6 +5,7 @@ package main.domain.enums;
  */
 public enum Permission {
 
-    KM_PRICE
+    KM_PRICE,
+    REGION_PRICE;
 
 }

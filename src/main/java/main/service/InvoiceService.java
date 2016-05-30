@@ -6,13 +6,10 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 
 import main.dao.InvoiceDao;
 import main.domain.Car;
 import main.domain.Invoice;
-import main.domain.enums.SortOrder;
 
 /**
  * Created by Eric on 03-04-16.

@@ -26,38 +26,36 @@
                 </div>
             </div>
 
-            <section id="widget-grid" class="">
-                <div class="row">
-                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0"
-                             data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false"
-                             data-widget-sortable="false">
-                            <header>
-                                <span class="widget-icon"> <i class="fa fa-table"/> </span>
-                                <h2>Rates</h2>
-                            </header>
-                            <div>
-                                <div class="jarviswidget-editbox">
-                                </div>
 
-                                <div class="widget-body">
-                                    <h:form id="form">
+            <h:form id="form">
+                <section id="widget-grid" class="">
+                    <div class="row">
+                        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0"
+                                 data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false"
+                                 data-widget-sortable="false">
+                                <header>
+                                    <span class="widget-icon"> <i class="fa fa-table"/> </span>
+                                    <h2>Rates</h2>
+                                    <div class="widget-toolbar" role="menu">
+                                        <h:commandLink class="btn btn-primary btn-xs"
+                                                       action="#{kilometerRateBean.prepareNewRateCreation()}"
+                                                       onclick="$('#addRateModal').modal('show')"
+                                                       rendered="#{userInfoBean.hasRatesPermission()}">
+                                            <i class="fa fa-plus"/>
+                                            Add
+                                            <f:ajax execute="@this" render=":modal-form-2"/>
+                                        </h:commandLink>
+                                    </div>
+                                </header>
+                                <div>
+                                    <div class="jarviswidget-editbox">
+                                    </div>
+
+                                    <div class="widget-body no-padding">
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <ui:fragment rendered="#{!kilometerRateBean.rates.isEmpty()}">
-                                                    <div class="align-right">
-                                                        <ui:repeat var="permission" value="#{userInfoBean.loggedInUser.permissions}">
-                                                            <c:if test="#{permission.name() == 'KM_PRICE'}">
-                                                                <h:commandLink class="btn btn-primary btn-xs"
-                                                                               action="#{kilometerRateBean.prepareNewRateCreation()}"
-                                                                               onclick="$('#addRateModal').modal('show')"
-                                                                               value="Add">
-                                                                    <i class="fa fa-plus"/>
-                                                                    <f:ajax execute="@this" render=":modal-form-2"/>
-                                                                </h:commandLink>
-                                                            </c:if>
-                                                        </ui:repeat>
-                                                    </div>
                                                     <table class="table table-striped table-bordered table-hover table-condensed">
                                                         <thead>
                                                         <tr>
@@ -83,7 +81,7 @@
                                                                     #{rate.name}
                                                                 </td>
                                                                 <td>
-                                                                    #{rate.value}
+                                                                    #{rate.valueString}
                                                                 </td>
                                                                 <ui:repeat var="permission3" value="#{userInfoBean.loggedInUser.permissions}">
                                                                     <ui:fragment rendered="#{permission3.name() == 'KM_PRICE'}">
@@ -91,13 +89,12 @@
                                                                             <div class="element-center">
                                                                                 <ui:repeat var="permission" value="#{userInfoBean.loggedInUser.permissions}">
                                                                                     <!--<c:if test="#{permission.name() == 'KM_PRICE'}">-->
-                                                                                        <h:commandLink class="btn btn-primary btn-xs"
-                                                                                                       action="#{kilometerRateBean.setRate(rate)}"
-                                                                                                       onclick="$('#editRateModal').modal('show')"
-                                                                                                       value="Edit">
-                                                                                            <i class="fa fa-pencil"/>
-                                                                                            <f:ajax execute="@this" render=":modal-form-1"/>
-                                                                                        </h:commandLink>
+                                                                                    <h:commandLink class="btn btn-primary btn-xs"
+                                                                                                   action="#{kilometerRateBean.setRate(rate)}"
+                                                                                                   onclick="$('#editRateModal').modal('show')">
+                                                                                        <i class="fa fa-pencil"/>
+                                                                                        <f:ajax execute="@this" render=":modal-form-1"/>
+                                                                                    </h:commandLink>
                                                                                     <!--</c:if>-->
                                                                                 </ui:repeat>
                                                                             </div>
@@ -111,13 +108,13 @@
                                                 </ui:fragment>
                                             </div>
                                         </div>
-                                    </h:form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </article>
-                </div>
-            </section>
+                        </article>
+                    </div>
+                </section>
+            </h:form>
         </div>
 
         <div class="modal fade" data-backdrop="static" id="editRateModal">
@@ -134,23 +131,27 @@
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="form-group">
-                                        Rate: <h:inputText value="#{kilometerRateBean.rate.valueString}"/>
+                                        <label class="control-label"><i class="fa fa-star-o"/> Rate</label>
+                                        <h:inputText class="form-control" value="#{kilometerRateBean.rate.valueString}"/>
                                     </div>
-                                    <h:commandLink class="btn btn-primary"
-                                                   action="#{kilometerRateBean.editRate()}"
-                                                   onclick="$('#editRateModal').modal('hide');">
-                                        <i class="fa fa-check"/>
-                                        Submit
-                                        <f:ajax execute="@form" render=":form"/>
-                                    </h:commandLink>
-                                    <h:commandLink class="btn btn-primary"
-                                                   action="#{kilometerRateBean.removeRate()}"
-                                                   onclick="$('#editRateModal').modal('hide');">
-                                        <i class="fa fa-remove"/>
-                                        Remove
-                                        <f:ajax execute="@form" render=":form"/>
-                                    </h:commandLink>
-                                    <a class="btn btn-default" onclick="$('#editRateModal').modal('hide');">
+
+                                    <div class="btn-group">
+                                        <h:commandLink class="btn btn-primary"
+                                                       action="#{kilometerRateBean.editRate()}"
+                                                       onclick="$('#editRateModal').modal('hide');">
+                                            <i class="fa fa-check"/>
+                                            Submit
+                                            <f:ajax execute="@form" render=":form"/>
+                                        </h:commandLink>
+                                        <h:commandLink class="btn btn-primary"
+                                                       action="#{kilometerRateBean.removeRate()}"
+                                                       onclick="$('#editRateModal').modal('hide');">
+                                            <i class="fa fa-remove"/>
+                                            Remove
+                                            <f:ajax execute="@form" render=":form"/>
+                                        </h:commandLink>
+                                    </div>
+                                    <a class="btn btn-default pull-right" onclick="$('#editRateModal').modal('hide');">
                                         Cancel
                                     </a>
                                 </div>
@@ -174,20 +175,26 @@
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="form-group">
-                                        Energy Label: <h:inputText value="#{kilometerRateBean.rate.name}"/>
-                                        <br/>
-                                        Rate: <h:inputText value="#{kilometerRateBean.rate.valueString}"/>
+                                        <label class="control-label"><i class="fa fa-star-o"/> Energy Label</label>
+                                        <h:inputText class="form-control" value="#{kilometerRateBean.rate.name}"/>
                                     </div>
-                                    <h:commandLink class="btn btn-primary"
-                                                   action="#{kilometerRateBean.addEnergyLabel()}"
-                                                   onclick="$('#addRateModal').modal('hide');">
-                                        <i class="fa fa-check"/>
-                                        Submit
-                                        <f:ajax execute="@form" render=":form"/>
-                                    </h:commandLink>
-                                    <a class="btn btn-default" onclick="$('#addRateModal').modal('hide');">
-                                        Cancel
-                                    </a>
+                                    <div class="form-group">
+                                        <label class="control-label"><i class="fa fa-star-o"/> Rate</label>
+                                        <h:inputText class="form-control" value="#{kilometerRateBean.rate.valueString}"/>
+                                    </div>
+
+                                    <div class="btn-group">
+                                        <h:commandLink class="btn btn-primary"
+                                                       action="#{kilometerRateBean.addEnergyLabel()}"
+                                                       onclick="$('#addRateModal').modal('hide');">
+                                            <i class="fa fa-check"/>
+                                            Submit
+                                            <f:ajax execute="@form" render=":form"/>
+                                        </h:commandLink>
+                                        <a class="btn btn-default pull-right" onclick="$('#addRateModal').modal('hide');">
+                                            Cancel
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -2,9 +2,9 @@ package main.core.communcation;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
-import main.domain.Driver;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -19,21 +19,21 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import main.domain.simulation.CarTracker;
+import main.core.exception.CommunicationException;
+import main.domain.Driver;
 import main.domain.simulation.TrackingPeriod;
 
 /**
  * @author Sam
  */
-public class Communicator {
-
-    /**
-     * The test url of the Movementsystem api.
-     */
-    private static final String BASE_URL_TEST = "http://localhost:8080/MovementSystem/api/trackers";
+public final class Communicator {
 
     /**
      * The production url of the Movementsystem api.
@@ -41,39 +41,30 @@ public class Communicator {
     private static final String BASE_URL_PRODUCTION = "http://movement.s63a.marijn.ws/api/trackers";
 
     /**
-     * Adds a new cartracker to the movement api
-     *
-     * @return The newly added cartracker
-     * @throws IOException Can happen when something is wrong with (StringEntity(jsonBody) en httpClient.execute(post)
+     * The date format used in api calls.
      */
-    public static Long requestNewCartracker() throws IOException, JSONException {
-        //Request
-        HttpClient httpClient = HttpClientBuilder.create().build();
-        HttpPost post = new HttpPost(BASE_URL_PRODUCTION);
-        HttpResponse response = httpClient.execute(post);
+    private static final String REGULAR_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
-        //Response
-        String responseString = EntityUtils.toString(response.getEntity(), "UTF-8");
-        JSONObject json = new JSONObject(responseString);
-        System.out.println("JSON Response: " + json);
-        return json.getLong("id");
+    private Communicator() {
+        //Utility class constructor cannot be called.
     }
 
     /**
-     * Gets all known cartrackers from the Movementsystem Api
+     * Adds a new cartracker to the movement api
      *
-     * @return All known cartrackers
-     * @throws IOException When trying to execute the http request or converts the response to a String
+     * @return The newly added cartracker
+     * @throws Exception Can happen when something is wrong with (StringEntity(jsonBody) en httpClient.execute(post)
      */
-    public static List<CarTracker> getAllCartrackers() throws IOException {
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-        HttpGet get = new HttpGet(BASE_URL_PRODUCTION);
-        HttpResponse response = httpClient.execute(get);
+    public static Long requestNewCartracker() throws Exception {
+        HttpClient httpClient = HttpClientBuilder.create().build();
+        HttpPost post = new HttpPost(BASE_URL_PRODUCTION);
+        HttpResponse response = httpClient.execute(post);
+        checkResponse(response);
 
-        String responseString = EntityUtils.toString(response.getEntity(), "UTF-8");
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
-        return gson.fromJson(responseString, new TypeToken<List<CarTracker>>() {
-        }.getType());
+        String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
+        JSONObject json = new JSONObject(responseString);
+
+        return json.getLong("id");
     }
 
     /**
@@ -83,14 +74,40 @@ public class Communicator {
      * @throws IOException when an IOException occurs.
      */
     public static List<Long> getAllCartrackerIds() throws IOException {
+        return getAllCartrackerIds(1);
+    }
+
+    private static List<Long> getAllCartrackerIds(int counter) throws IOException {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         HttpGet get = new HttpGet(BASE_URL_PRODUCTION + "/ids");
-        HttpResponse response = httpClient.execute(get);
 
-        String responseString = EntityUtils.toString(response.getEntity(), "UTF-8");
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
-        return gson.fromJson(responseString, new TypeToken<List<Long>>() {
-        }.getType());
+        HttpResponse response = httpClient.execute(get);
+        checkResponse(response);
+
+        String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
+
+        Gson gson = new GsonBuilder().setDateFormat(REGULAR_DATE_FORMAT).create();
+
+        List<Long> ids = new ArrayList<>();
+        try {
+            List<LongWrapper> wrappers = gson.fromJson(responseString, new TypeToken<List<LongWrapper>>() {
+            }.getType());
+
+            for (LongWrapper wrapper : wrappers) {
+                ids.add(wrapper.getValue());
+            }
+        } catch (JsonSyntaxException e) {
+            Logger.getLogger(Communicator.class.getName()).log(Level.SEVERE, null, e);
+
+            int updatedCounter = counter + 1;
+            if (updatedCounter < 3) {
+                getAllCartrackerIds(updatedCounter);
+            } else {
+                throw new CommunicationException("Gave up on connection after trying three times");
+            }
+        }
+
+        return ids;
     }
 
     /**
@@ -119,35 +136,51 @@ public class Communicator {
                 + endDate);
 
         HttpResponse response = httpClient.execute(get);
+        checkResponse(response);
 
-        String responseString = EntityUtils.toString(response.getEntity(), "UTF-8");
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+        String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
+        Gson gson = new GsonBuilder().setDateFormat(REGULAR_DATE_FORMAT).create();
+
         return gson.fromJson(responseString, new TypeToken<List<TrackingPeriod>>() {
         }.getType());
     }
 
-    public static Long addDriver(Driver driver) throws IOException, JSONException {
+    public static Long addDriver(Driver driver) throws Exception {
         Gson gson = new Gson();
         HttpClient httpClient = HttpClientBuilder.create().build();
         HttpPut post = new HttpPut("http://billdriver.s63a.marijn.ws/api/users");
 
         String jsonBody = gson.toJson(driver);
-        StringEntity postingString = new StringEntity(jsonBody, "UTF-8");
-
-        System.out.println(jsonBody);
+        StringEntity postingString = new StringEntity(jsonBody, StandardCharsets.UTF_8);
 
         post.setEntity(postingString);
         post.setHeader(HTTP.CONTENT_TYPE, "application/json");
 
         HttpResponse response = httpClient.execute(post);
+        checkResponse(response);
 
-        //Response
-        String responseString = EntityUtils.toString(response.getEntity(), "UTF-8");
+        String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
         JSONObject json = new JSONObject(responseString);
-        System.out.println("JSON Response: " + json);
+
         return json.getLong("id");
     }
 
+    /**
+     * Check if a received response is not null and has the statusCode code of 200.
+     *
+     * @param response to check.
+     * @throws CommunicationException if the response was null or the statusCode was not 200.s
+     */
+    private static void checkResponse(HttpResponse response) throws CommunicationException {
+        if (response == null) {
+            throw new CommunicationException("Response was null");
+        }
+
+        int statusCode = response.getStatusLine().getStatusCode();
+        if (statusCode != 200) {
+            throw new CommunicationException("Response did not have statusCode 200, instead the code was: " + statusCode);
+        }
+    }
 }
 
 

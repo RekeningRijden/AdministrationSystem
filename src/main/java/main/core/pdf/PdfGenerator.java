@@ -26,12 +26,18 @@ import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import main.core.exception.GenerationException;
+
 /**
  * Utility class for generating PDF files.
  *
  * @author Sam
  */
-public class PdfGenerator {
+public final class PdfGenerator {
+
+    private PdfGenerator() {
+        //Utility class constructor cannot be called.
+    }
 
     /**
      * Create a PDF file from the given data.
@@ -73,9 +79,9 @@ public class PdfGenerator {
 
             document.close();
 
-            out = new FileOutputStream(fileName + ".pdf");
+            out = new FileOutputStream("C:\\School\\" + fileName + ".pdf");
             baos.writeTo(out);
-        } catch (IOException | DocumentException e) {
+        } catch (IOException | DocumentException | GenerationException e) {
             Logger.getLogger(PdfGenerator.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             close(out);

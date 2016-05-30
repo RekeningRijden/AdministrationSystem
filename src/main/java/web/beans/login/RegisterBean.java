@@ -1,5 +1,7 @@
 package web.beans.login;
 
+import java.io.Serializable;
+
 import main.core.helper.PasswordGenerator;
 import main.domain.User;
 import main.service.UserService;
@@ -13,7 +15,7 @@ import javax.inject.Named;
  */
 @Named
 @ViewScoped
-public class RegisterBean {
+public class RegisterBean implements Serializable {
 
     private String username;
     private String password;
@@ -40,7 +42,7 @@ public class RegisterBean {
     public void register() {
         User u = new User();
         u.setUsername(username);
-        u.setPassword(PasswordGenerator.encryptPassword(username,password));
+        u.setPassword(PasswordGenerator.encryptPassword(username, password));
         userService.create(u);
     }
 }

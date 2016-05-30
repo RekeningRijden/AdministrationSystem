@@ -28,7 +28,7 @@ public abstract class InvoiceDao extends AbstractDao<Invoice> {
     public List<Invoice> getSortedFilteredAndPaged(int first, int pageSize,
                                                    String sortValue, SortOrder sortOrder, String filter) {
 
-        String queryString = "SELECT i FROM Invoice i LEFT JOIN i.ownership o";
+        String queryString = "SELECT i FROM Invoice i LEFT JOIN i.ownership o LEFT JOIN o.car c";
         queryString += filter.isEmpty() ? "" : getFilteredQueryString();
         queryString += sortValue.isEmpty() ? "" : getSortedQueryString(sortValue, sortOrder);
 
@@ -41,7 +41,7 @@ public abstract class InvoiceDao extends AbstractDao<Invoice> {
     }
 
     public int getFilteredRowCount(String filter) {
-        String queryString = "SELECT COUNT(i.id) FROM Invoice i LEFT JOIN i.ownership o";
+        String queryString = "SELECT COUNT(i.id) FROM Invoice i LEFT JOIN i.ownership o LEFT JOIN o.car c";
         queryString += filter.isEmpty() ? "" : getFilteredQueryString();
 
         Query query = getEntityManager().createQuery(queryString);
@@ -52,10 +52,11 @@ public abstract class InvoiceDao extends AbstractDao<Invoice> {
         return (int) (long) query.getSingleResult();
     }
 
-    private String getFilteredQueryString() {
+    private static String getFilteredQueryString() {
         return " WHERE CAST(i.period CHAR(255)) LIKE :filter " +
                 "OR CAST(i.paymentStatus CHAR(255)) LIKE :filter " +
                 "OR (concat(o.driver.firstName, ' ', o.driver.lastName)) LIKE :filter " +
-                "OR CAST(i.totalAmount CHAR(255)) LIKE :filter";
+                "OR CAST(i.totalAmount CHAR(255)) LIKE :filter " +
+                "OR CAST(c.cartrackerId CHAR(255)) LIKE :filter";
     }
 }

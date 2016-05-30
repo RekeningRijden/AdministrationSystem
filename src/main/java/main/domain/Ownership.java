@@ -1,7 +1,5 @@
 package main.domain;
 
-import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;

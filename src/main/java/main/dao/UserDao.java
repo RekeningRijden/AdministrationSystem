@@ -16,7 +16,7 @@ public abstract class UserDao extends AbstractDao<User> {
 
     public User login(String username, String password) {
 
-        TypedQuery<User> q = getEntityManager().createQuery("SELECT u FROM User u WHERE u.username=:username AND u.password=:password", User.class);
+        TypedQuery<User> q = getEntityManager().createQuery("SELECT u FROM User u WHERE u.username = :username AND u.password = :password", User.class);
         q.setParameter("username", username);
         q.setParameter("password", password);
 

@@ -22,6 +22,6 @@ public class Scheduler implements Serializable {
      */
     @Schedule(dayOfMonth = "1")
     public void doWork() {
-        //invoiceGenerator.generate();
+        invoiceGenerator.generate();
     }
 }

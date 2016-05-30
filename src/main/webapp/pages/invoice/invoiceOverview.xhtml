@@ -4,7 +4,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:jsf="http://java.sun.com/jsf">
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
 
 <ui:composition template="../../templates/main.xhtml">
 
@@ -18,32 +18,42 @@
 
     <ui:define name="content">
         <div id="content">
-            <div class="row">
-                <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
-                    <h1 class="page-title txt-color-blueDark visible-xs visible-sm visible-md visible-lg">
-                        <i class="fa fa-car fa-fw "/>
-                        Invoice overview
-                    </h1>
-                </div>
-            </div>
-
-            <section id="widget-grid" class="">
+            <h:form id="form">
                 <div class="row">
-                    <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0"
-                             data-widget-fullscreenbutton="false" data-widget-togglebutton="false"
-                             data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false"
-                             data-widget-sortable="false">
-                            <header>
-                                <span class="widget-icon"> <i class="fa fa-table"/> </span>
-                                <h2>Invoice overview</h2>
-                            </header>
-                            <div>
-                                <div class="jarviswidget-editbox">
-                                </div>
+                    <div class="col-xs-8 col-sm-7 col-md-7 col-lg-4">
+                        <h1 class="page-title txt-color-blueDark visible-xs visible-sm visible-md visible-lg">
+                            <i class="fa fa-car fa-fw "/>
+                            Invoice overview
+                        </h1>
+                    </div>
+                    <div class="col-xs-4 col-sm-5 col-md-5 col-lg-8">
+                        <h:commandLink class="btn btn-primary pull-right"
+                                       action="#{invoiceOverviewBean.startInvoiceGeneration()}"
+                                       style="margin-top: 10px;"
+                                       rendered="#{userInfoBean.loggedInGroup.id eq 1}">
+                            <i class="fa fa-check"/>
+                            Generate
+                            <f:ajax execute="@this" render="@none"/>
+                        </h:commandLink>
+                    </div>
+                </div>
 
-                                <div class="widget-body">
-                                    <h:form id="form">
+                <section id="widget-grid" class="">
+                    <div class="row">
+                        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0"
+                                 data-widget-fullscreenbutton="false" data-widget-togglebutton="false"
+                                 data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false"
+                                 data-widget-sortable="false">
+                                <header>
+                                    <span class="widget-icon"> <i class="fa fa-file"/> </span>
+                                    <h2>Invoices</h2>
+                                </header>
+                                <div>
+                                    <div class="jarviswidget-editbox">
+                                    </div>
+
+                                    <div class="widget-body">
                                         <div class="row">
                                             <div class="col-md-5 col-sm-6 col-xs-8">
                                                 <div class="form-group">
@@ -57,7 +67,7 @@
                                                             </span>
                                                         <input class="form-control" type="text"
                                                                jsf:value="#{invoiceOverviewBean.filter}"
-                                                               placeholder="Zoek..."/>
+                                                               placeholder="Search..."/>
                                                             <span class="input-group-btn">
                                                                 <h:commandLink class="btn btn-danger"
                                                                                action="#{invoiceOverviewBean.resetFilter()}">
@@ -138,6 +148,9 @@
                                                                                    action="#{invoiceOverviewBean.sortByTotalAmount()}"
                                                                                    rendered="#{sortedOn != 'i.totalAmount'}"/>
                                                                 </th>
+                                                                <th>
+                                                                    Cartracker Id
+                                                                </th>
                                                                 <th></th>
                                                             </f:ajax>
                                                         </tr>
@@ -147,8 +160,8 @@
                                                             <tr>
                                                                 <td>
                                                                     <!--<h:outputLink value="invoice.xhtml">-->
-                                                                        <!--<f:param name="invoiceId" value="#{item.id}"/>-->
-                                                                        <h:outputText value="#{item.id}"/>
+                                                                    <!--<f:param name="invoiceId" value="#{item.id}"/>-->
+                                                                    <h:outputText value="#{item.id}"/>
                                                                     <!--</h:outputLink>-->
                                                                 </td>
                                                                 <td>
@@ -168,6 +181,9 @@
                                                                         <f:convertNumber minFractionDigits="2"
                                                                                          maxFractionDigits="2"/>
                                                                     </h:outputText>
+                                                                </td>
+                                                                <td>
+                                                                    <h:outputText value="#{item.ownership.car.cartrackerId}"/>
                                                                 </td>
                                                                 <td>
                                                                     <ui:fragment
@@ -221,35 +237,35 @@
                                                     <f:ajax execute="@form" render="@form">
                                                         <h:commandButton class="btn btn-default" value="&#60;&#60;"
                                                                          action="#{invoiceOverviewBean.firstPage()}"
-                                                                         disabled="#{invoiceOverviewBean.prevNextButtonDisabled}"/>
+                                                                         rendered="#{!invoiceOverviewBean.prevNextButtonDisabled}"/>
                                                         <h:commandButton
                                                                 class="#{invoiceOverviewBean.isButtonCurrentPage(1) ? 'btn btn-primary' : 'btn btn-default'}"
                                                                 value="#{invoiceOverviewBean.getFirstButtonNumber()}"
                                                                 action="#{invoiceOverviewBean.beforePreviousPage()}"
-                                                                disabled="#{invoiceOverviewBean.isButtonDisabled(1)}"/>
+                                                                rendered="#{!invoiceOverviewBean.isButtonDisabled(1)}"/>
                                                         <h:commandButton
                                                                 class="#{invoiceOverviewBean.isButtonCurrentPage(2) ? 'btn btn-primary' : 'btn btn-default'}"
                                                                 value="#{invoiceOverviewBean.getSecondButtonNumber()}"
                                                                 action="#{invoiceOverviewBean.previousPage()}"
-                                                                disabled="#{invoiceOverviewBean.isButtonDisabled(2)}"/>
+                                                                rendered="#{!invoiceOverviewBean.isButtonDisabled(2)}"/>
                                                         <h:commandButton
                                                                 class="#{invoiceOverviewBean.isButtonCurrentPage(3) ? 'btn btn-primary' : 'btn btn-default'}"
                                                                 value="#{invoiceOverviewBean.getThirdButtonNumber()}"
                                                                 action="#{invoiceOverviewBean.currentPage()}"
-                                                                disabled="#{invoiceOverviewBean.isButtonDisabled(3)}"/>
+                                                                rendered="#{!invoiceOverviewBean.isButtonDisabled(3)}"/>
                                                         <h:commandButton
                                                                 class="#{invoiceOverviewBean.isButtonCurrentPage(4) ? 'btn btn-primary' : 'btn btn-default'}"
                                                                 value="#{invoiceOverviewBean.fourthButtonNumber}"
                                                                 action="#{invoiceOverviewBean.nextPage()}"
-                                                                disabled="#{invoiceOverviewBean.isButtonDisabled(4)}"/>
+                                                                rendered="#{!invoiceOverviewBean.isButtonDisabled(4)}"/>
                                                         <h:commandButton
                                                                 class="#{invoiceOverviewBean.isButtonCurrentPage(5) ? 'btn btn-primary' : 'btn btn-default'}"
                                                                 value="#{invoiceOverviewBean.fifthButtonNumber}"
                                                                 action="#{invoiceOverviewBean.afterNextPage()}"
-                                                                disabled="#{invoiceOverviewBean.isButtonDisabled(5)}"/>
+                                                                rendered="#{!invoiceOverviewBean.isButtonDisabled(5)}"/>
                                                         <h:commandButton class="btn btn-default" value="&#62;&#62;"
                                                                          action="#{invoiceOverviewBean.lastPage()}"
-                                                                         disabled="#{invoiceOverviewBean.prevNextButtonDisabled}"/>
+                                                                         rendered="#{!invoiceOverviewBean.prevNextButtonDisabled}"/>
                                                     </f:ajax>
                                                 </div>
                                                 <div class="pull-right">
@@ -270,14 +286,16 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </h:form>
+
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </article>
-                </div>
-            </section>
+                        </article>
+                    </div>
+                </section>
+            </h:form>
         </div>
+
 
         <div class="modal fade" data-backdrop="static" id="editInvoiceModal">
             <div class="modal-dialog">

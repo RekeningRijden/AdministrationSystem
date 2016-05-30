@@ -1,13 +1,12 @@
 package main.domain;
 
-import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
-
 import javax.persistence.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -80,7 +79,7 @@ public class Car implements Serializable, IEntity {
     public void setLicencePlate(String licencePlate) {
         this.licencePlate = licencePlate;
     }
-    
+
     public Rate getRate() {
         return rate;
     }
@@ -91,7 +90,6 @@ public class Car implements Serializable, IEntity {
 
     //</editor-fold>
 
-    
     //<editor-fold defaultstate="collapsed" desc="HashCode/Equals">
 
     @Override

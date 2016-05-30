@@ -3,62 +3,58 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:c="http://java.sun.com/jsp/jstl/core">
+      xmlns:f="http://java.sun.com/jsf/core">
 
 <ui:composition template="../../templates/main.xhtml">
-    <ui:param name="root" value="#{request.contextPath}"/>
+
 
     <f:metadata>
-        <f:event type="preRenderView" listener="#{leftMenuBean.setCurrentMenuItem('profile')}" />
-        <f:event type="preRenderView" listener="#{kilometerRateBean.init()}" />
+        <f:event type="preRenderView" listener="#{leftMenuBean.setCurrentMenuItem('profile')}"/>
+        <f:event type="preRenderView" listener="#{kilometerRateBean.init()}"/>
     </f:metadata>
 
     <ui:define name="content">
+        <ui:param name="root" value="#{request.contextPath}"/>
+
         <div id="content">
             <h:form id="form">
-                <fieldset>
-                    <legend>Profiel</legend>
-                    <div class="form-group">
-                        <strong><label class="control-label">Gebruikersnaam:</label></strong>
-                        <br></br>
-                        #{userInfoBean.loggedInUsername}
-                    </div>
+                <ui:fragment rendered="#{userInfoBean.loggedInUser != null}">
+                    <fieldset>
+                        <legend>Profiel</legend>
+                        <div class="form-group">
+                            <strong><label class="control-label">Gebruikersnaam:</label></strong>
+                            <br></br>
+                            #{userInfoBean.loggedInUsername}
+                        </div>
 
-                    <div class="form-group">
-                        <strong><label class="control-label">Group:</label></strong>
-                        <br></br>
-                        #{userInfoBean.loggedInGroup.name}
-                    </div>
+                        <div class="form-group">
+                            <strong><label class="control-label">Group:</label></strong>
+                            <br></br>
+                            #{userInfoBean.loggedInGroup.name}
+                        </div>
 
-                    <div class="form-group">
-                        <strong><label class="control-label">Permissions:</label></strong>
-                        <br></br>
-                        <c:if test="#{!empty(userInfoBean.loggedInUser.permissions)}">
-                            <ui:repeat value="#{userInfoBean.loggedInUser.permissions}" var="permission">
+                        <div class="form-group">
+                            <strong><label class="control-label">Permissions:</label></strong>
+                            <br></br>
+                            <ui:repeat value="#{userInfoBean.loggedInUser.permissions}" var="permission" rendered="#{!empty(userInfoBean.loggedInUser.permissions)}">
                                 #{permission}
                                 <br></br>
                             </ui:repeat>
-                        </c:if>
-                        <c:if test="#{empty(userInfoBean.loggedInUser.permissions)}">
-                            No permissions
-                        </c:if>
-                    </div>
+                            <h:outputText value="No permissions" rendered="#{empty(userInfoBean.loggedInUser.permissions)}"/>
+                        </div>
 
-                    <div class="row">
-                        <div class="col-xs-4">
-                            <c:if test="#{userInfoBean.loggedInGroup.id == 1}">
-                                <h:outputLink class="btn btn-primary btn-sm" value="#{root}/pages/profile/permissions.xhtml">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <h:outputLink class="btn btn-primary btn-sm" value="#{root}/pages/profile/permissions.xhtml" rendered="#{userInfoBean.loggedInGroup.id == 1}">
                                     <i class="fa fa-edit fa-lg"/>
                                     Edit Permissions
                                 </h:outputLink>
-                            </c:if>
+                            </div>
                         </div>
-                    </div>
-                </fieldset>
+                    </fieldset>
+                </ui:fragment>
             </h:form>
         </div>
     </ui:define>
 </ui:composition>
 </html>
-

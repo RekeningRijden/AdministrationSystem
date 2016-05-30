@@ -1,10 +1,22 @@
 package resources;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 import main.domain.Car;
 import main.domain.Driver;
 import main.domain.Invoice;
-import main.domain.enums.PaymentStatus;
+import main.domain.Ownership;
 import main.service.CarService;
 import main.service.DriverService;
 import main.service.InvoiceService;
@@ -63,13 +75,13 @@ public class ApiResources {
      *
      * @param driverId
      * @param driver
-     * @return The updatet created Driver
+     * @return The updated created Driver
      */
     @POST
     @Path("/{userId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Driver updateDriver(@PathParam("userId") Long driverId, Driver driver) {
-        Driver d = driverService.findById(driver.getId());
+        Driver d = driverService.findById(driverId);
         d.setAddress(driver.getAddress());
         return driverService.update(d);
     }

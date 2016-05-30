@@ -28,7 +28,6 @@ import main.service.DriverService;
 import main.service.RateService;
 import web.core.helpers.ContextHelper;
 import web.core.helpers.FrontendHelper;
-import javax.faces.view.ViewScoped;
 import web.core.helpers.RedirectHelper;
 
 /**
@@ -61,7 +60,6 @@ public class CarBean implements Serializable {
                 car = new Car();
 
                 Ownership ownership = new Ownership();
-                ownership.setDriver(new Driver());
                 ownership.setCar(car);
                 ownership.setStartDate(new Date());
 
@@ -86,7 +84,7 @@ public class CarBean implements Serializable {
                     car = carService.update(car);
                     FrontendHelper.displaySuccessSmallBox("De auto is toegevoegd");
                     RedirectHelper.redirect("/pages/car/carOverview.xhtml");
-                } catch (IOException | JSONException e) {
+                } catch (Exception e) {
                     Logger.getLogger(CarBean.class.getName()).log(Level.SEVERE, null, e);
                     FrontendHelper.displayErrorSmallBox("De auto kon niet toegevoegd worden");
                 }
@@ -94,6 +92,8 @@ public class CarBean implements Serializable {
                 FrontendHelper.displayErrorSmallBox("Selecteer een bestuurder");
             }
         }
+
+        carId = null;
     }
 
     public void updateSelectedDriver() {
@@ -117,7 +117,7 @@ public class CarBean implements Serializable {
                 car.getPastOwnerships().add(car.getCurrentOwnership());
 
                 car = carService.update(car);
-            }else{
+            } else {
                 car.getCurrentOwnership().setDriver(selectedDriver);
             }
         }

@@ -1,24 +1,23 @@
 package web.beans.user;
 
+import java.io.Serializable;
+import java.util.List;
+
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import main.domain.User;
 import main.domain.enums.Permission;
 import main.service.UserService;
+import web.beans.login.UserInfoBean;
 import web.core.helpers.ContextHelper;
-
-import javax.annotation.PostConstruct;
-import javax.faces.component.UIComponent;
-import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by martijn on 10-5-2016.
  */
 @Named
-@ViewScoped
+@SessionScoped
 public class UserBean implements Serializable {
 
     @Inject
@@ -30,15 +29,20 @@ public class UserBean implements Serializable {
 
     private User currentUser;
 
-    @PostConstruct
-    private void init() {
-        allPermissions = Permission.values();
+    @Inject
+    private UserInfoBean userInfoBean;
+
+    public void init() {
+        if (!ContextHelper.isAjaxRequest()) {
+            currentUser = userService.findById(userInfoBean.getLoggedInUser().getId());
+
+            allPermissions = Permission.values();
+            selectedPermissions = currentUser.getPermissions();
+        }
     }
 
     public void setNewPermissions() {
-        List<Permission> permissions = selectedPermissions;
-
-        currentUser.setPermissions(permissions);
+        currentUser.setPermissions(selectedPermissions);
         userService.update(currentUser);
     }
 

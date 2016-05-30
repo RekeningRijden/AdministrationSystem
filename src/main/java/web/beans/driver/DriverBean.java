@@ -5,12 +5,14 @@
  */
 package web.beans.driver;
 
+import org.codehaus.jettison.json.JSONException;
+
 import java.io.IOException;
 import java.io.Serializable;
-import javax.annotation.PostConstruct;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.enterprise.context.SessionScoped;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -18,13 +20,11 @@ import main.core.communcation.Communicator;
 import main.domain.Address;
 import main.domain.Driver;
 import main.service.DriverService;
-import org.codehaus.jettison.json.JSONException;
 import web.core.helpers.ContextHelper;
 import web.core.helpers.FrontendHelper;
 import web.core.helpers.RedirectHelper;
 
 /**
- *
  * @author maikel
  */
 @Named
@@ -58,18 +58,17 @@ public class DriverBean implements Serializable {
     public void save() {
         if (driverService.hasBeenPersisted(driver)) {
             driverService.update(driver);
-            FrontendHelper.displaySuccessSmallBox("De bestuurder is geupdate");
         } else {
             driver = driverService.create(driver);
             //register in bill driver application
 
             try {
                 Communicator.addDriver(driver);
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
-            }
+            } catch (Exception e) {
+                Logger.getLogger(DriverBean.class.getName()).log(Level.SEVERE, null, e);
 
-            FrontendHelper.displaySuccessSmallBox("De bestuurder is aangemaakt");
+                FrontendHelper.displayErrorSmallBox("Driver could not be added");
+            }
         }
         RedirectHelper.redirect("/pages/driver/driverOverview.xhtml");
     }
@@ -91,5 +90,4 @@ public class DriverBean implements Serializable {
         this.driver = driver;
     }
     //</editor-fold>
-
 }

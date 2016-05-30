@@ -21,9 +21,13 @@ import javax.servlet.http.Part;
  *         system.
  *         </p>
  */
-public class TransferHelper {
+public final class TransferHelper {
 
     private static final int BUFFER_SIZE = 2048;
+
+    private TransferHelper() {
+        //Utility class constructor cannot be called.
+    }
 
     /**
      * Download a file to the users filesystem.

@@ -1,6 +1,7 @@
 package main.domain;
 
 import javax.persistence.*;
+
 import java.io.Serializable;
 
 /**
@@ -17,6 +18,7 @@ public class UserGroup implements Serializable, IEntity {
     private String name;
 
     public UserGroup() {
+        //Default constructor
     }
 
     @Override

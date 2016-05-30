@@ -5,122 +5,202 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core">
 
-    <ui:composition template="../../templates/main.xhtml">
+<ui:composition template="../../templates/main.xhtml">
 
-        <f:metadata>
-            <f:viewParam name="driverId" value="#{driverBean.driverId}" />
+    <f:metadata>
+        <f:viewParam name="driverId" value="#{driverBean.driverId}"/>
 
-            <f:event type="preRenderView" listener="#{leftMenuBean.setCurrentMenuItem('driver')}" />
-            <f:event type="preRenderView" listener="#{driverBean.init()}" />
-        </f:metadata>
+        <f:event type="preRenderView" listener="#{leftMenuBean.setCurrentMenuItem('driver')}"/>
+        <f:event type="preRenderView" listener="#{driverBean.init()}"/>
+    </f:metadata>
 
-        <ui:define name="content">
-            <div id="content">
-                <h:form id="form">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
-                            <h1 class="page-title txt-color-blueDark visible-xs visible-sm visible-md visible-lg">
-                                <i class="fa fa-car fa-fw "/> 
-                                Driver #{driverBean.driver.fullName}
-                            </h1>
-                        </div>
+    <ui:define name="content">
+        <div id="content">
+            <h:form id="form">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+                        <h1 class="page-title txt-color-blueDark visible-xs visible-sm visible-md visible-lg">
+                            <i class="fa fa-car fa-fw "/>
+                            Driver #{driverBean.driver.fullName}
+                        </h1>
                     </div>
+                </div>
 
-                    <section id="widget-grid" class="">
-                        <div class="row">
-                            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" 
-                                     data-widget-fullscreenbutton="false" data-widget-togglebutton="false"
-                                     data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-sortable="false">     
-                                    <header>
-                                        <span class="widget-icon"> <i class="fa fa-table"/> </span>
-                                        <h2>Driver</h2>
-                                        <div class="widget-toolbar" role="menu">
-                                            <h:commandLink class="btn btn-primary" action="#{driverBean.save()}">
-                                                <i class="fa fa-check"/>
-                                                <f:ajax render="@form" execute="@form"/>
-                                                Save
-                                            </h:commandLink>
-                                        </div>
-                                    </header>
-                                    <div>
-                                        <div class="jarviswidget-editbox">
-                                        </div>
-                                        <div class="widget-body">
-                                            <fieldset>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <legend>Name</legend>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label class="control-label"><i class="fa fa-star-o"/> Firstname</label>
-                                                                        <h:inputText class="form-control" value="#{driverBean.driver.firstName}"/>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label class="control-label"><i class="fa fa-star-o"/> Lastname</label>
-                                                                    <h:inputText class="form-control" value="#{driverBean.driver.lastName}"/>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label class="control-label"><i class="fa fa-star-o"/> E-mail</label>
-                                                                    <h:inputText class="form-control" value="#{driverBean.driver.email}"/>
-                                                                </div>
+                <section id="widget-grid" class="">
+                    <div class="row">
+                        <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0"
+                                 data-widget-fullscreenbutton="false" data-widget-togglebutton="false"
+                                 data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-sortable="false">
+                                <header>
+                                    <span class="widget-icon"> <i class="fa fa-table"/> </span>
+                                    <h2>Driver</h2>
+                                    <div class="widget-toolbar" role="menu">
+                                        <h:commandLink class="btn btn-primary" action="#{driverBean.save()}">
+                                            <i class="fa fa-check"/>
+                                            <f:ajax render="@form" execute="@form"/>
+                                            Save
+                                        </h:commandLink>
+                                    </div>
+                                </header>
+                                <div>
+                                    <div class="jarviswidget-editbox">
+                                    </div>
+                                    <div class="widget-body">
+                                        <fieldset>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <legend>Name</legend>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><i class="fa fa-star-o"/> Firstname</label>
+                                                                <h:inputText id="firstName" class="form-control" value="#{driverBean.driver.firstName}"/>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <legend>Address</legend>
-                                                        <div class="row">
-                                                            <div class="col-md-9">
-                                                                <div class="form-group">
-                                                                    <label class="control-label"><i class="fa fa-star-o"/> Street</label>
-                                                                    <h:inputText class="form-control" value="#{driverBean.driver.address.street}"/>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <div class="form-group">
-                                                                    <label class="control-label"><i class="fa fa-star-o"/> Street number</label>
-                                                                    <h:inputText class="form-control" value="#{driverBean.driver.address.streetNr}"/>
-                                                                </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><i class="fa fa-star-o"/> Lastname</label>
+                                                                <h:inputText id="lastName" class="form-control" value="#{driverBean.driver.lastName}"/>
                                                             </div>
                                                         </div>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label class="control-label"><i class="fa fa-star-o"/> Zipcode</label>
-                                                                    <h:inputText class="form-control" value="#{driverBean.driver.address.zipCode}"/>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label class="control-label"><i class="fa fa-star-o"/> City</label>
-                                                                    <h:inputText class="form-control" value="#{driverBean.driver.address.city}"/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <div class="form-group">
-                                                                    <label class="control-label"><i class="fa fa-star-o"/> Country</label>
-                                                                    <h:inputText class="form-control" value="#{driverBean.driver.address.country}"/>
-                                                                </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><i class="fa fa-star-o"/> E-mail</label>
+                                                                <h:inputText id="email" class="form-control" value="#{driverBean.driver.email}"/>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </fieldset>
-                                        </div>
+                                                <div class="col-md-6">
+                                                    <legend>Address</legend>
+                                                    <div class="row">
+                                                        <div class="col-md-9">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><i class="fa fa-star-o"/> Street</label>
+                                                                <h:inputText id="street" class="form-control" value="#{driverBean.driver.address.street}"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><i class="fa fa-star-o"/> Street number</label>
+                                                                <h:inputText id="streetNr" class="form-control" value="#{driverBean.driver.address.streetNr}"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><i class="fa fa-star-o"/> Zipcode</label>
+                                                                <h:inputText id="zipCode" class="form-control" value="#{driverBean.driver.address.zipCode}"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><i class="fa fa-star-o"/> City</label>
+                                                                <h:inputText id="city" class="form-control" value="#{driverBean.driver.address.city}"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><i class="fa fa-star-o"/> Country</label>
+                                                                <h:inputText id="country" class="form-control" value="#{driverBean.driver.address.country}"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
                                     </div>
                                 </div>
-                            </article>
-                        </div>
-                    </section>
-                </h:form>
-            </div>
-        </ui:define>
-    </ui:composition>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+            </h:form>
+        </div>
+
+        <script type="text/javascript">
+            $(window).bind("load", function () {
+                $('#form').bootstrapValidator({
+                    framework: 'bootstrap',
+                    fields: {
+                        'form:firstName': {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Cannot be empty'
+                                }
+                            }
+                        },
+                        'form:lastName': {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Cannot be empty'
+                                }
+                            }
+                        },
+                        'form:email': {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Cannot be empty'
+                                },
+                                emailAddress: {
+                                    message: 'Enter a valid email address'
+                                }
+                            }
+                        },
+                        'form:street': {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Cannot be empty'
+                                }
+                            }
+                        },
+                        'form:streetNr': {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Cannot be empty'
+                                }
+                            }
+                        },
+                        'form:zipCode': {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Cannot be empty'
+                                }
+                            }
+                        },
+                        'form:city': {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Cannot be empty'
+                                }
+                            }
+                        },
+                        'form:county': {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Cannot be empty'
+                                }
+                            }
+                        },
+                        'form:licencePlate': {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Cannot be empty'
+                                },
+                                regexp: {
+                                    regexp: /^(?:[A-Z]{2}-\d{2}-\d{2})|(?:\d{2}-[A-Z]{2}-\d{2})|(?:\d{2}-\d{2}-[A-Z]{2})$/,
+                                    message: 'Enter a valid portuguese licence plate'
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
+    </ui:define>
+</ui:composition>
 </html>

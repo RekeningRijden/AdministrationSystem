@@ -16,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 
 import java.util.List;
 import main.domain.Ownership;
+import main.service.OwnershipService;
 
 /**
  * Created by Eric on 02-04-16.
@@ -32,7 +33,8 @@ public class ApiResources {
 
     @Inject
     private DriverService driverService;
-
+    @Inject
+    private OwnershipService ownershipService;
     @Inject
     private InvoiceService invoiceService;
     @Inject
@@ -172,8 +174,7 @@ public class ApiResources {
     @Path("/{userId}/ownerships")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Ownership> getOwnershipsByDriver(@PathParam("userId") Long userId) {
-        Driver driver = driverService.findById(userId);
-        return driver.getOwnerships();
+        return ownershipService.getOwnershipsFromDriver(userId);
     }
     
 }

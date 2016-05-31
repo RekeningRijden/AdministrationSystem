@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -24,6 +25,7 @@ import main.core.pdf.MonthlyInvoiceTemplate;
 import main.core.pdf.PdfGenerator;
 import main.domain.Car;
 import main.domain.Invoice;
+import main.domain.Rate;
 import main.domain.Region;
 import main.domain.enums.PaymentStatus;
 import main.domain.simulation.CarTracker;
@@ -89,7 +91,7 @@ public class InvoiceGenerator implements Serializable {
             throw new GenerationException("Car was not found and is null");
         }
 
-        BigDecimal totalPrice = calculatePrice(tracker, car);
+        BigDecimal totalPrice = calculatePrice(tracker.getTrackingPeriods(), car.getRate());
 
         LocalDate localDate = LocalDate.now();
         String fileName = "Invoice"
@@ -119,15 +121,15 @@ public class InvoiceGenerator implements Serializable {
      * Calculate the price a @{code Driver} has to pay for a @{code Car} he/she has driven
      * in the current month based on data in the @{code CarTracker} of the @{code Car}.
      *
-     * @param tracker to get the data from.
+     * @param trackingPeriods to get the data from.
      * @return a @{code BigDecimal} representing the total price that has to be paid for the current month.
      */
-    public BigDecimal calculatePrice(CarTracker tracker, Car car) {
+    public BigDecimal calculatePrice(List<TrackingPeriod> trackingPeriods, Rate rate) {
         List<Region> regions = regionService.getAll();
         Map<Region, Double> distances = new HashMap<>();
 
-        for (TrackingPeriod period : tracker.getTrackingPeriods()) {
-            distances.putAll(Calculator.calculateTotalDistance(period, regions));
+        for (TrackingPeriod period : trackingPeriods) {
+            distances.putAll(Calculator.calculateTotalDistance(period.getPositions(), regions));
         }
 
         double totalDistance = 0.0;
@@ -141,7 +143,16 @@ public class InvoiceGenerator implements Serializable {
             roadTax = roadTax.add(region.getRoadTaxPerKm().multiply(new BigDecimal(distance)));
         }
 
-        BigDecimal efficiencyTax = car.getRate().getValue().multiply(new BigDecimal(totalDistance));
+        BigDecimal efficiencyTax = rate.getValue().multiply(new BigDecimal(totalDistance));
         return efficiencyTax.add(roadTax);
     }
+
+    public Invoice generateForeignInvoice(List<TrackingPeriod> trackingPeriods, Rate rate) {
+        BigDecimal totalamount = calculatePrice(trackingPeriods, rate);
+        Invoice invoice = new Invoice();
+        invoice.setPeriod(new Date());
+        invoice.setTotalAmount(totalamount);
+        return invoice;
+    }
+
 }

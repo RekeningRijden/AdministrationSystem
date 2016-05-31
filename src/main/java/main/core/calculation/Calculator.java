@@ -22,14 +22,13 @@ public final class Calculator {
     /**
      * Calculate the total distance travelled by a Car in one @{code TrackingPeriod}.
      *
-     * @param trackingPeriod to calculate the total traveled distance from.
+     * @param positions to calculate the total traveled distance from.
      * @param regions        where the positions could be in.
      * @return distance in kilometres per Region.
      */
-    public static Map<Region, Double> calculateTotalDistance(TrackingPeriod trackingPeriod, List<Region> regions) {
+    public static Map<Region, Double> calculateTotalDistance(List<Position> positions, List<Region> regions) {
         Map<Region, Double> distances = new HashMap<>();
 
-        List<Position> positions = trackingPeriod.getPositions();
         for (int i = 0; i < positions.size() - 1; i++) {
             Position posOne = positions.get(i);
             Position posTwo = positions.get(i + 1);

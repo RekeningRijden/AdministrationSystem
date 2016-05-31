@@ -42,6 +42,11 @@ public class Rate implements Serializable, IEntity {
         this.name = name;
     }
 
+    public Rate(String name, Double startrate) {
+        this(name);
+        this.value = new BigDecimal(startrate);
+    }
+
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
     @Override
     public Long getId() {

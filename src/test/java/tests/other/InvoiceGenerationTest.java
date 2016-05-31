@@ -103,7 +103,7 @@ public class InvoiceGenerationTest {
 
         Assert.assertEquals("Wrong price calculated"
                 , new BigDecimal(140.765 * 2.0).setScale(1, BigDecimal.ROUND_HALF_UP)
-                , invoiceGenerator.calculatePrice(tracker, car).setScale(1, BigDecimal.ROUND_HALF_UP));
+                , invoiceGenerator.calculatePrice(tracker.getTrackingPeriods(), car.getRate()).setScale(1, BigDecimal.ROUND_HALF_UP));
     }
 
     //@Test

@@ -72,7 +72,6 @@ public class Invoice implements Serializable, IEntity {
         this.totalAmount = totalAmount;
     }
 
-    @XmlTransient
     public Ownership getOwnership() {
         return ownership;
     }

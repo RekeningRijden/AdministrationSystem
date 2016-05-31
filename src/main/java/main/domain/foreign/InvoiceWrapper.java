@@ -4,6 +4,7 @@ import main.domain.Invoice;
 
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -52,7 +53,7 @@ public class InvoiceWrapper {
     }
 
     public double getTotalAmount() {
-        return invoice.getTotalAmount().doubleValue();
+        return invoice.getTotalAmount().setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 
     public void setTotalAmount(double totalAmount) {

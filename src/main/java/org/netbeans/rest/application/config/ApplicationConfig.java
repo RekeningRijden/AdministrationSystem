@@ -30,6 +30,7 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(resources.ApiResources.class);
+        resources.add(resources.ApiResourcesV1.class);
         resources.add(resources.ForeignApiResources.class);
     }
 }

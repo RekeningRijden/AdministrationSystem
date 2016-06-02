@@ -12,7 +12,6 @@ import javax.persistence.TypedQuery;
  * Created by Eric on 03-04-16.
  */
 public abstract class InvoiceDao extends AbstractDao<Invoice> {
-
     /**
      * Get all invoices belonging to a cartracker
      *
@@ -24,6 +23,14 @@ public abstract class InvoiceDao extends AbstractDao<Invoice> {
                 .setParameter("cartrackerId", cartrackerId)
                 .getResultList();
     }
+    
+     public List<Invoice> getInvoicesFromDriverWithId(Long driverId, int pageIndex, int pageSize) {
+         return getEntityManager().createQuery("SELECT i FROM Invoice i WHERE i.ownership.driver.id = :driverId", Invoice.class)
+                .setParameter("driverId", driverId)
+                .setFirstResult(pageIndex * pageSize)
+                .setMaxResults(pageSize)
+                .getResultList();
+     }
 
     public List<Invoice> getSortedFilteredAndPaged(int first, int pageSize,
                                                    String sortValue, SortOrder sortOrder, String filter) {

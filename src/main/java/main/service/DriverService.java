@@ -17,4 +17,13 @@ public class DriverService extends DriverDao implements Serializable {
     protected Class<Driver> getEntityClass() {
         return Driver.class;
     }
+
+    public Driver updateDriver(Long driverId, Driver newDriver) {
+        Driver driver = findById(driverId);
+        if(driver == null) {
+            return null;
+        }
+        driver.setAddress(newDriver.getAddress());
+        return update(driver);
+    }
 }

@@ -1,12 +1,6 @@
 package resources;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 
 import main.domain.Car;
 import main.domain.Driver;
@@ -18,9 +12,10 @@ import main.service.InvoiceService;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import java.util.List;
-import javax.ws.rs.QueryParam;
+
 import main.domain.Ownership;
 import main.service.OwnershipService;
 import pagination.DriverPagination;
@@ -80,17 +75,19 @@ public class ApiResourcesV1 {
     /**
      * update driver
      *
-     * @param driverId
-     * @param driver
+     * @param driverId The id of the driver
+     * @param newDriver The updated driver to persist
      * @return The updated created Driver
      */
     @POST
     @Path("/{userId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Driver updateDriver(@PathParam("userId") Long driverId, Driver driver) {
-        Driver d = driverService.findById(driverId);
-        d.setAddress(driver.getAddress());
-        return driverService.update(d);
+    public Driver updateDriver(@PathParam("userId") Long driverId, Driver newDriver) {
+        Driver driver = driverService.updateDriver(driverId, newDriver);
+        if (driver == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        return driver;
     }
 
     /**
@@ -103,7 +100,11 @@ public class ApiResourcesV1 {
     @Path("/{userId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Driver getDriverById(@PathParam("userId") Long driverId) {
-        return driverService.findById(driverId);
+        Driver driver = driverService.findById(driverId);
+        if(driver == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        return driver;
     }
 
     /**
@@ -141,14 +142,18 @@ public class ApiResourcesV1 {
     @Path("/{userId}/invoices/{invoiceId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Invoice getInvoiceWithId(@PathParam("userId") Long userId, @PathParam("invoiceId") Long invoiceId) {
-        return invoiceService.findById(invoiceId);
+        Invoice invoice = invoiceService.findById(invoiceId);
+        if(invoice == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        return invoice;
     }
 
     /**
      * Updates the PaymentStatus for a specific invoice
      *
      * @param invoiceId The id of the invoice
-     * @param userId
+     * @param userId The id of the user
      * @return The invoice with the updated status
      */
     @PUT
@@ -156,9 +161,10 @@ public class ApiResourcesV1 {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Invoice updateInvoicePaymentStatus(@PathParam("userId") Long userId, @PathParam("invoiceId") Long invoiceId, Invoice inv) {
-        Invoice invoice = invoiceService.findById(invoiceId);
-        invoice.setPaymentStatus(inv.getPaymentStatus());
-        invoiceService.update(invoice);
+        Invoice invoice = invoiceService.updatePaymentStatus(invoiceId, inv.getPaymentStatus());
+        if (invoice == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
         return invoice;
     }
 
@@ -172,40 +178,59 @@ public class ApiResourcesV1 {
     @Path("/cars/{licencePlate}")
     @Produces(MediaType.APPLICATION_JSON)
     public Car getCarWithLicencePlate(@PathParam("licencePlate") String licencePlate) {
-        return carService.getCarByLicencePlate(licencePlate);
+        Car car = carService.getCarByLicencePlate(licencePlate);
+        if(car == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        return car;
     }
     
     /**
      * Get ownerships by licencePlate
-     * @param licencePlate
-     * @return 
+     * @param licencePlate The licenceplate of the car
+     * @return The list with ownerships of the car with the given licenceplate
      */
     @GET
     @Path("/cars/{licencePlate}/ownerships")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Ownership> getOwnershipsFromCarWithLicencePlate(@PathParam("licencePlate") String licencePlate) {
-        return carService.getCarByLicencePlate(licencePlate).getPastOwnerships();
+        Car car = carService.getCarByLicencePlate(licencePlate);
+        if (car == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        return car.getPastOwnerships();
     }
     
     /**
      * Gets the cartracker id by invoice
-     * @param userId
-     * @param invoiceId
+     * @param userId The unique id of the user
+     * @param invoiceId The unique id of the invoice
      * @return the cartrackerId
      */
     @GET
     @Path("/{userId}/invoices/{invoiceId}/cartracker")
     @Produces(MediaType.APPLICATION_JSON)
-    public Car getCartrackerByInvoice(@PathParam("userId") Long userId, @PathParam("invoiceId") Long invoiceId) {
+    public Car getCarByInvoice(@PathParam("userId") Long userId, @PathParam("invoiceId") Long invoiceId) {
         Invoice invoice = invoiceService.findById(invoiceId);
+        if (invoice == null || invoice.getOwnership() == null || invoice.getOwnership().getCar() == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
         return invoice.getOwnership().getCar();
     }
 
+    /**
+     * Returns ownerships from user with id: userid
+     * @param userId The unique id of the user
+     * @return Returns a list of ownerships if the user exists, empty list if there are no ownerships but the users exists or throws an exception when the user does not exist.
+     */
     @GET
     @Path("/{userId}/ownerships")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Ownership> getOwnershipsByDriver(@PathParam("userId") Long userId) {
-        return ownershipService.getOwnershipsFromDriver(userId);
+        List<Ownership> ownerships = ownershipService.getOwnershipsFromDriver(userId);
+        if (ownerships == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        return ownerships;
     }
-    
 }

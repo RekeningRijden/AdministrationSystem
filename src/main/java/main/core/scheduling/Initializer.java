@@ -33,7 +33,7 @@ public class Initializer {
     @Inject
     private UserGroupService userGroupService;
 
-    @PostConstruct
+    //@PostConstruct
     public void createUser() {
         if (userService.getAll().isEmpty()) {
             UserGroup userGroup = new UserGroup();

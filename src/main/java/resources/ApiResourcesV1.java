@@ -48,12 +48,17 @@ public class ApiResourcesV1 {
     @Produces(MediaType.APPLICATION_JSON)
     public DriverPagination getDrivers(@QueryParam("pageIndex") String pageIndex, @QueryParam("pageSize") String pageSize) {
         DriverPagination resultSet = new DriverPagination();
-        if (ValidationHelper.isInteger(pageIndex)) {
+        if (ValidationHelper.isPositiveInteger(pageIndex)) {
             resultSet.setPageIndex(Integer.parseInt(pageIndex));
+        } else {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        if (ValidationHelper.isInteger(pageSize)) {
+        if (ValidationHelper.isPositiveInteger(pageSize)) {
             resultSet.setPageSize(Integer.parseInt(pageSize));
+        } else {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
+
         resultSet.setTotalCount(driverService.count());
         List<Driver> drivers = driverService.getAllPaginated(resultSet.getPageIndex(), resultSet.getPageSize());
         resultSet.setItems(drivers);
@@ -69,13 +74,17 @@ public class ApiResourcesV1 {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Driver addNewDriver(Driver driver) {
+        if (!ValidationHelper.isValidDriver(driver)) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
         return driverService.create(driver);
     }
-    
+
     /**
      * update driver
      *
-     * @param driverId The id of the driver
+     * @param driverId  The id of the driver
      * @param newDriver The updated driver to persist
      * @return The updated created Driver
      */
@@ -83,10 +92,15 @@ public class ApiResourcesV1 {
     @Path("/{userId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Driver updateDriver(@PathParam("userId") Long driverId, Driver newDriver) {
+        if (!ValidationHelper.isPositiveLong(driverId) || !ValidationHelper.isValidDriver(newDriver)) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
         Driver driver = driverService.updateDriver(driverId, newDriver);
         if (driver == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
+
         return driver;
     }
 
@@ -100,8 +114,12 @@ public class ApiResourcesV1 {
     @Path("/{userId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Driver getDriverById(@PathParam("userId") Long driverId) {
+        if (!ValidationHelper.isPositiveLong(driverId)) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
         Driver driver = driverService.findById(driverId);
-        if(driver == null) {
+        if (driver == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
         return driver;
@@ -110,22 +128,31 @@ public class ApiResourcesV1 {
     /**
      * Gets all invoices from a driver based on his id
      *
-     * @param driverId The id of the driver
+     * @param driverId  The id of the driver
      * @param pageIndex selected page
-     * @param pageSize amount of items
+     * @param pageSize  amount of items
      * @return The invoices belonging to the driver
      */
     @GET
     @Path("/{userId}/invoices")
     @Produces(MediaType.APPLICATION_JSON)
     public InvoicePagination getInvoicesForUserWithId(@PathParam("userId") Long driverId, @QueryParam("pageIndex") String pageIndex, @QueryParam("pageSize") String pageSize) {
+        if (!ValidationHelper.isPositiveLong(driverId)) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
         InvoicePagination resultSet = new InvoicePagination();
-        if (ValidationHelper.isInteger(pageIndex)) {
+        if (ValidationHelper.isPositiveInteger(pageIndex)) {
             resultSet.setPageIndex(Integer.parseInt(pageIndex));
+        } else {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
-        if (ValidationHelper.isInteger(pageSize)) {
+        if (ValidationHelper.isPositiveInteger(pageSize)) {
             resultSet.setPageSize(Integer.parseInt(pageSize));
+        } else {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
+
         resultSet.setTotalCount(driverService.count());
         List<Invoice> invoices = invoiceService.getInvoicesFromDriverWithId(driverId, resultSet.getPageIndex(), resultSet.getPageSize());
         resultSet.setItems(invoices);
@@ -142,8 +169,12 @@ public class ApiResourcesV1 {
     @Path("/{userId}/invoices/{invoiceId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Invoice getInvoiceWithId(@PathParam("userId") Long userId, @PathParam("invoiceId") Long invoiceId) {
+        if (!ValidationHelper.isPositiveLong(invoiceId)) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
         Invoice invoice = invoiceService.findById(invoiceId);
-        if(invoice == null) {
+        if (invoice == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
         return invoice;
@@ -153,7 +184,7 @@ public class ApiResourcesV1 {
      * Updates the PaymentStatus for a specific invoice
      *
      * @param invoiceId The id of the invoice
-     * @param userId The id of the user
+     * @param userId    The id of the user
      * @return The invoice with the updated status
      */
     @PUT
@@ -161,10 +192,15 @@ public class ApiResourcesV1 {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Invoice updateInvoicePaymentStatus(@PathParam("userId") Long userId, @PathParam("invoiceId") Long invoiceId, Invoice inv) {
+        if (!ValidationHelper.isPositiveLong(invoiceId) || !ValidationHelper.isValidInvoice(inv)) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
         Invoice invoice = invoiceService.updatePaymentStatus(invoiceId, inv.getPaymentStatus());
         if (invoice == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
+
         return invoice;
     }
 
@@ -178,15 +214,21 @@ public class ApiResourcesV1 {
     @Path("/cars/{licencePlate}")
     @Produces(MediaType.APPLICATION_JSON)
     public Car getCarWithLicencePlate(@PathParam("licencePlate") String licencePlate) {
+        if (!ValidationHelper.isValidLicencePlate(licencePlate)) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
         Car car = carService.getCarByLicencePlate(licencePlate);
-        if(car == null) {
+        if (car == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
+
         return car;
     }
-    
+
     /**
      * Get ownerships by licencePlate
+     *
      * @param licencePlate The licenceplate of the car
      * @return The list with ownerships of the car with the given licenceplate
      */
@@ -194,16 +236,22 @@ public class ApiResourcesV1 {
     @Path("/cars/{licencePlate}/ownerships")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Ownership> getOwnershipsFromCarWithLicencePlate(@PathParam("licencePlate") String licencePlate) {
+        if (!ValidationHelper.isValidLicencePlate(licencePlate)) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
         Car car = carService.getCarByLicencePlate(licencePlate);
-        if (car == null) {
+        if (car == null || car.getPastOwnerships() == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
+
         return car.getPastOwnerships();
     }
-    
+
     /**
      * Gets the cartracker id by invoice
-     * @param userId The unique id of the user
+     *
+     * @param userId    The unique id of the user
      * @param invoiceId The unique id of the invoice
      * @return the cartrackerId
      */
@@ -211,15 +259,21 @@ public class ApiResourcesV1 {
     @Path("/{userId}/invoices/{invoiceId}/cartracker")
     @Produces(MediaType.APPLICATION_JSON)
     public Car getCarByInvoice(@PathParam("userId") Long userId, @PathParam("invoiceId") Long invoiceId) {
+        if (!ValidationHelper.isPositiveLong(invoiceId)) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
         Invoice invoice = invoiceService.findById(invoiceId);
-        if (invoice == null || invoice.getOwnership() == null || invoice.getOwnership().getCar() == null) {
+        if (!ValidationHelper.isValidInvoice(invoice)) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
+
         return invoice.getOwnership().getCar();
     }
 
     /**
      * Returns ownerships from user with id: userid
+     *
      * @param userId The unique id of the user
      * @return Returns a list of ownerships if the user exists, empty list if there are no ownerships but the users exists or throws an exception when the user does not exist.
      */
@@ -227,10 +281,15 @@ public class ApiResourcesV1 {
     @Path("/{userId}/ownerships")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Ownership> getOwnershipsByDriver(@PathParam("userId") Long userId) {
+        if (!ValidationHelper.isPositiveLong(userId)) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        }
+
         List<Ownership> ownerships = ownershipService.getOwnershipsFromDriver(userId);
         if (ownerships == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
+
         return ownerships;
     }
 }

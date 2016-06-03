@@ -6,12 +6,14 @@ import main.domain.foreign.InvoiceRequest;
 import main.domain.simulation.TrackingPeriod;
 import main.domain.foreign.InvoiceWrapper;
 import main.service.RateService;
+import util.ValidationHelper;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,7 +35,7 @@ public class ForeignApiResources {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public InvoiceWrapper calculateForeignInvoice(InvoiceRequest invoiceRequest) {
-        if (invoiceRequest.getPositions() != null && invoiceRequest.getPositions().size() > 1 && invoiceRequest.getCartrackerId() > 0 && invoiceRequest.getRate() != null && rateService.getByName(invoiceRequest.getRate().toUpperCase()) != null) {
+        if (ValidationHelper.isValidInvoiceRequest(invoiceRequest, rateService)) {
 
             Collections.sort(invoiceRequest.getPositions(), (pos1, pos2) -> pos1.getDate().compareTo(pos2.getDate()));
 
@@ -44,7 +46,7 @@ public class ForeignApiResources {
             List<TrackingPeriod> trackingPeriods = new ArrayList<>();
             trackingPeriods.add(trackingPeriod);
             Invoice invoice = invoiceGenerator.generateForeignInvoice(trackingPeriods, rateService.getByName(invoiceRequest.getRate()));
-            return  new InvoiceWrapper(invoice, invoiceRequest.getCartrackerId());
+            return new InvoiceWrapper(invoice, invoiceRequest.getCartrackerId());
         } else {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }

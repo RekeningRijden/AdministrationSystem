@@ -33,7 +33,7 @@ public class Initializer {
     @Inject
     private UserGroupService userGroupService;
 
-    @PostConstruct
+    //@PostConstruct
     public void createUser() {
         if (userService.getAll().isEmpty()) {
             UserGroup userGroup = new UserGroup();
@@ -49,11 +49,11 @@ public class Initializer {
         }
 
         if (rateService.getAll().isEmpty()) {
-            rateService.create(new Rate("A"));
-            rateService.create(new Rate("B"));
-            rateService.create(new Rate("C"));
-            rateService.create(new Rate("D"));
-            rateService.create(new Rate("E"));
+            rateService.create(new Rate("A", 0.80));
+            rateService.create(new Rate("B", 1.00));
+            rateService.create(new Rate("C", 1.25));
+            rateService.create(new Rate("D", 1.50));
+            rateService.create(new Rate("E", 1.75));
         }
 
         if (regionService.getAll().isEmpty()) {

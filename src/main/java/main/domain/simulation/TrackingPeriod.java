@@ -66,5 +66,18 @@ public class TrackingPeriod implements Serializable {
     public List<Position> getPositions() {
         return positions;
     }
+
+    public void setPositions(List<Position> positions) {
+        this.positions = positions;
+    }
+
+    public void setStartedTracking(Date startedTracking) {
+        this.startedTracking = startedTracking;
+    }
+
+    public void setFinishedTracking(Date finishedTracking) {
+        this.finishedTracking = finishedTracking;
+    }
+
     //</editor-fold>
 }

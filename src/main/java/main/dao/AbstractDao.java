@@ -10,6 +10,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
 import java.util.List;
+import javax.persistence.Query;
 
 /**
  * Base class for all persistence database actions.
@@ -49,7 +50,8 @@ public abstract class AbstractDao<T extends IEntity> {
     }
 
     public int count() {
-        return entityManager.createNamedQuery(getEntityClass() + ".count", getEntityClass()).getResultList().size();
+        Query query = entityManager.createNamedQuery(getEntityClass().getSimpleName() + ".count", getEntityClass());
+        return (int) (long) query.getSingleResult();
     }
 
     public T findById(Object id) {
@@ -69,6 +71,23 @@ public abstract class AbstractDao<T extends IEntity> {
         c.from(getEntityClass());
 
         TypedQuery<T> query = entityManager.createQuery(c);
+        return query.getResultList();
+    }
+    
+    /**
+     * Get a paginated list of items.
+     * @param pageIndex
+     * @param pageSize
+     * @return 
+     */
+    public List<T> getAllPaginated(int pageIndex, int pageSize) {
+        CriteriaBuilder qb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> c = qb.createQuery(getEntityClass());
+        c.from(getEntityClass());
+
+        TypedQuery<T> query = entityManager.createQuery(c);
+        query.setFirstResult(pageIndex * pageSize);
+        query.setMaxResults(pageSize);
         return query.getResultList();
     }
 

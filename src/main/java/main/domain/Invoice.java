@@ -15,7 +15,10 @@ import javax.xml.bind.annotation.XmlTransient;
  * Created by Eric on 02-04-16.
  */
 @Entity
-@NamedQuery(name = "findAllInvoicesForUserWithId", query = "SELECT i FROM Invoice i WHERE i.ownership.car.cartrackerId = :cartrackerId")
+@NamedQueries({
+    @NamedQuery(name = "Invoice.count", query = "SELECT COUNT(1) FROM Invoice i"),
+    @NamedQuery(name = "findAllInvoicesForUserWithId", query = "SELECT i FROM Invoice i WHERE i.ownership.car.cartrackerId = :cartrackerId")
+})
 public class Invoice implements Serializable, IEntity {
 
     @Id
@@ -89,9 +92,7 @@ public class Invoice implements Serializable, IEntity {
     }
 
     //</editor-fold>
-
     //<editor-fold defaultstate="collapsed" desc="HashCode/Equals">
-
     @Override
     public int hashCode() {
         int hash = 7;

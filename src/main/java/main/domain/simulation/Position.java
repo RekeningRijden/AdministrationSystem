@@ -19,6 +19,8 @@ public class Position implements Serializable {
         this.date = new Date();
     }
 
+    public Position() {}
+
     //<editor-fold desc="Getters/Setters">
     public Long getId() {
         return id;
@@ -57,4 +59,6 @@ public class Position implements Serializable {
     public Position copy() {
         return new Position(latitude, longitude);
     }
+
+
 }

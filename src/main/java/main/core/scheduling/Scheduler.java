@@ -20,7 +20,7 @@ public class Scheduler implements Serializable {
     /**
      * Start invoice generation on the first day of the month.
      */
-    @Schedule(dayOfMonth = "1")
+    //@Schedule(dayOfMonth = "1")
     public void doWork() {
         invoiceGenerator.generate();
     }

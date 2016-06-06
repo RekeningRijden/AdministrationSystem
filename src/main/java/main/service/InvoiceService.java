@@ -1,15 +1,21 @@
 package main.service;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import main.core.calculation.InvoiceGenerator;
 import main.dao.InvoiceDao;
 import main.domain.Car;
 import main.domain.Invoice;
+import main.domain.Rate;
+import main.domain.enums.PaymentStatus;
+import main.domain.simulation.TrackingPeriod;
 
 /**
  * Created by Eric on 03-04-16.
@@ -42,5 +48,15 @@ public class InvoiceService extends InvoiceDao implements Serializable {
         }
 
         return invoices;
+    }
+
+    public Invoice updatePaymentStatus(Long invoiceId, PaymentStatus status) {
+        Invoice invoice = findById(invoiceId);
+        if (invoice == null) {
+            return null;
+        }
+        invoice.setPaymentStatus(status);
+        update(invoice);
+        return invoice;
     }
 }

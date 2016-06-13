@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
 <ui:composition template="../../templates/main.xhtml">
 
@@ -36,7 +37,7 @@
                                     <span class="widget-icon"> <i class="fa fa-table"/> </span>
                                     <h2>Driver</h2>
                                     <div class="widget-toolbar" role="menu">
-                                        <h:commandLink class="btn btn-primary" action="#{driverBean.save()}">
+                                        <h:commandLink class="btn btn-primary" action="#{driverBean.save()}" pt:type="submit">
                                             <i class="fa fa-check"/>
                                             <f:ajax render="@form" execute="@form"/>
                                             Save

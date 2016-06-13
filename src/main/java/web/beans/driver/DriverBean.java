@@ -56,21 +56,25 @@ public class DriverBean implements Serializable {
     }
 
     public void save() {
-        if (driverService.hasBeenPersisted(driver)) {
-            driverService.update(driver);
+        if (driver.getFirstName().equals("") && driver.getLastName().equals("") && driver.getEmail().equals("") && driver.getAddress().getStreet().equals("") && driver.getAddress().getStreetNr().equals("") && driver.getAddress().getZipCode().equals("") && driver.getAddress().getCountry().equals("") && driver.getAddress().getCity().equals("")) {
+            FrontendHelper.displayErrorSmallBox("All field must be filled");
         } else {
-            driver = driverService.create(driver);
-            //register in bill driver application
+            if (driverService.hasBeenPersisted(driver)) {
+                driverService.update(driver);
+            } else {
+                driver = driverService.create(driver);
+                //register in bill driver application
 
-            try {
-                Communicator.addDriver(driver);
-            } catch (Exception e) {
-                Logger.getLogger(DriverBean.class.getName()).log(Level.SEVERE, null, e);
+                try {
+                    Communicator.addDriver(driver);
+                } catch (Exception e) {
+                    Logger.getLogger(DriverBean.class.getName()).log(Level.SEVERE, null, e);
 
-                FrontendHelper.displayErrorSmallBox("Driver could not be added");
+                    FrontendHelper.displayErrorSmallBox("Driver could not be added");
+                }
             }
+            RedirectHelper.redirect("/pages/driver/driverOverview.xhtml");
         }
-        RedirectHelper.redirect("/pages/driver/driverOverview.xhtml");
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters / Setters">

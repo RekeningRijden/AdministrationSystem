@@ -48,6 +48,7 @@ public class Driver implements Serializable, IEntity {
         this.ownerships = new ArrayList<>();
         this.firstName = "";
         this.lastName = "";
+        this.address = new Address();
     }
 
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">

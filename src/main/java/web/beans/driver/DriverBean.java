@@ -40,18 +40,7 @@ public class DriverBean implements Serializable {
     //@PostConstruct
     public void init() {
         if (!ContextHelper.isAjaxRequest()) {
-            if (driverId != null) {
-                driver = driverService.findById(driverId);
-                if (driver.getAddress() == null) {
-                    Address address = new Address();
-                    driver.setAddress(address);
-                }
-            } else {
-                driver = new Driver();
-
-                Address address = new Address();
-                driver.setAddress(address);
-            }
+            driver = driverService.findOrSetup(driverId);
         }
     }
 

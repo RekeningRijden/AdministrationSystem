@@ -59,6 +59,7 @@ public class DriverService extends DriverDao implements Serializable {
             return update(driver);
         } else {
             driver = create(driver);
+            flush();
             Communicator.addDriver(driver);
         }
 

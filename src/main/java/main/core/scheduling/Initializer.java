@@ -57,10 +57,10 @@ public class Initializer {
         }
 
         if (regionService.getAll().isEmpty()) {
-            regionService.create(new Region("NORTE", 40.5, new BigDecimal(0.2)));
-            regionService.create(new Region("CENTRO", 39.5, new BigDecimal(0.25)));
-            regionService.create(new Region("ALENTEJO", 38.0, new BigDecimal(0.3)));
-            regionService.create(new Region("ALGARVE", 37.2, new BigDecimal(0.35)));
+            regionService.create(new Region("NORTE", 40.5, BigDecimal.valueOf(0.2)));
+            regionService.create(new Region("CENTRO", 39.5, BigDecimal.valueOf(0.25)));
+            regionService.create(new Region("ALENTEJO", 38.0, BigDecimal.valueOf(0.3)));
+            regionService.create(new Region("ALGARVE", 37.2, BigDecimal.valueOf(0.35)));
         }
     }
 }

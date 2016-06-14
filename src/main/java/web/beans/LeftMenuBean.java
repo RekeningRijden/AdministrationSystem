@@ -6,7 +6,7 @@ import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 
 /**
- * @author administration
+ * @author Sam
  */
 @Named
 @SessionScoped

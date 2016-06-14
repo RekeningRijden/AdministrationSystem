@@ -2,27 +2,30 @@ package web.beans.login;
 
 import java.io.Serializable;
 
-import main.core.helper.PasswordGenerator;
-import main.domain.User;
-import main.service.UserService;
-
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import main.service.UserService;
+
 /**
- * Created by martijn on 10-5-2016.
+ * @author Martijn
  */
 @Named
 @ViewScoped
 public class RegisterBean implements Serializable {
 
-    private String username;
-    private String password;
-
     @Inject
     private UserService userService;
 
+    private String username;
+    private String password;
+
+    public void register() {
+        userService.register(username, password);
+    }
+
+    //<editor-fold defaultstate="collapsed" desc="Getters / Setters">
     public void setUsername(String username) {
         this.username = username;
     }
@@ -38,11 +41,5 @@ public class RegisterBean implements Serializable {
     public String getPassword() {
         return password;
     }
-
-    public void register() {
-        User u = new User();
-        u.setUsername(username);
-        u.setPassword(PasswordGenerator.encryptPassword(username, password));
-        userService.create(u);
-    }
+    //</editor-fold>
 }

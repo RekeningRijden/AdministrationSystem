@@ -19,7 +19,7 @@ public final class TestHelper {
      */
     public static Archive<?> createDeployment() {
         WebArchive war = ShrinkWrap.create(WebArchive.class)
-                .addPackages(true, "main", "org.netbeans.rest.application.config", "resources", "web")
+                .addPackages(true, "main", "org.netbeans.rest.application.config", "resources", "web", "util", "pagination")
                 .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 

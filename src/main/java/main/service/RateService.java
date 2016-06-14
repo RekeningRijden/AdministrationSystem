@@ -21,5 +21,5 @@ public class RateService extends RateDao implements Serializable {
     protected Class<Rate> getEntityClass() {
         return Rate.class;
     }
-    
+
 }

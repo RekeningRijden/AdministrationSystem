@@ -96,7 +96,7 @@ public class ApiResourcesV1 {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        Driver driver = driverService.updateDriver(driverId, newDriver);
+        Driver driver = driverService.findAndSetAddress(driverId, newDriver);
         if (driver == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }

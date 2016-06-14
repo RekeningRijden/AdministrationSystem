@@ -14,7 +14,7 @@ import web.beans.login.UserInfoBean;
 import web.core.helpers.ContextHelper;
 
 /**
- * Created by martijn on 10-5-2016.
+ * @author martijn
  */
 @Named
 @SessionScoped

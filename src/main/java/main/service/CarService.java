@@ -63,15 +63,14 @@ public class CarService extends CarDao implements Serializable {
         } else {
             if (car.getCurrentOwnership().getId() != null) {
                 car.getCurrentOwnership().setEndDate(new Date());
-                car = update(car);
 
                 Ownership ownership = new Ownership();
                 ownership.setDriver(driver);
                 ownership.setCar(car);
                 ownership.setStartDate(new Date());
 
-                car.setCurrentOwnership(ownership);
                 car.getPastOwnerships().add(car.getCurrentOwnership());
+                car.setCurrentOwnership(ownership);
 
                 return update(car);
             } else {
@@ -99,7 +98,7 @@ public class CarService extends CarDao implements Serializable {
             } else {
                 car.setCartrackerId(Communicator.requestNewCartracker());
                 car.getPastOwnerships().add(car.getCurrentOwnership());
-                return update(car);
+                return create(car);
             }
         }
     }

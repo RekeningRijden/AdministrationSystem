@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -24,7 +24,7 @@ import web.core.helpers.RedirectHelper;
  * @author maikel
  */
 @Named
-@SessionScoped
+@ViewScoped
 public class CarBean implements Serializable {
 
     @Inject
@@ -56,20 +56,18 @@ public class CarBean implements Serializable {
         try {
             car = carService.createOrUpdate(car);
         } catch (DriverAssignmentException e) {
-            FrontendHelper.displayErrorSmallBox("Selecteer een bestuurder");
+            FrontendHelper.displayErrorSmallBox("Please select a owner");
             success = false;
         } catch (Exception ex) {
             Logger.getLogger(CarBean.class.getName()).log(Level.SEVERE, null, ex);
-            FrontendHelper.displayErrorSmallBox("De auto kon niet toegevoegd worden");
+            FrontendHelper.displayErrorSmallBox("The car could not be added");
             success = false;
         }
 
         carId = null;
         if (success) {
-            FrontendHelper.displaySuccessSmallBox("De auto is geüpdate");
+            RedirectHelper.redirect("/pages/car/carOverview.xhtml");
         }
-
-        RedirectHelper.redirect("/pages/car/carOverview.xhtml");
     }
 
     public void assignDriver() {

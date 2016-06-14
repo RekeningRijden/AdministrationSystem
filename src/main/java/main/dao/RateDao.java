@@ -1,19 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package main.dao;
 
+import java.util.List;
+
 import javax.persistence.TypedQuery;
+
 import main.domain.Rate;
 
 /**
- *
  * @author martijn
  */
 public abstract class RateDao extends AbstractDao<Rate> {
-    
+
     public Rate getByName(String name) {
         TypedQuery<Rate> q = getEntityManager().createQuery("SELECT r FROM Rate r WHERE r.name = :name", Rate.class)
                 .setParameter("name", name);
@@ -27,5 +24,10 @@ public abstract class RateDao extends AbstractDao<Rate> {
 
         return q.getResultList().isEmpty() ? null : q.getResultList().get(0);
     }
-    
+
+    @Override
+    public List<Rate> getAll() {
+        return getEntityManager().createQuery("SELECT r FROM Rate r ORDER BY r.name", Rate.class)
+                .getResultList();
+    }
 }

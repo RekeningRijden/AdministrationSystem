@@ -61,7 +61,6 @@
                                                             <label class="control-label">Rate</label>
                                                             <h:selectOneMenu class="form-control" value="#{carBean.car.rate}">
                                                                 <f:converter converterId="rateConverter"/>
-                                                                <f:selectItem itemLabel="--" itemValue="#{null}" /> 
                                                                 <f:selectItems value="#{carBean.rates}" var="rate" itemLabel="#{rate.name}" itemValue="#{rate}"/>
                                                             </h:selectOneMenu>
                                                         </div>

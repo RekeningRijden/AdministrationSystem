@@ -5,6 +5,7 @@ import junit.framework.Assert;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
+import org.junit.After;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,6 +35,13 @@ public class DriverServiceTest {
     @Inject
     private DriverService driverService;
 
+    @After
+    public void after(){
+       // for(Driver driver : driverService.getAll()){
+       //     driverService.remove(driver);
+       // }
+    }
+
     @Test
     public void test1SetupWithoutDriver() {
         Driver driver = driverService.findOrSetup(null);
@@ -50,15 +58,17 @@ public class DriverServiceTest {
         Driver driver = driverService.findOrSetup(null);
         driver.setFirstName("Henk");
         driver.setEmail(email);
+        driver.setId(1L);
 
-        //driver = driverService.createOrUpdate(driver);
+        driver = driverService.createOrUpdate(driver);
 
-        //Assert.assertTrue("Driver has not been created in the database", driverService.hasBeenPersisted(driver));
-        //Assert.assertEquals("Wrong amount of drivers found in the database", 1, driverService.getAll().size());
+        Assert.assertTrue("Driver has not been created in the database", driverService.hasBeenPersisted(driver));
+        Assert.assertEquals("Wrong amount of drivers found in the database", 1, driverService.getAll().size());
     }
 
     @Test
     public void test3SetupWithDriver() {
+        int lel = driverService.getAll().size();
         Driver driver = driverService.findOrSetup(1L);
 
         Assert.assertEquals("Wrong driver found", "Henk", driver.getFirstName());

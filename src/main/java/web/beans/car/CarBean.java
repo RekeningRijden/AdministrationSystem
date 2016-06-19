@@ -56,6 +56,7 @@ public class CarBean implements Serializable {
         try {
             car = carService.createOrUpdate(car);
         } catch (DriverAssignmentException e) {
+            Logger.getLogger(CarBean.class.getName()).log(Level.SEVERE, null, e);
             FrontendHelper.displayErrorSmallBox("Please select a owner");
             success = false;
         } catch (Exception ex) {
@@ -74,6 +75,7 @@ public class CarBean implements Serializable {
         try {
             car = carService.assignDriver(selectedDriver, car);
         } catch (DriverAssignmentException e) {
+            Logger.getLogger(CarBean.class.getName()).log(Level.SEVERE, null, e);
             FrontendHelper.displayErrorSmallBox("Dit is al de bestuurder");
         }
 

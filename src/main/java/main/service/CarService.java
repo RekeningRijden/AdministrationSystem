@@ -1,21 +1,16 @@
 package main.service;
 
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.ejb.Stateless;
+
 import main.core.communcation.Communicator;
 import main.core.exception.DriverAssignmentException;
 import main.dao.CarDao;
 import main.domain.Car;
 import main.domain.Driver;
 import main.domain.Ownership;
-import web.beans.car.CarBean;
-import web.core.helpers.FrontendHelper;
-import web.core.helpers.RedirectHelper;
-
-import javax.ejb.Stateless;
-
-import java.io.Serializable;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author Sam

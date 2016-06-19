@@ -6,8 +6,10 @@
 package main.dao;
 
 import java.util.List;
+
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+
 import main.domain.Driver;
 import main.domain.enums.SortOrder;
 
@@ -24,7 +26,7 @@ public abstract class DriverDao extends AbstractDao<Driver> {
     }
 
     public List<Driver> getSortedFilteredAndPaged(int first, int pageSize,
-            String sortValue, SortOrder sortOrder, String filter) {
+                                                  String sortValue, SortOrder sortOrder, String filter) {
 
         String queryString = "FROM Driver d";
         queryString += filter.isEmpty() ? "" : getFilteredQueryString();
@@ -50,7 +52,7 @@ public abstract class DriverDao extends AbstractDao<Driver> {
         return (int) (long) query.getSingleResult();
     }
 
-    private String getFilteredQueryString() {
+    private static String getFilteredQueryString() {
         return " WHERE d.lastName LIKE :filter OR d.firstName LIKE :filter";
     }
 }

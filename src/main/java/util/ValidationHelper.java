@@ -10,7 +10,11 @@ import main.service.RateService;
 /**
  * @author Marijn
  */
-public class ValidationHelper {
+public final class ValidationHelper {
+
+    private ValidationHelper(){
+        //Utility class constructor cannot be called.
+    }
 
     /**
      * Try to parse a String to and integer and check if the resulting integer is positive (zero or bigger).

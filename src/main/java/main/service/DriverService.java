@@ -1,13 +1,12 @@
 package main.service;
 
-import main.core.communcation.Communicator;
-import main.dao.DriverDao;
-import main.domain.Address;
-import main.domain.Driver;
+import java.io.Serializable;
 
 import javax.ejb.Stateless;
 
-import java.io.Serializable;
+import main.core.communcation.Communicator;
+import main.dao.DriverDao;
+import main.domain.Driver;
 
 /**
  * @author Sam

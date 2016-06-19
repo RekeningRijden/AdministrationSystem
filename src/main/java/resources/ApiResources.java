@@ -20,14 +20,6 @@ import main.domain.Ownership;
 import main.service.CarService;
 import main.service.DriverService;
 import main.service.InvoiceService;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-
-import java.util.List;
-import main.domain.Ownership;
 import main.service.OwnershipService;
 
 /**

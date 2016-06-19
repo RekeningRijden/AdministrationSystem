@@ -14,7 +14,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -143,7 +142,7 @@ public class InvoiceGenerator implements Serializable {
             roadTax = roadTax.add(region.getRoadTaxPerKm().multiply(new BigDecimal(distance)));
         }
 
-        BigDecimal efficiencyTax = rate.getValue().multiply(new BigDecimal(totalDistance));
+        BigDecimal efficiencyTax = rate.getValue().multiply(BigDecimal.valueOf(totalDistance));
         return efficiencyTax.add(roadTax);
     }
 

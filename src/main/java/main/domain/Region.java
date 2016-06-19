@@ -31,6 +31,7 @@ public class Region implements Serializable, IEntity {
     private BigDecimal roadTaxPerKm;
 
     public Region() {
+        //Empty constructor only called by JPA
     }
 
     public Region(String name, double latitudeSouth, BigDecimal roadTaxPerKm) {

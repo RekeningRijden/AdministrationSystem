@@ -1,8 +1,8 @@
 package main.domain.foreign;
 
-import main.domain.simulation.Position;
-
 import java.util.List;
+
+import main.domain.simulation.Position;
 
 /**
  * Created by Eric on 31-05-16.
@@ -15,7 +15,9 @@ public class InvoiceRequest {
 
     private String rate;
 
-    public InvoiceRequest(){}
+    public InvoiceRequest() {
+        //Empty constructor only called by JPA.
+    }
 
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
     public int getCartrackerId() {

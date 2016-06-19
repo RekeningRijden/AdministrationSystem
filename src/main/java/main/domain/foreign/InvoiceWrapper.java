@@ -1,13 +1,11 @@
 package main.domain.foreign;
 
-import main.domain.Invoice;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 
 import javax.xml.bind.annotation.XmlTransient;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
+import main.domain.Invoice;
 
 /**
  * Created by Eric on 31-05-16.

@@ -151,14 +151,14 @@ public class InvoiceGenerator implements Serializable {
         Map<Region, Double> distances = new HashMap<>();
 
         for (TrackingPeriod period : trackingPeriods) {
-            Map<Region, Double> afstand = Calculator.calculateTotalDistance(period.getPositions(), regions);
+            Map<Region, Double> distancePerPeriod = Calculator.calculateTotalDistance(period.getPositions(), regions);
 
-            for (Map.Entry<Region, Double> entry : afstand.entrySet()) {
+            for (Map.Entry<Region, Double> entry : distancePerPeriod.entrySet()) {
                 if (distances.containsKey(entry.getKey())) {
                     double distance = distances.get(entry.getKey()) + entry.getValue();
                     distances.put(entry.getKey(), distance);
                 } else {
-                    distances.putAll(afstand);
+                    distances.putAll(distancePerPeriod);
                 }
             }
         }

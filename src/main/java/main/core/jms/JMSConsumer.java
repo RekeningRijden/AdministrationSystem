@@ -46,7 +46,7 @@ public class JMSConsumer {
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
                 String message = new String(body, "UTF-8");
                 System.out.println("Received message: " + message + " on queue " + queueName + " with routing key: " + envelope.getRoutingKey());
-                
+
             }
         };
         channel.basicConsume(queueName, true, consumer);

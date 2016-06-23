@@ -59,9 +59,12 @@ public final class Communicator {
         HttpClient httpClient = HttpClientBuilder.create().build();
         HttpPost post = new HttpPost(BASE_URL_PRODUCTION);
         HttpResponse response = httpClient.execute(post);
-        checkResponse(response);
 
         String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
+
+        checkResponse(response);
+
+
         JSONObject json = new JSONObject(responseString);
 
         return json.getLong("id");

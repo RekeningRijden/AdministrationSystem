@@ -1,0 +1,20 @@
+----------------------------------------------------------------
+Thu Jun 23 21:30:04 CEST 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.1.2 - (1095077): instance a816c00e-0155-7ebd-9ec5-00000df31ea8 
+on database directory /Users/Eric/git/AdministrationSystem/administrationsystem  with class loader sun.misc.Launcher$AppClassLoader@1540e19d 
+Loaded from file:/Users/Eric/.m2/repository/org/glassfish/main/extras/glassfish-embedded-all/3.1.2/glassfish-embedded-all-3.1.2.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_45-b14
+user.dir=/Users/Eric/git/AdministrationSystem
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Thu Jun 23 21:30:07 CEST 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.1.2 - (1095077): instance 6ebdc076-0155-7ebd-9ec5-00000df31ea8 
+on database directory /private/var/folders/xj/3d06l5g92md62p8dn95d5ghh0000gn/T/gfembed248840730393695364tmp/lib/databases/ejbtimer  with class loader sun.misc.Launcher$AppClassLoader@1540e19d 
+Loaded from file:/Users/Eric/.m2/repository/org/glassfish/main/extras/glassfish-embedded-all/3.1.2/glassfish-embedded-all-3.1.2.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_45-b14
+user.dir=/Users/Eric/git/AdministrationSystem
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

@@ -17,6 +17,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.google.gson.annotations.Expose;
 import main.domain.enums.PaymentStatus;
 
 /**
@@ -35,10 +36,15 @@ public class Invoice implements Serializable, IEntity {
 
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
+
+    @Expose
     @Temporal(value = TemporalType.DATE)
     private Date period;
+
+    @Expose
     private BigDecimal totalAmount;
 
+    @Expose
     @ManyToOne
     private Ownership ownership;
 

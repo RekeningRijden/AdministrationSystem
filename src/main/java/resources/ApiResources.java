@@ -1,5 +1,6 @@
 package resources;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -13,6 +14,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import main.core.calculation.InvoiceGenerator;
 import main.domain.Car;
 import main.domain.Driver;
 import main.domain.Invoice;
@@ -43,6 +45,8 @@ public class ApiResources {
     private InvoiceService invoiceService;
     @Inject
     private CarService carService;
+    @Inject
+    private InvoiceGenerator invoiceGenerator;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -179,6 +183,14 @@ public class ApiResources {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Ownership> getOwnershipsByDriver(@PathParam("userId") Long userId) {
         return ownershipService.getOwnershipsFromDriver(userId);
+    }
+
+    @GET
+    @Path("/testpath")
+    public String testnogwat() {
+        invoiceGenerator.generate();
+
+        return "Hoi";
     }
     
 }

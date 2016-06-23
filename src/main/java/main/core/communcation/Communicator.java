@@ -22,6 +22,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -81,9 +82,10 @@ public final class Communicator {
         HttpGet get = new HttpGet(BASE_URL_PRODUCTION + "/ids");
 
         HttpResponse response = httpClient.execute(get);
-        checkResponse(response);
 
         String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
+
+        checkResponse(response);
 
         Gson gson = new GsonBuilder().setDateFormat(REGULAR_DATE_FORMAT).create();
 
@@ -122,8 +124,14 @@ public final class Communicator {
     public static List<TrackingPeriod> getTrackingPeriodsByMonth(Long id, int month, int year) throws IOException {
         LocalDate dateInMonth = LocalDate.of(year, month, 1);
 
-        String startDate = year + "-" + month + "01";
+        String monthString = String.valueOf(month);
+        if(monthString.length() < 2) {
+            monthString = "0" + monthString;
+        }
+
+        String startDate = year + "-" + monthString + "-01";
         String endDate = dateInMonth.withDayOfMonth(dateInMonth.lengthOfMonth()).toString();
+
 
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         HttpGet get = new HttpGet(BASE_URL_PRODUCTION
@@ -143,6 +151,7 @@ public final class Communicator {
         return gson.fromJson(responseString, new TypeToken<List<TrackingPeriod>>() {
         }.getType());
     }
+
 
     public static Long addDriver(Driver driver) throws Exception {
         Gson gson = new Gson();
@@ -168,7 +177,7 @@ public final class Communicator {
      * Check if a received response is not null and has the statusCode code of 200.
      *
      * @param response to check.
-     * @throws CommunicationException if the response was null or the statusCode was not 200.s
+     * @throws CommunicationException if the response was null or the statusCode was not 200
      */
     private static void checkResponse(HttpResponse response) throws CommunicationException {
         if (response == null) {
@@ -181,5 +190,3 @@ public final class Communicator {
         }
     }
 }
-
-

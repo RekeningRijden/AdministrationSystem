@@ -1,5 +1,7 @@
 package main.domain;
 
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
 
 import java.io.Serializable;
@@ -21,7 +23,10 @@ public class Car implements Serializable, IEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Expose
     private Long cartrackerId;
+
+    @Expose
     private String licencePlate;
     @ManyToOne
     private Rate rate;

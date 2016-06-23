@@ -7,18 +7,19 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import main.core.communcation.Communicator;
 import main.core.exception.GenerationException;
+import main.core.jms.JMSInit;
+import main.core.jms.JMSProducer;
 import main.core.pdf.ITemplate;
 import main.core.pdf.MonthlyInvoiceTemplate;
 import main.core.pdf.PdfGenerator;
@@ -27,6 +28,7 @@ import main.domain.Invoice;
 import main.domain.Rate;
 import main.domain.Region;
 import main.domain.enums.PaymentStatus;
+import main.domain.foreign.InvoiceWrapper;
 import main.domain.simulation.CarTracker;
 import main.domain.simulation.TrackingPeriod;
 import main.service.CarService;
@@ -45,6 +47,8 @@ public class InvoiceGenerator implements Serializable {
     private InvoiceService invoiceService;
     @Inject
     private RegionService regionService;
+    @Inject
+    private JMSInit jmsInit;
 
     /**
      * Retrieve all the @{code Cartracker} from the MovementSystem
@@ -52,28 +56,46 @@ public class InvoiceGenerator implements Serializable {
      * based on the amount of kilometers the @{code Driver} has driver in the current month.
      */
     public void generate() {
-        LocalDate now = LocalDate.now();
-        List<Long> ids = null;
+        LocalDate lastMonth = LocalDate.now().minusMonths(1);
+        List<Long> tempids;
+        HashMap<Long, String> idCountryMap = carService.getCountriesForForeignCartrackers();
 
         try {
-            ids = Communicator.getAllCartrackerIds();
+            tempids = Communicator.getAllCartrackerIds();
+            for (Long id : tempids) {
+                if (id > 0L) {
+                    idCountryMap.put(id, "");
+                }
+            }
+
         } catch (IOException e) {
             Logger.getLogger(Communicator.class.getName()).log(Level.SEVERE, null, e);
         }
 
-        if (ids != null) {
-            for (Long trackerId : ids) {
-                try {
-                    List<TrackingPeriod> periods = Communicator.getTrackingPeriodsByMonth(trackerId, now.getMonthValue(), now.getYear());
+        for (Map.Entry<Long, String> entry : idCountryMap.entrySet()) {
+            try {
+                Long trackerId = entry.getKey();
+                String country = entry.getValue();
+                List<TrackingPeriod> periods = Communicator.getTrackingPeriodsByMonth(trackerId, lastMonth.getMonthValue(), lastMonth.getYear());
 
+                if (periods.size() > 0) {
                     CarTracker tracker = new CarTracker();
                     tracker.setId(trackerId);
                     tracker.setTrackingPeriods(periods);
 
-                    generateInvoice(tracker);
-                } catch (GenerationException | IOException ex) {
-                    Logger.getLogger(InvoiceGenerator.class.getName()).log(Level.SEVERE, null, ex);
+                    Invoice invoice = generateInvoice(tracker);
+
+                    if (!country.isEmpty()) {
+                        JMSProducer jmsProducer = jmsInit.getProducerByExchangeName("portugal_foreign_invoice_exchange");
+                        if (jmsProducer != null) {
+                            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+                            jmsProducer.sendMessage(gson.toJson(new InvoiceWrapper(invoice, country)));
+                        }
+                    }
                 }
+
+            } catch (GenerationException | IOException ex) {
+                Logger.getLogger(InvoiceGenerator.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -84,13 +106,13 @@ public class InvoiceGenerator implements Serializable {
      *
      * @param tracker to generate the invoice for.
      */
-    public void generateInvoice(CarTracker tracker) throws GenerationException {
+    public Invoice generateInvoice(CarTracker tracker) throws GenerationException {
         Car car = carService.getCarByCartrackerId(tracker.getId());
         if (car == null) {
             throw new GenerationException("Car was not found and is null");
         }
 
-        BigDecimal totalPrice = calculatePrice(tracker.getTrackingPeriods(), car.getRate());
+        TreeMap<Double, BigDecimal> distanceAndPrice = calculatePrice(tracker.getTrackingPeriods(), car.getRate());
 
         LocalDate localDate = LocalDate.now();
         String fileName = "Invoice"
@@ -108,12 +130,13 @@ public class InvoiceGenerator implements Serializable {
         invoice.setOwnership(car.getCurrentOwnership());
         invoice.setPaymentStatus(PaymentStatus.OPEN);
         invoice.setPeriod(month);
-        invoice.setTotalAmount(totalPrice);
+        invoice.setTotalAmount(distanceAndPrice.firstEntry().getValue());
 
         invoiceService.create(invoice);
 
-        ITemplate template = new MonthlyInvoiceTemplate(invoice, 111.0);
+        ITemplate template = new MonthlyInvoiceTemplate(invoice, distanceAndPrice.firstKey());
         PdfGenerator.generate(invoiceFile.getName(), template);
+        return invoice;
     }
 
     /**
@@ -123,12 +146,21 @@ public class InvoiceGenerator implements Serializable {
      * @param trackingPeriods to get the data from.
      * @return a @{code BigDecimal} representing the total price that has to be paid for the current month.
      */
-    public BigDecimal calculatePrice(List<TrackingPeriod> trackingPeriods, Rate rate) {
+    public TreeMap<Double, BigDecimal> calculatePrice(List<TrackingPeriod> trackingPeriods, Rate rate) {
         List<Region> regions = regionService.getAll();
         Map<Region, Double> distances = new HashMap<>();
 
         for (TrackingPeriod period : trackingPeriods) {
-            distances.putAll(Calculator.calculateTotalDistance(period.getPositions(), regions));
+            Map<Region, Double> afstand = Calculator.calculateTotalDistance(period.getPositions(), regions);
+
+            for (Map.Entry<Region, Double> entry : afstand.entrySet()) {
+                if (distances.containsKey(entry.getKey())) {
+                    double distance = distances.get(entry.getKey()) + entry.getValue();
+                    distances.put(entry.getKey(), distance);
+                } else {
+                    distances.putAll(afstand);
+                }
+            }
         }
 
         double totalDistance = 0.0;
@@ -143,15 +175,8 @@ public class InvoiceGenerator implements Serializable {
         }
 
         BigDecimal efficiencyTax = rate.getValue().multiply(BigDecimal.valueOf(totalDistance));
-        return efficiencyTax.add(roadTax);
+        TreeMap<Double, BigDecimal> distanceWithPrice = new TreeMap<>();
+        distanceWithPrice.put(totalDistance, efficiencyTax.add(roadTax));
+        return distanceWithPrice;
     }
-
-    public Invoice generateForeignInvoice(List<TrackingPeriod> trackingPeriods, Rate rate) {
-        BigDecimal totalamount = calculatePrice(trackingPeriods, rate);
-        Invoice invoice = new Invoice();
-        invoice.setPeriod(new Date());
-        invoice.setTotalAmount(totalamount);
-        return invoice;
-    }
-
 }

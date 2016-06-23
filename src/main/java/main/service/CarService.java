@@ -2,8 +2,12 @@ package main.service;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.ejb.Stateless;
+import javax.persistence.Query;
 
 import main.core.communcation.Communicator;
 import main.core.exception.DriverAssignmentException;
@@ -97,4 +101,6 @@ public class CarService extends CarDao implements Serializable {
             }
         }
     }
+
+
 }

@@ -94,7 +94,7 @@ public class InvoiceGenerationTest {
 
         invoiceGenerator.generateInvoice(tracker);
 
-        LocalDate localDate = LocalDate.now();
+        LocalDate localDate = LocalDate.now().minusMonths(1);
         String fileName = "Invoice"
                 + tracker.getId()
                 + "-"
@@ -113,7 +113,7 @@ public class InvoiceGenerationTest {
 
         Assert.assertEquals("Wrong price calculated"
                 , new BigDecimal(109.3 * 2.0).add(new BigDecimal(109.3 * 0.3)).setScale(1, BigDecimal.ROUND_HALF_UP)
-                , invoiceGenerator.calculatePrice(tracker.getTrackingPeriods(), car.getRate()).setScale(1, BigDecimal.ROUND_HALF_UP));
+                , invoiceGenerator.calculatePrice(tracker.getTrackingPeriods(), car.getRate()).firstEntry().getValue().setScale(1, BigDecimal.ROUND_HALF_UP));
     }
 
     @Test

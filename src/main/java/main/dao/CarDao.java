@@ -11,6 +11,7 @@ import main.domain.enums.SortOrder;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -72,5 +73,16 @@ public abstract class CarDao extends AbstractDao<Car> {
                 .setParameter("licencePlate", licencePlate);
 
         return oneResult(q);
+    }
+
+    public HashMap<Long, String> getCountriesForForeignCartrackers() {
+        HashMap<Long, String> result = new HashMap<>();
+        Query query = getEntityManager().createQuery("select c.cartrackerId, a.country from Car c left join c.currentOwnership.driver.address a where c.cartrackerId < 0");
+        List<Object[]> strings = query.getResultList();
+        for(Object[] obj : strings) {
+            result.put((Long) obj[0], (String) obj[1]);
+
+        }
+        return result;
     }
 }

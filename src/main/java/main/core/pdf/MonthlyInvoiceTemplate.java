@@ -1,5 +1,6 @@
 package main.core.pdf;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 import main.core.exception.GenerationException;
@@ -15,11 +16,11 @@ import main.domain.Invoice;
 public class MonthlyInvoiceTemplate implements ITemplate {
 
     private final Invoice invoice;
-    private final double distance;
+    private final BigDecimal distance;
 
     public MonthlyInvoiceTemplate(Invoice invoice, double distance) {
         this.invoice = invoice;
-        this.distance = distance;
+        this.distance = BigDecimal.valueOf(distance).setScale(1, BigDecimal.ROUND_HALF_UP);
     }
 
     @Override
@@ -124,7 +125,7 @@ public class MonthlyInvoiceTemplate implements ITemplate {
         sb.append("<tbody>");
 
         sb.append("<tr>");
-        sb.append("<td>").append(distance).append("</td>");
+        sb.append("<td>").append(distance).append(" km</td>");
         sb.append("<td>").append(invoice.getOwnership().getCar().getRate().getName()).append("</td>");
         sb.append("<td>").append(decimalF.format(invoice.getTotalAmount())).append("</td>");
         sb.append("</tr>");

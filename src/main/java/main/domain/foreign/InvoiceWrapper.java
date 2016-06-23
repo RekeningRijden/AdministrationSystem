@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.google.gson.annotations.Expose;
 import main.domain.Invoice;
 
 /**
@@ -12,28 +13,17 @@ import main.domain.Invoice;
  */
 public class InvoiceWrapper {
 
-
-    @XmlTransient
+    @Expose
     private Invoice invoice;
 
-    private int cartrackerId;
-    private double totalAmount;
-    private String invoiceDate;
+    @Expose
+    private String country;
 
-    private SimpleDateFormat sdf;
-
-    public InvoiceWrapper(Invoice invoice, int cartrackerId) {
-        this();
+    public InvoiceWrapper(Invoice invoice, String country) {
         this.invoice = invoice;
-        this.cartrackerId = cartrackerId;
+        this.country = country;
     }
 
-    public InvoiceWrapper(){
-        sdf = new SimpleDateFormat("YYYY-MM-dd");
-    }
-
-    //<editor-fold desc="Getters/Setters">
-    @XmlTransient
     public Invoice getInvoice() {
         return invoice;
     }
@@ -42,28 +32,11 @@ public class InvoiceWrapper {
         this.invoice = invoice;
     }
 
-    public int getCartrackerId() {
-        return cartrackerId;
+    public String getCountry() {
+        return country;
     }
 
-    public void setCartrackerId(int cartrackerId) {
-        this.cartrackerId = cartrackerId;
+    public void setCountry(String country) {
+        this.country = country;
     }
-
-    public double getTotalAmount() {
-        return invoice.getTotalAmount().setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-    }
-
-    public void setTotalAmount(double totalAmount) {
-        this.totalAmount = totalAmount;
-    }
-
-    public String getInvoiceDate() {
-        return sdf.format(invoice.getPeriod());
-    }
-
-    public void setInvoiceDate(String invoiceDate) {
-        this.invoiceDate = invoiceDate;
-    }
-    //</editor-fold>
 }

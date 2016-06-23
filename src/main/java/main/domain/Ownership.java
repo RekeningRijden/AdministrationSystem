@@ -1,5 +1,7 @@
 package main.domain;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,6 +39,7 @@ public class Ownership implements Serializable, IEntity {
     @OneToMany(mappedBy = "ownership", cascade = CascadeType.ALL)
     private List<Invoice> invoices;
 
+    @Expose
     @ManyToOne
     private Car car;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

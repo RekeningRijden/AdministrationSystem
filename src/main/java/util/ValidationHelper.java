@@ -4,8 +4,6 @@ import java.util.regex.Pattern;
 
 import main.domain.Driver;
 import main.domain.Invoice;
-import main.domain.foreign.InvoiceRequest;
-import main.service.RateService;
 
 /**
  * @author Marijn
@@ -96,25 +94,5 @@ public final class ValidationHelper {
      */
     public static boolean isValidInvoice(Invoice invoice) {
         return !(invoice == null || invoice.getOwnership() == null || invoice.getOwnership().getCar() == null);
-    }
-
-    public static boolean isValidInvoiceRequest(InvoiceRequest invoiceRequest, RateService rateService) {
-        if (invoiceRequest == null) {
-            return false;
-        }
-
-        if (invoiceRequest.getPositions() == null || invoiceRequest.getPositions().isEmpty()) {
-            return false;
-        }
-
-        if (invoiceRequest.getCartrackerId() == 0 || !isPositiveInteger(invoiceRequest.getCartrackerId())) {
-            return false;
-        }
-
-        if (invoiceRequest.getRate() == null || rateService.getByName(invoiceRequest.getRate().toUpperCase()) == null) {
-            return false;
-        }
-
-        return true;
     }
 }

@@ -15,6 +15,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import main.core.communcation.Communicator;
 
 /**
  * Created by Eric on 17-06-16.
@@ -27,10 +31,8 @@ import java.util.concurrent.TimeoutException;
 @Startup
 public class JMSInit {
 
-
     @Inject
     private IntegrationService integrationService;
-
     private List<JMSConsumer> consumers;
     private List<JMSProducer> producers;
 
@@ -66,7 +68,7 @@ public class JMSInit {
                 producers.add(producer);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger.getLogger(JMSInit.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
@@ -79,27 +81,23 @@ public class JMSInit {
         for (JMSConsumer consumer : consumers) {
             try {
                 consumer.closeConnection();
-            } catch (TimeoutException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (TimeoutException | IOException e) {
+                Logger.getLogger(JMSInit.class.getName()).log(Level.SEVERE, null, e);
             }
         }
 
         for (JMSProducer producer : producers) {
             try {
                 producer.closeConnection();
-            } catch (TimeoutException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (TimeoutException | IOException e) {
+                Logger.getLogger(JMSInit.class.getName()).log(Level.SEVERE, null, e);
             }
         }
     }
 
     public JMSProducer getProducerByExchangeName(String exchangeName) {
-        for(JMSProducer producer : producers) {
-            if(producer.getExchangeName().equals(exchangeName)){
+        for (JMSProducer producer : producers) {
+            if (producer.getExchangeName().equals(exchangeName)) {
                 return producer;
             }
         }

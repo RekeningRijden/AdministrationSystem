@@ -12,8 +12,12 @@ import org.junit.runner.RunWith;
 import javax.inject.Inject;
 
 import main.domain.Car;
+import main.domain.Ownership;
+import main.domain.Rate;
 import main.service.CarService;
 import tests.TestHelper;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Sam
@@ -35,6 +39,31 @@ public class CarTest {
 
     @Inject
     private CarService carService;
+
+    @Test
+    public void testGettersSetters() {
+        Ownership o1 = new Ownership();
+        Ownership o2 = new Ownership();
+        o1.setId(1L);
+        o2.setId(2L);
+
+        Rate rate = new Rate();
+        rate.setName("Rate");
+
+        Car car = new Car();
+        car.setId(1L);
+        car.setLicencePlate("AA-11-AA");
+        car.setCartrackerId(2L);
+        car.setCurrentOwnership(o1);
+        car.getPastOwnerships().add(o2);
+        car.setRate(rate);
+
+        assertEquals(new Long(1L), car.getId());
+        assertEquals("AA-11-AA", car.getLicencePlate());
+        assertEquals(new Long(2L), car.getCartrackerId());
+        assertEquals(o2, car.getPastOwnerships().get(0));
+        assertEquals("Rate", car.getRate().getName());
+    }
 
     @Test
     public void createCarTest() {

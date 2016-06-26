@@ -1,9 +1,15 @@
 package main.core.jms;
 
+import main.service.CarService;
+import main.service.DriverService;
+import main.service.IntegrationService;
+import main.service.OwnershipService;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.inject.Inject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,6 +31,8 @@ import main.core.communcation.Communicator;
 @Startup
 public class JMSInit {
 
+    @Inject
+    private IntegrationService integrationService;
     private List<JMSConsumer> consumers;
     private List<JMSProducer> producers;
 
@@ -50,8 +58,8 @@ public class JMSInit {
 
         try {
 
-            for (String queue : consumerQueues) {
-                JMSConsumer consumer = new JMSConsumer(queue);
+            for(String queue : consumerQueues) {
+                JMSConsumer consumer = new JMSConsumer(queue, integrationService);
                 consumers.add(consumer);
             }
 

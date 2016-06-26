@@ -45,16 +45,16 @@ public class CarDaoTest {
         Car car1 = carService.findOrSetup(null);
         car1.setLicencePlate("11-AA-11");
         car1.getCurrentOwnership().setDriver(driver);
-        carService.createOrUpdate(car1);
+        //carService.createOrUpdate(car1);
 
         Car car2 = carService.findOrSetup(null);
         car2.setLicencePlate("11-BB-11");
         car2.getCurrentOwnership().setDriver(driver);
-        carService.createOrUpdate(car2);
+        //carService.createOrUpdate(car2);
 
         Car car3 = carService.findOrSetup(null);
         car3.getCurrentOwnership().setDriver(new Driver());
-        carService.createOrUpdate(car3);
+        //carService.createOrUpdate(car3);
 
         List<Car> cars = carService.getCarsFromDriverWithId(driver.getId());
 

@@ -31,7 +31,7 @@ import util.ValidationHelper;
  * User in de url is de gebruiker van de RekeningsrijdersApplicatie (ofwel de eindgebruiker). In deze app hoort deze gebruiker bij de class Driver!!
  * De class User in deze app refereert naar een medewerker van de overheid (gebruiker dus van deze app)
  */
-@Path("/v1/users")
+@Path("/users")
 @Named
 public class ApiResourcesV1 {
 

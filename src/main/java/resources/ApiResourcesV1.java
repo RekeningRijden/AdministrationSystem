@@ -153,7 +153,7 @@ public class ApiResourcesV1 {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        resultSet.setTotalCount(driverService.count());
+        resultSet.setTotalCount(invoiceService.count());
         List<Invoice> invoices = invoiceService.getInvoicesFromDriverWithId(driverId, resultSet.getPageIndex(), resultSet.getPageSize());
         resultSet.setItems(invoices);
         return resultSet;

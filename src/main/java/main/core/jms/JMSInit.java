@@ -1,9 +1,6 @@
 package main.core.jms;
 
-import main.service.CarService;
-import main.service.DriverService;
 import main.service.IntegrationService;
-import main.service.OwnershipService;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -12,14 +9,11 @@ import javax.ejb.Startup;
 import javax.inject.Inject;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import main.core.communcation.Communicator;
 
 /**
  * Created by Eric on 17-06-16.
@@ -30,7 +24,7 @@ import main.core.communcation.Communicator;
  */
 @Singleton
 @Startup
-public class JMSInit implements Serializable{
+public class JMSInit {
 
     @Inject
     private IntegrationService integrationService;
@@ -68,7 +62,7 @@ public class JMSInit implements Serializable{
                 JMSProducer producer = new JMSProducer(EXCHANGE_TYPE_DIRECT, queue);
                 producers.add(producer);
             }
-        } catch (IOException | TimeoutException e) {
+        } catch (Exception e) {
             Logger.getLogger(JMSInit.class.getName()).log(Level.SEVERE, null, e);
         }
     }

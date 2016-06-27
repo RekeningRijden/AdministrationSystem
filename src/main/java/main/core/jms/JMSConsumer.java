@@ -4,13 +4,12 @@ import com.rabbitmq.client.*;
 import main.service.IntegrationService;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.concurrent.TimeoutException;
 
 /**
  * Created by Eric on 17-06-16.
  */
-public class JMSConsumer implements Serializable{
+public class JMSConsumer {
 
     private Channel channel;
 

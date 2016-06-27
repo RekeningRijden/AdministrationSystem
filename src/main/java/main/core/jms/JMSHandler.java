@@ -1,6 +1,5 @@
 package main.core.jms;
 
-import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import main.domain.Address;
@@ -14,7 +13,7 @@ import org.json.simple.parser.ParseException;
 /**
  * Created by Eric on 24-06-16.
  */
-public class JMSHandler implements Serializable{
+public class JMSHandler {
 
     private IntegrationService integrationService;
 

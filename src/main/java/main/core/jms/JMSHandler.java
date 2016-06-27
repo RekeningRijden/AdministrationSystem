@@ -1,5 +1,7 @@
 package main.core.jms;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import main.domain.Address;
 import main.domain.Car;
 import main.domain.Driver;
@@ -59,7 +61,7 @@ public class JMSHandler {
             integrationService.AddNewForeignCarWithDriverAndOwnership(car, driver);
 
         } catch (ParseException e) {
-            e.printStackTrace();
+            Logger.getLogger(JMSHandler.class.getName()).log(Level.SEVERE, null, e);
         }
 
     }

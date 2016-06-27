@@ -12,6 +12,7 @@ import javax.ejb.Startup;
 import javax.inject.Inject;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
@@ -29,7 +30,7 @@ import main.core.communcation.Communicator;
  */
 @Singleton
 @Startup
-public class JMSInit {
+public class JMSInit implements Serializable{
 
     @Inject
     private IntegrationService integrationService;
@@ -67,7 +68,7 @@ public class JMSInit {
                 JMSProducer producer = new JMSProducer(EXCHANGE_TYPE_DIRECT, queue);
                 producers.add(producer);
             }
-        } catch (Exception e) {
+        } catch (IOException | TimeoutException e) {
             Logger.getLogger(JMSInit.class.getName()).log(Level.SEVERE, null, e);
         }
     }

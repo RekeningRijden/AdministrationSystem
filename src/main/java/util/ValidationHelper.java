@@ -1,5 +1,7 @@
 package util;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import main.domain.Driver;
@@ -29,6 +31,7 @@ public final class ValidationHelper {
         try {
             value = Integer.parseInt(s);
         } catch (NullPointerException | NumberFormatException e) {
+            Logger.getLogger(ValidationHelper.class.getName()).log(Level.SEVERE, null, e);
             return false;
         }
 

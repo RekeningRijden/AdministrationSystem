@@ -68,7 +68,7 @@ public class CarService extends CarDao implements Serializable {
                 ownership.setCar(car);
                 ownership.setStartDate(new Date());
 
-                car.getPastOwnerships().add(car.getCurrentOwnership());
+                car.getPastOwnerships().add(ownership);
                 car.setCurrentOwnership(ownership);
 
                 return update(car);

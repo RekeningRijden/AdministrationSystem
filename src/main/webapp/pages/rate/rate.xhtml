@@ -68,7 +68,6 @@
                                                             <ui:repeat var="permission2" value="#{userInfoBean.loggedInUser.permissions}">
                                                                 <ui:fragment rendered="#{permission2.name() == 'KM_PRICE'}">
                                                                     <th>
-                                                                        Edit Rate
                                                                     </th>
                                                                 </ui:fragment>
                                                             </ui:repeat>
@@ -83,24 +82,18 @@
                                                                 <td>
                                                                     #{rate.valueString}
                                                                 </td>
-                                                                <ui:repeat var="permission3" value="#{userInfoBean.loggedInUser.permissions}">
-                                                                    <ui:fragment rendered="#{permission3.name() == 'KM_PRICE'}">
-                                                                        <td>
-                                                                            <div class="element-center">
-                                                                                <ui:repeat var="permission" value="#{userInfoBean.loggedInUser.permissions}">
-                                                                                    <!--<c:if test="#{permission.name() == 'KM_PRICE'}">-->
-                                                                                    <h:commandLink class="btn btn-primary btn-xs"
-                                                                                                   action="#{kilometerRateBean.setRate(rate)}"
-                                                                                                   onclick="$('#editRateModal').modal('show')">
-                                                                                        <i class="fa fa-pencil"/>
-                                                                                        <f:ajax execute="@this" render=":modal-form-1"/>
-                                                                                    </h:commandLink>
-                                                                                    <!--</c:if>-->
-                                                                                </ui:repeat>
-                                                                            </div>
-                                                                        </td>
-                                                                    </ui:fragment>
-                                                                </ui:repeat>
+                                                                <ui:fragment rendered="#{userInfoBean.hasRatesPermission()}">
+                                                                    <td>
+                                                                        <div class="element-center">
+                                                                            <h:commandLink class="btn btn-primary btn-xs"
+                                                                                           action="#{kilometerRateBean.setRate(rate)}"
+                                                                                           onclick="$('#editRateModal').modal('show')">
+                                                                                <i class="fa fa-pencil"/>
+                                                                                <f:ajax execute="@this" render=":modal-form-1"/>
+                                                                            </h:commandLink>
+                                                                        </div>
+                                                                    </td>
+                                                                </ui:fragment>
                                                             </tr>
                                                         </ui:repeat>
                                                         </tbody>

@@ -38,8 +38,8 @@ public abstract class AbstractDao<T extends IEntity> {
     }
 
     public T update(T entity) {
-        entityManager.merge(entity);
-        return entity;
+        return entityManager.merge(entity);
+        //return entity;
     }
 
     public void remove(T entity) {

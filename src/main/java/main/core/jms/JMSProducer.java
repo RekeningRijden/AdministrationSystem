@@ -5,13 +5,14 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.concurrent.TimeoutException;
 
 /**
  * Created by Eric on 17-06-16.
  */
-public class JMSProducer {
+public class JMSProducer implements Serializable{
 
     private Channel channel;
     private Connection connection;

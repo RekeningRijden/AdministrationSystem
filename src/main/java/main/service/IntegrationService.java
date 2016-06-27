@@ -1,5 +1,6 @@
 package main.service;
 
+import java.io.Serializable;
 import main.domain.Car;
 import main.domain.Driver;
 import main.domain.Ownership;
@@ -14,7 +15,7 @@ import java.util.logging.Logger;
  * Created by Eric on 24-06-16.
  */
 @Named
-public class IntegrationService {
+public class IntegrationService implements Serializable{
 
     @Inject
     private CarService carService;
